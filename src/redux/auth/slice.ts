@@ -1,5 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { UserType } from '../../types';
+import { logIn } from './operations';
 
 export interface IAuthState {
   user: UserType | null;
@@ -12,10 +13,14 @@ const initialState: IAuthState = {
   isError: '',
 };
 
-const authSlice = createSlice({
+export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {},
+  extraReducers: (builder) =>
+    builder.addCase(logIn.fulfilled, (state, { payload }) => {
+      state.user = payload;
+    }),
 });
 
 export const authReducer = authSlice.reducer;
