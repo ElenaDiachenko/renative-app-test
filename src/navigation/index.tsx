@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -11,6 +11,8 @@ import {
 } from './types';
 import { useAuth } from '../hooks';
 import { DrawerMenu } from '../components';
+import { useAppDispatch } from '../redux/hooks';
+import { checkStatus } from '../redux/auth/operations';
 
 const Drawer = createDrawerNavigator<DrawerParamList>();
 const MainStack = createStackNavigator<HomeStackNavigatorParamList>();
@@ -54,11 +56,23 @@ const MainNav = () => (
 );
 
 const Navigation = () => {
+  const [initializing, setInitializing] = useState(true);
   const { isLoggedIn } = useAuth();
+  const dispatch = useAppDispatch();
 
+  useEffect(() => {
+    (async () => {
+      await dispatch(checkStatus());
+      setInitializing(false);
+    })();
+  }, []);
+
+  if (initializing) {
+    return <></>;
+  }
   return (
     <NavigationContainer>
-      {!isLoggedIn ? <MainNav /> : <AuthNav />}
+      {isLoggedIn ? <MainNav /> : <AuthNav />}
     </NavigationContainer>
   );
 };

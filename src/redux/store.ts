@@ -20,7 +20,7 @@ const rootReducer = combineReducers({
 
 const persistConfig = {
   key: 'state',
-  storage: isPlatformWeb ? storage : AsyncStorage,
+  storage: AsyncStorage,
 };
 
 const persistedReduser = persistReducer<ReturnType<typeof rootReducer>>(

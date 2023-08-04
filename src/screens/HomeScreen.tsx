@@ -1,16 +1,15 @@
 import { Button, StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { palette } from '../styles';
 import { useAppDispatch } from '../redux/hooks';
 
 import { getSerializedSearchParameters } from '../utils';
-import { LoginData } from '../types';
-import { logIn } from '../redux/auth/operations';
+import { useAuth } from '../hooks';
 
 type Props = {};
 
 const HomeScreen = (props: Props) => {
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
 
   // const searchParameters = {
   //   page: 1,
@@ -20,18 +19,9 @@ const HomeScreen = (props: Props) => {
   //   order: '1',
   // };
 
-  const credentials: LoginData = {
-    email: 'mary@gmail.com',
-    password: 'mary1234',
-  };
-  const handleSubmit = () => {
-    dispatch(logIn(credentials));
-  };
-
   return (
     <View>
       <Text style={{ color: palette.whiteColor }}>HomeScreen</Text>
-      <Button title="LogIn" onPress={handleSubmit} />
     </View>
   );
 };

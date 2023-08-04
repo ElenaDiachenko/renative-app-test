@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { UserType } from '../../types';
-import { logIn } from './operations';
+import { checkStatus, logIn, logOut, register } from './operations';
 
 export interface IAuthState {
   user: UserType | null;
@@ -18,9 +18,19 @@ export const authSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) =>
-    builder.addCase(logIn.fulfilled, (state, { payload }) => {
-      state.user = payload;
-    }),
+    builder
+      .addCase(logIn.fulfilled, (state, { payload }) => {
+        state.user = payload;
+      })
+      .addCase(checkStatus.fulfilled, (state, { payload }) => {
+        state.user = payload;
+      })
+      .addCase(register.fulfilled, (state, { payload }) => {
+        state.user = payload;
+      })
+      .addCase(logOut.fulfilled, (state) => {
+        state.user = null;
+      }),
 });
 
 export const authReducer = authSlice.reducer;
