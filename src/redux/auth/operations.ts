@@ -15,6 +15,7 @@ export const checkStatus = createAsyncThunk<UserType | null>(
               token,
             };
             unsubscribe();
+            console.log(currentUser, 'ciheck');
             resolve(currentUser);
           } else {
             resolve(null);
@@ -51,11 +52,11 @@ export const register = createAsyncThunk(
       };
 
       return user;
-    } catch (err) {
+    } catch (err: any) {
       if (err instanceof Error) {
         return rejectWithValue(err);
       } else {
-        console.log('Unexpected error', err);
+        console.log('Unexpected error' + err);
       }
     }
   },
@@ -75,11 +76,11 @@ export const logIn = createAsyncThunk(
       };
 
       return user;
-    } catch (err) {
+    } catch (err: any) {
       if (err instanceof Error) {
         return rejectWithValue(err);
       } else {
-        console.log('Unexpected error', err);
+        console.log('Unexpected error' + err);
       }
     }
   },
@@ -91,11 +92,11 @@ export const logOut = createAsyncThunk(
     console.log('logOut');
     try {
       await auth().signOut();
-    } catch (err) {
+    } catch (err: any) {
       if (err instanceof Error) {
         return rejectWithValue(err);
       } else {
-        console.log('Unexpected error', err);
+        console.log('Unexpected error' + err);
       }
     }
   },

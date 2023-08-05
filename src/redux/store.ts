@@ -13,9 +13,11 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { authReducer } from './auth/slice';
+import { filterReducer } from './filter/slice';
 
 const rootReducer = combineReducers({
   auth: authReducer,
+  movie: filterReducer,
 });
 
 const persistConfig = {
