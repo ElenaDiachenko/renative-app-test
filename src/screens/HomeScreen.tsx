@@ -2,15 +2,15 @@ import { Button, StyleSheet, Text, View } from 'react-native';
 import React, { useEffect } from 'react';
 import { palette } from '../styles';
 import { useAppDispatch } from '../redux/hooks';
-
-import { getSerializedSearchParameters } from '../utils';
-import { useAuth } from '../hooks';
+import { MovieGallery } from '../components';
+import { movieRequests } from '../API';
+import { fetchMovies } from '../API/movieRequests';
+import { useMovieQuery } from '../hooks';
 
 type Props = {};
 
 const HomeScreen = (props: Props) => {
-  // const dispatch = useAppDispatch();
-
+  console.log(movieRequests);
   // const searchParameters = {
   //   page: 1,
   //   limit: 10,
@@ -20,9 +20,8 @@ const HomeScreen = (props: Props) => {
   // };
 
   return (
-    <View>
-      <Text style={{ color: palette.whiteColor }}>HomeScreen</Text>
-    </View>
+    // <View></View>
+    <MovieGallery movieHandler={useMovieQuery} fetchData={fetchMovies} />
   );
 };
 

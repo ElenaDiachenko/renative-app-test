@@ -88,7 +88,7 @@ export const logIn = createAsyncThunk(
 
 export const logOut = createAsyncThunk(
   'auth/logOut',
-  async ({ rejectWithValue }: any) => {
+  async (_, { rejectWithValue }: any) => {
     console.log('logOut');
     try {
       await auth().signOut();

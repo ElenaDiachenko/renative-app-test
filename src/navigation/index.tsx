@@ -13,6 +13,8 @@ import { useAuth } from '../hooks';
 import { DrawerMenu } from '../components';
 import { useAppDispatch } from '../redux/hooks';
 import { checkStatus } from '../redux/auth/operations';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { headerHeight } from '../utils/constants';
 
 const Drawer = createDrawerNavigator<DrawerParamList>();
 const MainStack = createStackNavigator<HomeStackNavigatorParamList>();
@@ -34,6 +36,10 @@ const DrawerNav = () => {
       drawerContent={(props) => <DrawerMenu {...props} />}
       screenOptions={{
         overlayColor: 'transparent',
+        drawerType: 'front',
+        headerStyle: {
+          height: headerHeight,
+        },
       }}
     >
       <Drawer.Screen name="Home" component={Screens.HomeScreen} />

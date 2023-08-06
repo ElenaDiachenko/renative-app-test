@@ -17,7 +17,7 @@ import { filterReducer } from './filter/slice';
 
 const rootReducer = combineReducers({
   auth: authReducer,
-  movie: filterReducer,
+  filter: filterReducer,
 });
 
 const persistConfig = {
