@@ -6,9 +6,9 @@ import { UseLibraryQueryType } from '../hooks/useLibraryQuery';
 import MovieCard from './MovieCard';
 import { Movie } from '../types';
 // import ActionSection from './ActionSection';
-import { commonStyles, palette } from '../styles';
+import { commonStyles } from '../styles';
 import { useOrientation } from '../hooks';
-import { Pagination } from './ui';
+import { Loader, Pagination } from './ui';
 import { isPlatformAndroidtv } from '@rnv/renative';
 
 type GalleryPropType = {
@@ -21,7 +21,7 @@ const renderMovieCard = ({ item, index }: { item: Movie; index: number }) => (
 );
 
 const MovieGallery: FC<GalleryPropType> = ({ movieHandler, fetchData }) => {
-  const { isPortrait, width } = useOrientation();
+  const { isPortrait, width, height } = useOrientation();
   const [numCols, setCols] = useState(0);
   const { data, isLoading, isError, changeSearchParams } =
     movieHandler(fetchData);
@@ -40,14 +40,19 @@ const MovieGallery: FC<GalleryPropType> = ({ movieHandler, fetchData }) => {
     setCols(numColumnsLandscape);
   }, [width, isPortrait]);
 
-  console.log(width, numCols);
   const paginate = (page: number) => {
     changeSearchParams({ page });
   };
 
   return (
-    <View style={styles.gallery}>
-      <View>
+    <View style={[commonStyles.container, { paddingTop: 10 }]}>
+      {isLoading && <Loader size={isPortrait ? width / 6 : height / 6} full />}
+      {isError && (
+        <View style={styles.innerContainer}>
+          <Text>An error has occurred. Try again later.</Text>
+        </View>
+      )}
+      {!isLoading && movieData?.length && (
         <FlatList
           ListFooterComponent={
             currentPage && totalPages && totalPages > 1 ? (
@@ -75,13 +80,7 @@ const MovieGallery: FC<GalleryPropType> = ({ movieHandler, fetchData }) => {
             ) : null
           }
         />
-        {/* {isLoading && <Loader size={isPortrait ? width / 6 : height / 6} />} */}
-        {isError && (
-          <View style={styles.innerContainer}>
-            <Text>An error has occurred. Try again later.</Text>
-          </View>
-        )}
-      </View>
+      )}
     </View>
   );
 };
@@ -89,13 +88,6 @@ const MovieGallery: FC<GalleryPropType> = ({ movieHandler, fetchData }) => {
 export default MovieGallery;
 
 const styles = StyleSheet.create({
-  gallery: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: palette.mainBgColor,
-  },
-
   innerContainer: {
     alignSelf: 'center',
     marginTop: 10,

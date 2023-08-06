@@ -1,7 +1,8 @@
-import { TouchableOpacity, ViewStyle } from 'react-native';
+import { ViewStyle } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import React from 'react';
 import { palette } from '../styles';
+import { Focused } from './ui';
 
 type Props = {
   handlePress: () => void;
@@ -10,9 +11,9 @@ type Props = {
 
 const LogoutBtn = ({ handlePress, style }: Props) => {
   return (
-    <TouchableOpacity style={style} onPress={() => handlePress()}>
+    <Focused style={style} handlePress={() => handlePress()}>
       <Feather name="log-out" size={30} color={palette.footerTextColor} />
-    </TouchableOpacity>
+    </Focused>
   );
 };
 

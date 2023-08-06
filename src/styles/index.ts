@@ -1,4 +1,4 @@
-import {Dimensions, StyleSheet} from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 
 export const palette = {
   accentColor: '#5dadef',
@@ -18,12 +18,13 @@ export const commonStyles = StyleSheet.create({
     backgroundColor: palette.mainBgColor,
     flex: 1,
     justifyContent: 'center',
+    alignItems: 'center',
   },
 
   text: {
     color: palette.whiteColor,
   },
-  borderInit: {borderColor: 'transparent', borderWidth: 1, borderRadius: 5},
+  borderInit: { borderColor: 'transparent', borderWidth: 1, borderRadius: 5 },
 });
 
 export const ScreenWidth = Dimensions.get('screen').width;
