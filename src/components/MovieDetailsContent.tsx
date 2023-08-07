@@ -15,6 +15,7 @@ import { useOrientation } from '../hooks';
 import { Focused, Loader } from './ui';
 import { HomeStackNavigatorParamList } from '../navigation/types';
 import { Movie } from '../types';
+import { store } from '../redux/store';
 
 type MoviePropsType = {
   movieId: string;

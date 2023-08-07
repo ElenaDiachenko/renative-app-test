@@ -1,5 +1,5 @@
-import axios from 'axios';
-import {getTokenFromAsyncStorage} from '../utils';
+import axios, { AxiosRequestConfig } from 'axios'; // Import AxiosRequestConfig type
+import { getTokenFromAsyncStorage } from '../utils';
 
 const API_URL = 'http://10.0.2.2:4200/api';
 
@@ -10,10 +10,14 @@ const $api = axios.create({
   },
 });
 
-$api.interceptors.request.use(async config => {
+$api.interceptors.request.use(async (config: AxiosRequestConfig<any>) => {
   try {
     const token = await getTokenFromAsyncStorage();
-    config.headers.Authorization = `Bearer ${token}`;
+
+    config.headers = {
+      ...config.headers,
+      Authorization: `Bearer ${token}`,
+    };
   } catch (error) {
     console.log(error);
   }
