@@ -10,17 +10,29 @@ import { commonStyles } from '../styles';
 import { useOrientation } from '../hooks';
 import { Loader, Pagination } from './ui';
 import { isPlatformAndroidtv } from '@rnv/renative';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 type GalleryPropType = {
   movieHandler: UseMovieQueryType | UseLibraryQueryType;
   fetchData: movieRequests.FetchMoviesType | libraryRequests.FetchMoviesType;
+  prevRoute: string;
 };
 
-const renderMovieCard = ({ item, index }: { item: Movie; index: number }) => (
-  <MovieCard movie={item} index={index} />
-);
+const renderMovieCard = ({
+  item,
+  index,
+  prevRoute,
+}: {
+  item: Movie;
+  index: number;
+  prevRoute: string;
+}) => <MovieCard movie={item} index={index} prevRoute={prevRoute} />;
 
-const MovieGallery: FC<GalleryPropType> = ({ movieHandler, fetchData }) => {
+const MovieGallery: FC<GalleryPropType> = ({
+  movieHandler,
+  fetchData,
+  prevRoute,
+}) => {
   const { isPortrait, width, height } = useOrientation();
   const [numCols, setCols] = useState(0);
   const { data, isLoading, isError, changeSearchParams } =
@@ -69,7 +81,9 @@ const MovieGallery: FC<GalleryPropType> = ({ movieHandler, fetchData }) => {
           }
           key={numCols}
           data={movieData}
-          renderItem={({ item, index }) => renderMovieCard({ item, index })}
+          renderItem={({ item, index }) =>
+            renderMovieCard({ item, index, prevRoute })
+          }
           keyExtractor={(item) => item._id}
           numColumns={numCols}
           ListEmptyComponent={

@@ -1,8 +1,8 @@
 import { ViewStyle } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import React from 'react';
-import { palette } from '../styles';
-import { Focused } from './ui';
+import { palette } from '../../styles';
+import Focused from './Focused';
 
 type Props = {
   handlePress: () => void;

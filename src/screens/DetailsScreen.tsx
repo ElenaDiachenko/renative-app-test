@@ -1,24 +1,27 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
-// import { AppStackScreenProps } from '../navigation/types';
-// import { MovieDetailsContent, ScreenWrapper } from '../components';
+import { StyleSheet, View } from 'react-native';
+import { HomeStackScreenProps } from '../navigation/types';
+import { MovieDetailsContent } from '../components';
 import { palette } from '../styles';
 
-const DetailsScreen = () => {
-  // const route = useRoute<AppStackScreenProps<'Details'>['route']>();
-  // const navigation =
-  //   useNavigation<AppStackScreenProps<'Details'>['navigation']>();
-  // const { movieId } = route.params;
+const DetailsScreen = ({
+  navigation,
+  route,
+}: HomeStackScreenProps<'Details'>) => {
+  const { movieId, prevRoute } = route.params;
+  console.log(route, 'Route');
 
   return (
-    <View>
-      <Text style={{ color: palette.whiteColor }}>DetailsScreen</Text>
-    </View>
+    <View style={styles.container}>
+      {/* <ScreenWrapper style={styles.container}> */}
+      <MovieDetailsContent
+        movieId={movieId}
+        navigation={navigation}
+        prevRoute={prevRoute}
+      />
 
-    // <ScreenWrapper style={styles.container}>
-    //   <MovieDetailsContent movieId={movieId} navigation={navigation} />
-    // </ScreenWrapper>
+      {/* </ScreenWrapper> */}
+    </View>
   );
 };
 

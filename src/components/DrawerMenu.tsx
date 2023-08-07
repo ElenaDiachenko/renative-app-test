@@ -4,7 +4,6 @@ import { DrawerParamList, HomeDrawerScreenProps } from '../navigation/types';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useAppDispatch } from '../redux/hooks';
 import { logOut } from '../redux/auth/operations';
-import LogoutBtn from './LogoutBtn';
 
 import { palette } from '../styles';
 import {
@@ -13,7 +12,7 @@ import {
 } from '@react-navigation/drawer';
 import { useNavigation } from '@react-navigation/native';
 import { headerHeight } from '../utils/constants';
-import { Focused } from './ui';
+import { Focused, LogoutBtn } from './ui';
 
 export const screens = {
   Home: 'Home' as keyof DrawerParamList,

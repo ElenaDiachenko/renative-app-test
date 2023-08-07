@@ -17,9 +17,10 @@ import { Focused } from './ui';
 type MovieCardProps = {
   movie: Movie;
   index: number;
+  prevRoute: string;
 };
 
-const MovieCard: FC<MovieCardProps> = ({ movie, index }) => {
+const MovieCard: FC<MovieCardProps> = ({ movie, index, prevRoute }) => {
   const navigation = useNavigation();
   const { width, isPortrait } = useOrientation();
 
@@ -30,7 +31,9 @@ const MovieCard: FC<MovieCardProps> = ({ movie, index }) => {
       hasTVPreferredFocus={index === 0}
       style={{ ...styles.card, width: cardWidth }}
       focusedStyle={styles.cardFocused}
-      handlePress={() => navigation.navigate('Details', { movieId: movie._id })}
+      handlePress={() =>
+        navigation.navigate('Details', { movieId: movie._id, prevRoute })
+      }
     >
       <FastImage
         style={styles.cardImage}

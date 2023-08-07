@@ -1,4 +1,5 @@
 import type {
+  CompositeScreenProps,
   NavigatorScreenParams,
   RouteProp,
 } from '@react-navigation/native';
@@ -13,6 +14,7 @@ export type HomeStackNavigatorParamList = {
   Main: NavigatorScreenParams<DrawerParamList>;
   Details: {
     movieId: string;
+    prevRoute: string;
   };
   Video: {
     uri: string;
@@ -38,9 +40,6 @@ export type HomeDrawerScreenProps<T extends keyof DrawerParamList> =
     navigation: DrawerNavigationProp<DrawerParamList, keyof DrawerParamList>;
     route: RouteProp<DrawerParamList, T>;
   };
-
-// export type HomeDrawerScreenProps<T extends keyof DrawerParamList> =
-//   DrawerNavigationProp<DrawerParamList, T>;
 
 ////////////////
 
