@@ -10,7 +10,6 @@ import { commonStyles } from '../styles';
 import { useOrientation } from '../hooks';
 import { Loader, Pagination } from './ui';
 import { isPlatformAndroidtv } from '@rnv/renative';
-import { useNavigation, useRoute } from '@react-navigation/native';
 
 type GalleryPropType = {
   movieHandler: UseMovieQueryType | UseLibraryQueryType;
@@ -64,7 +63,7 @@ const MovieGallery: FC<GalleryPropType> = ({
           <Text>An error has occurred. Try again later.</Text>
         </View>
       )}
-      {!isLoading && movieData?.length && (
+      {!isLoading && movieData && (
         <FlatList
           ListFooterComponent={
             currentPage && totalPages && totalPages > 1 ? (

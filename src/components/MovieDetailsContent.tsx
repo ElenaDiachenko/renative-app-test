@@ -10,12 +10,11 @@ import { convertRating, convertTime, constants } from '../utils';
 import { fetchMovieById } from '../API/movieRequests';
 
 import { commonStyles, palette } from '../styles';
-import { useOrientation } from '../hooks';
+import { useMovie, useOrientation } from '../hooks';
 
 import { Focused, Loader } from './ui';
 import { HomeStackNavigatorParamList } from '../navigation/types';
 import { Movie } from '../types';
-import { store } from '../redux/store';
 
 type MoviePropsType = {
   movieId: string;
@@ -29,7 +28,7 @@ const MovieDetailsContent: FC<MoviePropsType> = ({
   prevRoute,
 }) => {
   const { isPortrait, width, height } = useOrientation();
-  const { navigate, getState, goBack } = navigation;
+  const { navigate, goBack } = navigation;
   const [movie, setMovie] = useState<Movie | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -50,8 +49,7 @@ const MovieDetailsContent: FC<MoviePropsType> = ({
     })();
   }, []);
 
-  //   const { toggleMovie } = useMovie({ isHomeScreen, goBack });
-  const toggleMovie = (movie: Movie) => {};
+  const { toggleMovie } = useMovie({ isHomeScreen, goBack });
 
   const posterBoxStyle = {
     width: isPortrait ? '100%' : undefined,

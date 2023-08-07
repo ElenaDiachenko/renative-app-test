@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react';
 import { FetchMoviesType } from '../API/libraryRequests';
 import { useAppSelector, useAppDispatch } from '../redux/hooks';
 import { MovieSlice, setSearchParameters } from '../redux/filter/slice';
-import { selectFilterMovie } from '../redux/filter/selectors';
+import { selectFilterlibrary } from '../redux/filter/selectors';
 import { MovieDataType } from '../types';
 
-export const useMovieQuery = (fetchData: FetchMoviesType) => {
-  const searchParameters = useAppSelector(selectFilterMovie);
+export const useLibraryQuery = (fetchData: FetchMoviesType) => {
+  const searchParameters = useAppSelector(selectFilterlibrary);
   const dispatch = useAppDispatch();
   const [data, setData] = useState<MovieDataType | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -41,4 +41,4 @@ export const useMovieQuery = (fetchData: FetchMoviesType) => {
   };
 };
 
-export type UseLibraryQueryType = typeof useMovieQuery;
+export type UseLibraryQueryType = typeof useLibraryQuery;

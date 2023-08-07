@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig } from 'axios'; // Import AxiosRequestConfig type
+import axios, { AxiosRequestConfig } from 'axios';
 import { getTokenFromAsyncStorage } from '../utils';
 
 const API_URL = 'http://10.0.2.2:4200/api';
