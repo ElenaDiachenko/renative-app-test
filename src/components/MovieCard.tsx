@@ -1,11 +1,5 @@
 import React, { useState, FC } from 'react';
-import {
-  View,
-  Text,
-  Image,
-  TouchableWithoutFeedback,
-  StyleSheet,
-} from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { constants, convertRating, calculateCardWidth } from '../utils';
 import { Movie } from '../types';
@@ -23,7 +17,7 @@ type MovieCardProps = {
 const MovieCard: FC<MovieCardProps> = ({ movie, index, prevRoute }) => {
   const navigation = useNavigation();
   const { width, isPortrait } = useOrientation();
-
+  // console.log(index, '  ----- ', movie, '!!!!!!!!movie');
   const cardWidth = calculateCardWidth(isPortrait, width);
 
   return (

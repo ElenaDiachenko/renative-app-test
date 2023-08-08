@@ -1,16 +1,16 @@
 import { useAuth } from './useAuth';
-import { useMovieQuery } from './useMovieQuery';
-import { useLibraryQuery } from './useLibraryQuery';
+import { useMovies } from './useMovies';
 import { useOrientation } from './useOrientation';
 import { usePagination, DOTS } from './usePagination';
-import { useMovie } from './useMovie';
+import { useToggleMovie } from './useToggleMovie';
+import { useLibraryState } from './useLibraryState';
 
 export {
   useAuth,
-  useMovieQuery,
-  useLibraryQuery,
+  useMovies,
   useOrientation,
   usePagination,
   DOTS,
-  useMovie,
+  useToggleMovie,
+  useLibraryState,
 };

@@ -12,17 +12,28 @@ import {
   REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { authReducer } from './auth/slice';
-import { filterReducer } from './filter/slice';
+import { authReducer, AuthState } from './auth/slice';
+import { filterReducer, FilterState } from './filter/slice';
+import { libraryReducer, LibraryState } from './library/slice';
+import { movieReducer, MoviesState } from './movies/slice';
 
+export type RootState = {
+  auth: AuthState;
+  filter: FilterState;
+  library: LibraryState;
+  movies: MoviesState;
+};
 const rootReducer = combineReducers({
   auth: authReducer,
   filter: filterReducer,
+  library: libraryReducer,
+  movies: movieReducer,
 });
 
 const persistConfig = {
   key: 'state',
   storage: AsyncStorage,
+  blacklist: ['library', 'movies'],
 };
 
 const persistedReduser = persistReducer<ReturnType<typeof rootReducer>>(
@@ -40,7 +51,6 @@ export const store = configureStore({
     }),
 });
 
-export type RootState = ReturnType<typeof rootReducer>;
 export type AppDispatch = typeof store.dispatch;
 
 export const persistor = persistStore(store);

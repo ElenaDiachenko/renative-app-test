@@ -9,15 +9,14 @@ const DetailsScreen = ({
   route,
 }: HomeStackScreenProps<'Details'>) => {
   const { movieId, prevRoute } = route.params;
-  console.log(route, 'Route');
 
   return (
     <View style={styles.container}>
       {/* <ScreenWrapper style={styles.container}> */}
       <MovieDetailsContent
-        movieId={movieId}
         navigation={navigation}
         prevRoute={prevRoute}
+        movieId={movieId}
       />
 
       {/* </ScreenWrapper> */}

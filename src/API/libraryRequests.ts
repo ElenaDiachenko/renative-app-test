@@ -17,26 +17,17 @@ export const fetchMovies = async (searchParams: LibrarySearchParamsType) => {
     queryParams += `&query=${encodeURIComponent(query)}`;
   }
 
-  try {
-    const response = await $api.get<MovieDataType>(`/library?${queryParams}`);
-
-    return response.data;
-  } catch (error: any) {
-    console.log('Error Response:', error?.response?.data);
-    console.log('Status Code:', error?.response?.status);
-    console.log('Headers:', error?.response?.headers);
-  }
+  const response = await $api.get<MovieDataType>(`/library?${queryParams}`);
+  return response.data;
 };
 
-export const addMovie = async (id: string) => {
+export const saveMovie = async (id: string) => {
   const { data } = await $api.post<Movie>(`/library/${id}`);
-
   return data;
 };
 
 export const deleteMovie = async (id: string) => {
   const { data } = await $api.delete<Movie>(`/library/${id}`);
-
   return data;
 };
 

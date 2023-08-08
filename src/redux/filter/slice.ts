@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-export type MovieSlice = {
+export type FiltersSlice = {
   searchParameters: {
     page: number;
     limit: number;
@@ -17,7 +17,7 @@ export type MovieSlice = {
   };
 };
 
-export const initialState: MovieSlice = {
+export const initialState: FiltersSlice = {
   searchParameters: {
     page: 1,
     limit: 12,
@@ -40,7 +40,7 @@ const filterSlice = createSlice({
   reducers: {
     setSearchParameters: (
       state,
-      action: PayloadAction<Partial<MovieSlice['searchParameters']>>,
+      action: PayloadAction<Partial<FiltersSlice['searchParameters']>>,
     ) => {
       state.searchParameters = {
         ...state.searchParameters,
@@ -49,7 +49,7 @@ const filterSlice = createSlice({
     },
     setLibrarySearchParameters: (
       state,
-      action: PayloadAction<Partial<MovieSlice['librarySearchParameters']>>,
+      action: PayloadAction<Partial<FiltersSlice['librarySearchParameters']>>,
     ) => {
       state.librarySearchParameters = {
         ...state.librarySearchParameters,
@@ -63,3 +63,4 @@ export const { setSearchParameters, setLibrarySearchParameters } =
   filterSlice.actions;
 
 export const filterReducer = filterSlice.reducer;
+export type FilterState = ReturnType<typeof filterReducer>;

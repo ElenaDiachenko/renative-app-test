@@ -7,14 +7,14 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import FastImage from 'react-native-fast-image';
 
 import { convertRating, convertTime, constants } from '../utils';
-import { fetchMovieById } from '../API/movieRequests';
-
 import { commonStyles, palette } from '../styles';
-import { useMovie, useOrientation } from '../hooks';
+import { useToggleMovie, useOrientation } from '../hooks';
 
 import { Focused, Loader } from './ui';
 import { HomeStackNavigatorParamList } from '../navigation/types';
-import { Movie } from '../types';
+
+import { useAppSelector } from '../redux/hooks';
+import { selectMovieById } from '../redux/movies/selectors';
 
 type MoviePropsType = {
   movieId: string;
@@ -29,27 +29,10 @@ const MovieDetailsContent: FC<MoviePropsType> = ({
 }) => {
   const { isPortrait, width, height } = useOrientation();
   const { navigate, goBack } = navigation;
-  const [movie, setMovie] = useState<Movie | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
   const isHomeScreen = prevRoute === 'Home';
+  const movie = useAppSelector(selectMovieById(movieId, isHomeScreen));
 
-  useEffect(() => {
-    (async () => {
-      setIsLoading(true);
-      try {
-        const data = await fetchMovieById(movieId);
-        if (data) setMovie(data);
-        setIsLoading(false);
-      } catch (error) {
-        setIsError(true);
-        setIsLoading(false);
-        console.log(error);
-      }
-    })();
-  }, []);
-
-  const { toggleMovie } = useMovie({ isHomeScreen, goBack });
+  const { toggleMovie } = useToggleMovie({ isHomeScreen, goBack });
 
   const posterBoxStyle = {
     width: isPortrait ? '100%' : undefined,
@@ -65,9 +48,6 @@ const MovieDetailsContent: FC<MoviePropsType> = ({
 
   return (
     <>
-      {isLoading ? (
-        <Loader size={isPortrait ? width / 6 : height / 6} full />
-      ) : null}
       {movie && (
         <ScrollView style={isPortrait ? styles.container : styles.containerRow}>
           <View style={[styles.posterBox, posterBoxStyle]}>

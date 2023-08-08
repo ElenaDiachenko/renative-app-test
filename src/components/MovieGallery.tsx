@@ -1,8 +1,6 @@
 import React, { FC, useState, useEffect } from 'react';
 import { FlatList, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { UseMovieQueryType } from '../hooks/useMovieQuery';
-import { movieRequests, libraryRequests } from '../API';
-import { UseLibraryQueryType } from '../hooks/useLibraryQuery';
+
 import MovieCard from './MovieCard';
 import { Movie } from '../types';
 // import ActionSection from './ActionSection';
@@ -10,10 +8,8 @@ import { commonStyles } from '../styles';
 import { useOrientation } from '../hooks';
 import { Loader, Pagination } from './ui';
 import { isPlatformAndroidtv } from '@rnv/renative';
-
+import { useLibraryState } from '../hooks';
 type GalleryPropType = {
-  movieHandler: UseMovieQueryType | UseLibraryQueryType;
-  fetchData: movieRequests.FetchMoviesType | libraryRequests.FetchMoviesType;
   prevRoute: string;
 };
 
@@ -27,15 +23,11 @@ const renderMovieCard = ({
   prevRoute: string;
 }) => <MovieCard movie={item} index={index} prevRoute={prevRoute} />;
 
-const MovieGallery: FC<GalleryPropType> = ({
-  movieHandler,
-  fetchData,
-  prevRoute,
-}) => {
+const MovieGallery: FC<GalleryPropType> = ({ prevRoute }) => {
   const { isPortrait, width, height } = useOrientation();
   const [numCols, setCols] = useState(0);
   const { data, isLoading, isError, changeSearchParams } =
-    movieHandler(fetchData);
+    useLibraryState(prevRoute);
 
   const { data: movieData, currentPage, totalPages } = data || {};
 

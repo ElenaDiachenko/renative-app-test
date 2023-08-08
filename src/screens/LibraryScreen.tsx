@@ -1,21 +1,13 @@
 import { StyleSheet } from 'react-native';
 import React from 'react';
-
 import { MovieGallery } from '../components';
-
-import { fetchMovies } from '../API/libraryRequests';
-import { useLibraryQuery } from '../hooks';
+import { useMovies } from '../hooks';
 
 type Props = {};
-
+const CURRENT_SCREEN = 'Library';
 const LibraryScreen = (props: Props) => {
-  return (
-    <MovieGallery
-      movieHandler={useLibraryQuery}
-      fetchData={fetchMovies}
-      prevRoute={'Library'}
-    />
-  );
+  useMovies(CURRENT_SCREEN);
+  return <MovieGallery prevRoute={CURRENT_SCREEN} />;
 };
 
 export default LibraryScreen;

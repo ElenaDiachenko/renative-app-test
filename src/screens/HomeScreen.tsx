@@ -4,18 +4,14 @@ import React from 'react';
 import { MovieGallery } from '../components';
 
 import { fetchMovies } from '../API/movieRequests';
-import { useMovieQuery } from '../hooks';
+import { useMovies } from '../hooks';
 
 type Props = {};
+const CURRENT_SCREEN = 'Home';
 
 const HomeScreen = (props: Props) => {
-  return (
-    <MovieGallery
-      movieHandler={useMovieQuery}
-      fetchData={fetchMovies}
-      prevRoute={'Home'}
-    />
-  );
+  useMovies(CURRENT_SCREEN);
+  return <MovieGallery prevRoute={CURRENT_SCREEN} />;
 };
 
 export default HomeScreen;
