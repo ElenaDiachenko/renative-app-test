@@ -1,15 +1,9 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-// import { RegisterForm } from '../components';
-import { palette } from '../styles';
+
+import { RegisterForm } from '../components';
 
 const RegisterScreen = () => {
-  // return <RegisterForm />;
-  return (
-    <View>
-      <Text style={{ color: palette.whiteColor }}>Login screen</Text>
-    </View>
-  );
+  return <RegisterForm />;
 };
 
 export default RegisterScreen;

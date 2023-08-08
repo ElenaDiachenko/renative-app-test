@@ -22,7 +22,11 @@ const AuthStack = createStackNavigator<AuthStackParamList>();
 
 const AuthNav = () => {
   return (
-    <AuthStack.Navigator>
+    <AuthStack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
       <AuthStack.Screen name="Login" component={Screens.LoginScreen} />
       <AuthStack.Screen name="Register" component={Screens.RegisterScreen} />
     </AuthStack.Navigator>
