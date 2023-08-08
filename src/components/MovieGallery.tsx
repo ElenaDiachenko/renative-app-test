@@ -10,10 +10,8 @@ import { commonStyles } from '../styles';
 import { useOrientation } from '../hooks';
 import { Loader, Pagination } from './ui';
 import { isPlatformAndroidtv } from '@rnv/renative';
-
+import { useLibraryState } from '../hooks';
 type GalleryPropType = {
-  movieHandler: UseMovieQueryType | UseLibraryQueryType;
-  fetchData: movieRequests.FetchMoviesType | libraryRequests.FetchMoviesType;
   prevRoute: string;
 };
 
@@ -27,18 +25,14 @@ const renderMovieCard = ({
   prevRoute: string;
 }) => <MovieCard movie={item} index={index} prevRoute={prevRoute} />;
 
-const MovieGallery: FC<GalleryPropType> = ({
-  movieHandler,
-  fetchData,
-  prevRoute,
-}) => {
+const MovieGallery: FC<GalleryPropType> = ({ prevRoute }) => {
   const { isPortrait, width, height } = useOrientation();
   const [numCols, setCols] = useState(0);
   const { data, isLoading, isError, changeSearchParams } =
-    movieHandler(fetchData);
+    useLibraryState(prevRoute);
 
   const { data: movieData, currentPage, totalPages } = data || {};
-
+  console.log();
   useEffect(() => {
     if (isPlatformAndroidtv) {
       return setCols(5);
@@ -52,6 +46,7 @@ const MovieGallery: FC<GalleryPropType> = ({
   }, [width, isPortrait]);
 
   const paginate = (page: number) => {
+    console.log(page, 'PAGe');
     changeSearchParams({ page });
   };
 

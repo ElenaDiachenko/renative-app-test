@@ -1,11 +1,5 @@
 import React, { useState, FC } from 'react';
-import {
-  View,
-  Text,
-  Image,
-  TouchableWithoutFeedback,
-  StyleSheet,
-} from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { constants, convertRating, calculateCardWidth } from '../utils';
 import { Movie } from '../types';

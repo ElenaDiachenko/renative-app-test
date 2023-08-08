@@ -1,44 +1,28 @@
 import { useState, useEffect } from 'react';
 import { FetchMoviesType } from '../API/libraryRequests';
 import { useAppSelector, useAppDispatch } from '../redux/hooks';
-import { MovieSlice, setSearchParameters } from '../redux/filter/slice';
-import { selectFilterlibrary } from '../redux/filter/selectors';
+import { FiltersSlice, setSearchParameters } from '../redux/filter/slice';
+import {
+  selectFilterlibrary,
+  selectFilterMovie,
+} from '../redux/filter/selectors';
 import { MovieDataType } from '../types';
+import { fetchAll as fetchLibrary } from '../redux/library/operations';
+import { fetchAll as fetchMovies } from '../redux/movies/operations';
 
-export const useLibraryQuery = (fetchData: FetchMoviesType) => {
-  const searchParameters = useAppSelector(selectFilterlibrary);
+export const useLibraryQuery = (currentScreen: string) => {
+  const isHomeScreen = currentScreen === 'Home';
+  const selector = isHomeScreen ? selectFilterMovie : selectFilterlibrary;
+  const searchParameters = useAppSelector(selector);
   const dispatch = useAppDispatch();
-  const [data, setData] = useState<MovieDataType | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
-    (async () => {
-      setIsLoading(true);
-      try {
-        const result = await fetchData(searchParameters);
-        if (result) setData(result);
-      } catch (error) {
-        console.log(error);
-        setIsError(true);
-      } finally {
-        setIsLoading(false);
-      }
-    })();
-  }, [searchParameters]);
-
-  const changeSearchParams = (
-    params: Partial<MovieSlice['librarySearchParameters']>,
-  ) => {
-    dispatch(setSearchParameters(params));
-  };
-
-  return {
-    data,
-    isLoading,
-    isError,
-    changeSearchParams,
-  };
+    dispatch(
+      isHomeScreen
+        ? fetchMovies(searchParameters)
+        : fetchLibrary(searchParameters),
+    );
+  }, [currentScreen, searchParameters]);
 };
 
 export type UseLibraryQueryType = typeof useLibraryQuery;

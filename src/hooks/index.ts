@@ -3,7 +3,8 @@ import { useMovieQuery } from './useMovieQuery';
 import { useLibraryQuery } from './useLibraryQuery';
 import { useOrientation } from './useOrientation';
 import { usePagination, DOTS } from './usePagination';
-import { useMovie } from './useMovie';
+import { useToggleMovie } from './useToggleMovie';
+import { useLibraryState } from './useLibraryState';
 
 export {
   useAuth,
@@ -12,5 +13,6 @@ export {
   useOrientation,
   usePagination,
   DOTS,
-  useMovie,
+  useToggleMovie,
+  useLibraryState,
 };

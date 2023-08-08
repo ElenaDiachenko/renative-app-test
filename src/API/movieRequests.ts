@@ -1,7 +1,7 @@
 import { MovieDataType, Movie } from '../types';
 import $api from './instance';
 
-type SearchParamsType = {
+export type SearchParamsType = {
   page: number;
   limit: number;
   query: string;

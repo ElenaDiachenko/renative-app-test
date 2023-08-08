@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { FetchMoviesType } from '../API/movieRequests';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { selectFilterMovie } from '../redux/filter/selectors';
-import { MovieSlice, setSearchParameters } from '../redux/filter/slice';
+import { FiltersSlice, setSearchParameters } from '../redux/filter/slice';
 import { MovieDataType } from '../types';
 
 export const useMovieQuery = (fetchData: FetchMoviesType) => {
@@ -28,7 +28,7 @@ export const useMovieQuery = (fetchData: FetchMoviesType) => {
   }, [searchParameters]);
 
   const changeSearchParams = (
-    params: Partial<MovieSlice['searchParameters']>,
+    params: Partial<FiltersSlice['searchParameters']>,
   ) => {
     dispatch(setSearchParameters(params));
   };
