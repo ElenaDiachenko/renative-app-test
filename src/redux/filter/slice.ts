@@ -56,11 +56,18 @@ const filterSlice = createSlice({
         ...action.payload,
       };
     },
+    resetFilterState: (state) => {
+      state.searchParameters = initialState.searchParameters;
+      state.librarySearchParameters = initialState.librarySearchParameters;
+    },
   },
 });
 
-export const { setSearchParameters, setLibrarySearchParameters } =
-  filterSlice.actions;
+export const {
+  setSearchParameters,
+  setLibrarySearchParameters,
+  resetFilterState,
+} = filterSlice.actions;
 
 export const filterReducer = filterSlice.reducer;
 export type FilterState = ReturnType<typeof filterReducer>;

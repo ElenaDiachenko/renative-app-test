@@ -34,7 +34,11 @@ const rejectedActionTypes = [
 export const librarySlice = createSlice({
   name: 'library',
   initialState,
-  reducers: {},
+  reducers: {
+    resetLibraryState: () => {
+      return initialState;
+    },
+  },
   extraReducers: (builder) =>
     builder
       .addCase(fetchAll.fulfilled, (state, { payload }) => {
@@ -54,6 +58,8 @@ export const librarySlice = createSlice({
         },
       ),
 });
+
+export const { resetLibraryState } = librarySlice.actions;
 
 export const libraryReducer = librarySlice.reducer;
 

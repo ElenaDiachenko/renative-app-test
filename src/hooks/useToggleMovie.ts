@@ -1,5 +1,3 @@
-import { Alert } from 'react-native';
-
 import { Movie } from '../types';
 import { useAppDispatch } from '../redux/hooks';
 import {

@@ -1,11 +1,12 @@
-import React, { useState, FC } from 'react';
+import React, { FC } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import FastImage from 'react-native-fast-image';
+
 import { constants, convertRating, calculateCardWidth } from '../utils';
 import { Movie } from '../types';
 import { palette } from '../styles';
 import { useOrientation } from '../hooks';
-import { useNavigation } from '@react-navigation/native';
 import { Focused } from './ui';
 
 type MovieCardProps = {
@@ -17,7 +18,7 @@ type MovieCardProps = {
 const MovieCard: FC<MovieCardProps> = ({ movie, index, prevRoute }) => {
   const navigation = useNavigation();
   const { width, isPortrait } = useOrientation();
-  // console.log(index, '  ----- ', movie, '!!!!!!!!movie');
+
   const cardWidth = calculateCardWidth(isPortrait, width);
 
   return (

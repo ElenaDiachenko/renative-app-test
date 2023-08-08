@@ -22,15 +22,8 @@ export const fetchMovies = async (searchParams: SearchParamsType) => {
     )}`;
   }
 
-  try {
-    const response = await $api.get<MovieDataType>(`/movies?${queryParams}`);
-
-    return response.data;
-  } catch (error: any) {
-    console.log('Error Response:', error?.response?.data);
-    console.log('Status Code:', error?.response?.status);
-    console.log('Headers:', error?.response?.headers);
-  }
+  const response = await $api.get<MovieDataType>(`/movies?${queryParams}`);
+  return response.data;
 };
 
 export const fetchMovieById = async (id: string) => {

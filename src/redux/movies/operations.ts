@@ -1,10 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import {
-  SearchParamsType,
-  fetchMovieById,
-  fetchMovies,
-} from '../../API/movieRequests';
-import { Movie, MovieDataType } from '../../types';
+import { SearchParamsType, fetchMovies } from '../../API/movieRequests';
+import { MovieDataType } from '../../types';
 
 export const fetchAll = createAsyncThunk<MovieDataType, SearchParamsType>(
   'movies/getAll',

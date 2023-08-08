@@ -1,6 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import auth from '@react-native-firebase/auth';
 import { UserType, SignupData, LoginData } from '../../types';
+import { resetLibraryState } from '../library/slice';
+import { resetMoviesState } from '../movies/slice';
+import { resetFilterState } from '../filter/slice';
 
 export const checkStatus = createAsyncThunk<UserType | null>(
   'auth/checkStatus',
@@ -88,10 +91,16 @@ export const logIn = createAsyncThunk(
 
 export const logOut = createAsyncThunk(
   'auth/logOut',
-  async (_, { rejectWithValue }: any) => {
+  async (_, { dispatch, rejectWithValue }: any) => {
     console.log('logOut');
     try {
       await auth().signOut();
+
+      dispatch(resetLibraryState());
+      dispatch(resetMoviesState());
+      dispatch(resetFilterState());
+
+      return null;
     } catch (err: any) {
       if (err instanceof Error) {
         return rejectWithValue(err);

@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { RootState } from '../store';
+import { Alert } from 'react-native';
 
+import { RootState } from '../store';
 import {
   LibrarySearchParamsType,
   fetchMovies,
@@ -8,7 +9,6 @@ import {
   deleteMovie,
 } from '../../API/libraryRequests';
 import { Movie, MovieDataType } from '../../types';
-import { Alert } from 'react-native';
 
 export const fetchAll = createAsyncThunk<
   MovieDataType,

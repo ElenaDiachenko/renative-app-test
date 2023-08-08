@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC } from 'react';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import Octicons from 'react-native-vector-icons/Octicons';
 import LinearGradient from 'react-native-linear-gradient';
@@ -10,7 +10,7 @@ import { convertRating, convertTime, constants } from '../utils';
 import { commonStyles, palette } from '../styles';
 import { useToggleMovie, useOrientation } from '../hooks';
 
-import { Focused, Loader } from './ui';
+import { Focused } from './ui';
 import { HomeStackNavigatorParamList } from '../navigation/types';
 
 import { useAppSelector } from '../redux/hooks';
@@ -27,7 +27,7 @@ const MovieDetailsContent: FC<MoviePropsType> = ({
   navigation,
   prevRoute,
 }) => {
-  const { isPortrait, width, height } = useOrientation();
+  const { isPortrait, height } = useOrientation();
   const { navigate, goBack } = navigation;
   const isHomeScreen = prevRoute === 'Home';
   const movie = useAppSelector(selectMovieById(movieId, isHomeScreen));

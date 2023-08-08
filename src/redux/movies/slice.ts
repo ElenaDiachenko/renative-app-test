@@ -23,7 +23,11 @@ const rejectedActionTypes = [fetchAll.rejected];
 export const movieSlice = createSlice({
   name: 'movies',
   initialState,
-  reducers: {},
+  reducers: {
+    resetMoviesState: () => {
+      return initialState;
+    },
+  },
   extraReducers: (builder) =>
     builder
       .addCase(fetchAll.fulfilled, (state, { payload }) => {
@@ -43,6 +47,8 @@ export const movieSlice = createSlice({
         },
       ),
 });
+
+export const { resetMoviesState } = movieSlice.actions;
 
 export const movieReducer = movieSlice.reducer;
 export type MoviesState = ReturnType<typeof movieReducer>;

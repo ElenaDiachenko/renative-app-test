@@ -40,18 +40,7 @@ export const authSlice = createSlice({
   reducers: {},
   extraReducers: (builder) =>
     builder
-      // .addCase(logIn.fulfilled, (state, { payload }) => {
-      //   state.user = payload;
-      // })
-      // .addCase(checkStatus.fulfilled, (state, { payload }) => {
-      //   state.user = payload;
-      // })
-      // .addCase(register.fulfilled, (state, { payload }) => {
-      //   state.user = payload;
-      // })
-      // .addCase(logOut.fulfilled, (state) => {
-      //   state.user = null;
-      // })
+
       .addMatcher(
         isAnyOf(...fulfilledActionTypes),
         (state, action: PayloadAction<UserType | null>) => {
