@@ -7,32 +7,30 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import FastImage from 'react-native-fast-image';
 
 import { convertRating, convertTime, constants } from '../utils';
-import { fetchMovieById } from '../API/movieRequests';
-
 import { commonStyles, palette } from '../styles';
 import { useToggleMovie, useOrientation } from '../hooks';
 
 import { Focused, Loader } from './ui';
 import { HomeStackNavigatorParamList } from '../navigation/types';
-import { Movie } from '../types';
-import { useAppDispatch, useAppSelector } from '../redux/hooks';
-import { selectMovies } from '../redux/movies/selectors';
+
+import { useAppSelector } from '../redux/hooks';
+import { selectMovieById } from '../redux/movies/selectors';
 
 type MoviePropsType = {
-  // movieId: string;
+  movieId: string;
   prevRoute: string;
   navigation: StackNavigationProp<HomeStackNavigatorParamList, 'Details'>;
 };
 
 const MovieDetailsContent: FC<MoviePropsType> = ({
-  // movieId,
+  movieId,
   navigation,
   prevRoute,
 }) => {
   const { isPortrait, width, height } = useOrientation();
   const { navigate, goBack } = navigation;
   const isHomeScreen = prevRoute === 'Home';
-  const { byId: movie, isLoading, isError } = useAppSelector(selectMovies);
+  const movie = useAppSelector(selectMovieById(movieId, isHomeScreen));
 
   const { toggleMovie } = useToggleMovie({ isHomeScreen, goBack });
 
@@ -50,9 +48,6 @@ const MovieDetailsContent: FC<MoviePropsType> = ({
 
   return (
     <>
-      {isLoading ? (
-        <Loader size={isPortrait ? width / 6 : height / 6} full />
-      ) : null}
       {movie && (
         <ScrollView style={isPortrait ? styles.container : styles.containerRow}>
           <View style={[styles.posterBox, posterBoxStyle]}>

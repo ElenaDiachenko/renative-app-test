@@ -40,38 +40,6 @@ export const librarySlice = createSlice({
       .addCase(fetchAll.fulfilled, (state, { payload }) => {
         state.data = payload;
       })
-      .addCase(addMovie.fulfilled, (state, { payload }) => {
-        if (state.data) {
-          state.data.data.push(payload.movie);
-          state.data.currentPage = Math.ceil(
-            (state.data.data.length + 1) / payload.limit,
-          );
-          state.data.totalPages = Math.ceil(
-            state.data.data.length / payload.limit,
-          );
-        } else {
-          state.data = {
-            data: [payload.movie],
-            currentPage: 1,
-            totalPages: 1,
-          };
-        }
-      })
-      .addCase(removeMovie.fulfilled, (state, { payload }) => {
-        if (state.data) {
-          const idx = state.data.data.findIndex(
-            (item) => payload.movie._id === item._id,
-          );
-          state.data.data.splice(idx, 1);
-
-          state.data.currentPage = Math.ceil(
-            (state.data.data.length + 1) / payload.limit,
-          );
-          state.data.totalPages = Math.ceil(
-            state.data.data.length / payload.limit,
-          );
-        }
-      })
       .addMatcher(isAnyOf(...fulfilledActionTypes), (state) => {
         state.isLoading = false;
         state.isError = null;

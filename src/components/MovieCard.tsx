@@ -17,7 +17,7 @@ type MovieCardProps = {
 const MovieCard: FC<MovieCardProps> = ({ movie, index, prevRoute }) => {
   const navigation = useNavigation();
   const { width, isPortrait } = useOrientation();
-
+  // console.log(index, '  ----- ', movie, '!!!!!!!!movie');
   const cardWidth = calculateCardWidth(isPortrait, width);
 
   return (

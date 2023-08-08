@@ -1,16 +1,13 @@
-import { useState, useEffect } from 'react';
-import { FetchMoviesType } from '../API/libraryRequests';
+import { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../redux/hooks';
-import { FiltersSlice, setSearchParameters } from '../redux/filter/slice';
 import {
   selectFilterlibrary,
   selectFilterMovie,
 } from '../redux/filter/selectors';
-import { MovieDataType } from '../types';
 import { fetchAll as fetchLibrary } from '../redux/library/operations';
 import { fetchAll as fetchMovies } from '../redux/movies/operations';
 
-export const useLibraryQuery = (currentScreen: string) => {
+export const useMovies = (currentScreen: string) => {
   const isHomeScreen = currentScreen === 'Home';
   const selector = isHomeScreen ? selectFilterMovie : selectFilterlibrary;
   const searchParameters = useAppSelector(selector);
@@ -24,5 +21,3 @@ export const useLibraryQuery = (currentScreen: string) => {
     );
   }, [currentScreen, searchParameters]);
 };
-
-export type UseLibraryQueryType = typeof useLibraryQuery;

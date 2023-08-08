@@ -1,8 +1,6 @@
 import React, { FC, useState, useEffect } from 'react';
 import { FlatList, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { UseMovieQueryType } from '../hooks/useMovieQuery';
-import { movieRequests, libraryRequests } from '../API';
-import { UseLibraryQueryType } from '../hooks/useLibraryQuery';
+
 import MovieCard from './MovieCard';
 import { Movie } from '../types';
 // import ActionSection from './ActionSection';
@@ -32,7 +30,7 @@ const MovieGallery: FC<GalleryPropType> = ({ prevRoute }) => {
     useLibraryState(prevRoute);
 
   const { data: movieData, currentPage, totalPages } = data || {};
-  console.log();
+
   useEffect(() => {
     if (isPlatformAndroidtv) {
       return setCols(5);
@@ -46,7 +44,6 @@ const MovieGallery: FC<GalleryPropType> = ({ prevRoute }) => {
   }, [width, isPortrait]);
 
   const paginate = (page: number) => {
-    console.log(page, 'PAGe');
     changeSearchParams({ page });
   };
 

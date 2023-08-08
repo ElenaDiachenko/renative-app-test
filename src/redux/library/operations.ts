@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { RootState } from '../store';
+
 import {
   LibrarySearchParamsType,
   fetchMovies,
@@ -20,7 +21,7 @@ export const fetchAll = createAsyncThunk<
   ) => {
     try {
       const result = await fetchMovies(searchParameters);
-      console.log(result, 'library/getLibrary');
+
       return result;
     } catch (error: any) {
       Alert.alert('Something went wrong. Try again later');
@@ -30,19 +31,18 @@ export const fetchAll = createAsyncThunk<
 );
 
 export const addMovie = createAsyncThunk<
-  {
-    movie: Movie;
-    limit: number;
-  },
+  Movie,
   string,
   { state: RootState; rejectWithValue: any }
->('library/addMovie', async (id, { rejectWithValue, getState }) => {
+>('library/addMovie', async (id, { rejectWithValue, getState, dispatch }) => {
   try {
     const movie = await saveMovie(id);
     const { filter } = getState();
-    const limit = filter.librarySearchParameters.limit;
+
+    const librarySearchParameters = filter.librarySearchParameters;
+    await dispatch(fetchAll(librarySearchParameters));
     Alert.alert('The movie has been saved successfully');
-    return { movie, limit };
+    return movie;
   } catch (error: any) {
     if (error?.response?.status === 403) {
       Alert.alert(error?.response?.data?.message);
@@ -54,21 +54,24 @@ export const addMovie = createAsyncThunk<
 });
 
 export const removeMovie = createAsyncThunk<
-  {
-    movie: Movie;
-    limit: number;
-  },
+  Movie,
   string,
   { state: RootState; rejectWithValue: any }
->('library/removeMovie', async (id, { rejectWithValue, getState }) => {
-  try {
-    const movie = await deleteMovie(id);
-    const { filter } = getState();
-    const limit = filter.librarySearchParameters.limit;
-    Alert.alert('The movie has been deleted successfully');
-    return { movie, limit };
-  } catch (error: any) {
-    Alert.alert('Something went wrong. Try again later');
-    return rejectWithValue(error?.response?.data);
-  }
-});
+>(
+  'library/removeMovie',
+  async (id, { rejectWithValue, getState, dispatch }) => {
+    try {
+      const movie = await deleteMovie(id);
+      const { filter } = getState();
+
+      const librarySearchParameters = filter.librarySearchParameters;
+      await dispatch(fetchAll(librarySearchParameters));
+
+      Alert.alert('The movie has been deleted successfully');
+      return movie;
+    } catch (error: any) {
+      Alert.alert('Something went wrong. Try again later');
+      return rejectWithValue(error?.response?.data);
+    }
+  },
+);

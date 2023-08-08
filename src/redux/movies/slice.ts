@@ -1,26 +1,24 @@
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
-import { Movie, MovieDataType } from '../../types';
-import { fetchAll, fetchById } from './operations';
+import { MovieDataType } from '../../types';
+import { fetchAll } from './operations';
 
 export type IMovieState = {
   data: MovieDataType | null;
   isLoading: boolean;
   isError: Error | string | null;
-  byId: Movie | null;
 };
 
 const initialState: IMovieState = {
   data: null,
   isLoading: false,
   isError: null,
-  byId: null,
 };
 
-const fulfilledActionTypes = [fetchAll.fulfilled, fetchById.fulfilled];
+const fulfilledActionTypes = [fetchAll.fulfilled];
 
-const pendingActionTypes = [fetchAll.pending, fetchById.pending];
+const pendingActionTypes = [fetchAll.pending];
 
-const rejectedActionTypes = [fetchAll.rejected, fetchById.rejected];
+const rejectedActionTypes = [fetchAll.rejected];
 
 export const movieSlice = createSlice({
   name: 'movies',
@@ -30,12 +28,6 @@ export const movieSlice = createSlice({
     builder
       .addCase(fetchAll.fulfilled, (state, { payload }) => {
         state.data = payload;
-      })
-      .addCase(fetchById.pending, (state) => {
-        state.byId = null;
-      })
-      .addCase(fetchById.fulfilled, (state, { payload }) => {
-        state.byId = payload;
       })
       .addMatcher(isAnyOf(...fulfilledActionTypes), (state) => {
         state.isLoading = false;
