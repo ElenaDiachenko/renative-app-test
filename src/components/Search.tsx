@@ -7,7 +7,6 @@ import React, {
 } from 'react';
 import { StyleSheet, Keyboard, View } from 'react-native';
 import { CustomInput, SearchButton } from './ui';
-// import {Focused, Input} from './ui';
 
 type SearchPropsType = {
   handleChange: (newQuery: string) => void;
@@ -87,7 +86,7 @@ export default Search;
 
 const styles = StyleSheet.create({
   container: {
-    width: '80%',
+    width: '100%',
   },
   innerContainer: {
     position: 'relative',

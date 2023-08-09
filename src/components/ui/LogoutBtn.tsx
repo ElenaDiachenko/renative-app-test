@@ -12,7 +12,7 @@ type Props = {
 const LogoutBtn = ({ handlePress, style }: Props) => {
   return (
     <Focused style={style} handlePress={() => handlePress()}>
-      <Feather name="log-out" size={30} color={palette.footerTextColor} />
+      <Feather name="log-out" size={30} color={palette.whiteColor} />
     </Focused>
   );
 };

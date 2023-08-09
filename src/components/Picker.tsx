@@ -49,7 +49,7 @@ export default CustomPicker;
 const styles = StyleSheet.create({
   picker: {
     height: 30,
-    width: 130,
+    width: '90%',
     backgroundColor: 'transparent',
     color: palette.whiteColor,
   },

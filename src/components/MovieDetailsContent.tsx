@@ -1,5 +1,11 @@
 import React, { FC } from 'react';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import {
+  isFactorMobile,
+  isPlatformAndroidtv,
+  isPlatformAndroid,
+} from '@rnv/renative';
+
 import Octicons from 'react-native-vector-icons/Octicons';
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -42,120 +48,132 @@ const MovieDetailsContent: FC<MoviePropsType> = ({
 
   const infoContainerStyle = {
     width: isPortrait ? '100%' : '65%',
-    paddingHorizontal: isPortrait ? 16 : 0,
+    paddingHorizontal: isPortrait ? 16 : 16,
     paddingTop: 16,
   };
 
   return (
     <>
       {movie && (
-        <ScrollView style={isPortrait ? styles.container : styles.containerRow}>
-          <View style={[styles.posterBox, posterBoxStyle]}>
-            <FastImage
-              style={[
-                styles.infoImage,
-                { aspectRatio: constants.ASPECT_RATIO },
-              ]}
-              resizeMode="cover"
-              source={{ uri: movie.poster[2] }}
-            />
-            <LinearGradient
-              colors={['transparent', 'rgba(0, 0, 0, 0.6)']}
-              style={styles.gradient}
-            />
-          </View>
-          <View style={infoContainerStyle}>
-            <View style={styles.item}>
-              <Text style={styles.title}>{constants.fields.RATING}</Text>
+        <ScrollView>
+          <View
+            style={
+              isPortrait || !isPlatformAndroidtv
+                ? styles.container
+                : styles.containerRow
+            }
+          >
+            <View style={[styles.posterBox, posterBoxStyle]}>
+              <FastImage
+                style={[
+                  styles.infoImage,
+                  { aspectRatio: constants.ASPECT_RATIO },
+                ]}
+                resizeMode="cover"
+                source={{ uri: movie.poster[2] }}
+              />
+              <LinearGradient
+                colors={['transparent', 'rgba(0, 0, 0, 0.6)']}
+                style={styles.gradient}
+              />
+            </View>
+            <View style={infoContainerStyle}>
+              <View style={styles.item}>
+                <Text style={styles.title}>{constants.fields.RATING}</Text>
 
-              <View style={styles.contentColor}>
-                <Text style={commonStyles.text}>
-                  {convertRating(movie.rating || 0)}
+                <View style={styles.contentColor}>
+                  <Text style={commonStyles.text}>
+                    {convertRating(movie.rating || 0)}
+                  </Text>
+                </View>
+              </View>
+              <View style={styles.item}>
+                <Text style={styles.title}>
+                  {constants.fields.RELEASE_DATE}
+                </Text>
+                <Text style={styles.content}>{movie.releaseDate}</Text>
+              </View>
+              <View style={styles.item}>
+                <Text style={styles.title}>{constants.fields.DURATION}</Text>
+                <Text style={styles.content}>
+                  {convertTime(movie.duration)}
                 </Text>
               </View>
-            </View>
-            <View style={styles.item}>
-              <Text style={styles.title}>{constants.fields.RELEASE_DATE}</Text>
-              <Text style={styles.content}>{movie.releaseDate}</Text>
-            </View>
-            <View style={styles.item}>
-              <Text style={styles.title}>{constants.fields.DURATION}</Text>
-              <Text style={styles.content}>{convertTime(movie.duration)}</Text>
-            </View>
-            <View style={styles.item}>
-              <Text style={styles.title}>{constants.fields.TITLE}</Text>
-              <Text style={[styles.content, { textTransform: 'uppercase' }]}>
-                {movie.title}
-              </Text>
-            </View>
-            <View style={styles.item}>
-              <Text style={styles.title}>{constants.fields.GENRE}</Text>
-              <Text style={styles.content}>
-                {movie.genres.map((genre) => genre).join(' | ')}
-              </Text>
-            </View>
-            <View style={styles.container}>
-              <Text style={styles.title}>{constants.fields.CASTS}</Text>
-              <Text style={[styles.content, { lineHeight: 20 }]}>
-                {movie.casts?.slice(0, 10).join(', ')}
-              </Text>
-            </View>
-            <View style={{ ...styles.container, marginTop: 10 }}>
-              <Text style={styles.title}>{constants.fields.ABOUT}</Text>
-              <Text style={[styles.content, { lineHeight: 20 }]}>
-                {movie.desc}
-              </Text>
-            </View>
-            <View style={styles.buttonBox}>
-              <Focused
-                hasTVPreferredFocus
-                style={styles.button}
-                focusedStyle={styles.buttonFocused}
-                handlePress={() =>
-                  navigate('Video', {
-                    uri: movie.videos[0],
-                  })
-                }
-              >
-                <Octicons
-                  name="play"
-                  size={isPortrait ? 60 : 40}
-                  color={palette.whiteColor}
-                />
-                <Text style={[commonStyles.text, { marginLeft: 4 }]}>
-                  WATCH
+              <View style={styles.item}>
+                <Text style={styles.title}>{constants.fields.TITLE}</Text>
+                <Text style={[styles.content, { textTransform: 'uppercase' }]}>
+                  {movie.title}
                 </Text>
-              </Focused>
-              <Focused
-                style={styles.button}
-                focusedStyle={styles.buttonFocused}
-                handlePress={() => toggleMovie(movie)}
-              >
-                <View
-                  style={{
-                    ...(isPortrait
-                      ? styles.iconBoxCentered
-                      : styles.iconBoxCenteredLand),
-                  }}
+              </View>
+              <View style={styles.item}>
+                <Text style={styles.title}>{constants.fields.GENRE}</Text>
+                <Text style={styles.content}>
+                  {movie.genres.map((genre) => genre).join(' | ')}
+                </Text>
+              </View>
+              <View style={styles.container}>
+                <Text style={styles.title}>{constants.fields.CASTS}</Text>
+                <Text style={[styles.content, { lineHeight: 20 }]}>
+                  {movie.casts?.slice(0, 10).join(', ')}
+                </Text>
+              </View>
+              <View style={{ ...styles.container, marginTop: 10 }}>
+                <Text style={styles.title}>{constants.fields.ABOUT}</Text>
+                <Text style={[styles.content, { lineHeight: 20 }]}>
+                  {movie.desc}
+                </Text>
+              </View>
+              <View style={styles.buttonBox}>
+                <Focused
+                  hasTVPreferredFocus
+                  style={styles.button}
+                  focusedStyle={styles.buttonFocused}
+                  handlePress={() =>
+                    navigate('Video', {
+                      uri: movie.videos[0],
+                    })
+                  }
                 >
-                  {isHomeScreen ? (
-                    <Octicons
-                      name="heart"
-                      size={isPortrait ? 26 : 20}
-                      color={palette.whiteColor}
-                    />
-                  ) : (
-                    <Octicons
-                      name="heart-fill"
-                      size={isPortrait ? 26 : 20}
-                      color={palette.whiteColor}
-                    />
-                  )}
-                </View>
-                <Text style={[commonStyles.text, { marginLeft: 4 }]}>
-                  {isHomeScreen ? 'SAVE' : 'REMOVE'}
-                </Text>
-              </Focused>
+                  <Octicons
+                    name="play"
+                    size={isPortrait ? 60 : 40}
+                    color={palette.whiteColor}
+                  />
+                  <Text style={[commonStyles.text, { marginLeft: 4 }]}>
+                    WATCH
+                  </Text>
+                </Focused>
+                <Focused
+                  style={styles.button}
+                  focusedStyle={styles.buttonFocused}
+                  handlePress={() => toggleMovie(movie)}
+                >
+                  <View
+                    style={{
+                      ...(isPortrait || isPlatformAndroid
+                        ? styles.iconBoxCentered
+                        : styles.iconBoxCenteredLand),
+                    }}
+                  >
+                    {isHomeScreen ? (
+                      <Octicons
+                        name="heart"
+                        size={isPortrait ? 26 : 20}
+                        color={palette.whiteColor}
+                      />
+                    ) : (
+                      <Octicons
+                        name="heart-fill"
+                        size={isPortrait ? 26 : 20}
+                        color={palette.whiteColor}
+                      />
+                    )}
+                  </View>
+                  <Text style={[commonStyles.text, { marginLeft: 4 }]}>
+                    {isHomeScreen ? 'SAVE' : 'REMOVE'}
+                  </Text>
+                </Focused>
+              </View>
             </View>
           </View>
         </ScrollView>
@@ -173,8 +191,8 @@ const styles = StyleSheet.create({
   },
   containerRow: {
     flexDirection: 'row',
-
-    paddingLeft: 16,
+    alignItems: 'center',
+    // paddingLeft: 16,
     paddingVertical: 16,
   },
   posterBox: {
@@ -190,6 +208,7 @@ const styles = StyleSheet.create({
 
   infoImage: {
     width: '100%',
+    backgroundColor: 'red',
   },
   item: {
     flexDirection: 'row',

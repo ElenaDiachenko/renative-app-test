@@ -24,7 +24,6 @@ export const genreList = [
   { id: 'western', value: 'western' },
   { id: 'sport', value: 'sport' },
 ];
-
 export const sortList = [
   { label: 'Year', value: 'releaseDate' },
   { label: 'Rating', value: 'rating' },

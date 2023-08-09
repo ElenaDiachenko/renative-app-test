@@ -18,7 +18,7 @@ export const checkStatus = createAsyncThunk<UserType | null>(
               token,
             };
             unsubscribe();
-            console.log(currentUser, 'ciheck');
+            console.log(currentUser, 'check');
             resolve(currentUser);
           } else {
             resolve(null);

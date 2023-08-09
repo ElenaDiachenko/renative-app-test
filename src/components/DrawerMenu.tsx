@@ -1,18 +1,30 @@
-import React from 'react';
-import { Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import {
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+  View,
+  Button,
+} from 'react-native';
+import { DrawerActions } from '@react-navigation/native';
 import { DrawerParamList, HomeDrawerScreenProps } from '../navigation/types';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useAppDispatch } from '../redux/hooks';
 import { logOut } from '../redux/auth/operations';
-
+import GenreList from './GenreList';
 import { palette } from '../styles';
 import {
   DrawerContentComponentProps,
   useDrawerStatus,
 } from '@react-navigation/drawer';
 import { useNavigation } from '@react-navigation/native';
-import { headerHeight } from '../utils/constants';
+import { genreList, headerHeight } from '../utils/constants';
 import { Focused, LogoutBtn } from './ui';
+import { Picker } from '@react-native-picker/picker';
+import { MemoizedGenreItem } from './GenreItem';
+import Search from './Search';
+import ActionSection from './ActionSection';
 
 export const screens = {
   Home: 'Home' as keyof DrawerParamList,
@@ -29,7 +41,7 @@ const drawerRoutes = [
       <Icon
         name={focused ? 'home' : 'home-outline'}
         size={30}
-        color={focused ? palette.whiteColor : palette.footerTextColor}
+        color={palette.whiteColor}
       />
     ),
   },
@@ -41,36 +53,48 @@ const drawerRoutes = [
       <Icon
         name={focused ? 'heart' : 'heart-outline'}
         size={30}
-        color={focused ? palette.whiteColor : palette.footerTextColor}
+        color={palette.whiteColor}
       />
     ),
   },
-  {
-    name: screens.Filters,
-    focusedRoute: screens.Filters,
-    title: 'Filters',
-    icon: (focused: boolean) => (
-      <Icon
-        name={focused ? 'grid' : 'grid-outline'}
-        size={30}
-        color={focused ? palette.whiteColor : palette.footerTextColor}
-      />
-    ),
-  },
+  // {
+  //   name: screens.Filters,
+  //   focusedRoute: screens.Filters,
+  //   title: 'Filters',
+  //   icon: (focused: boolean) => (
+  //     <Icon
+  //       name={focused ? 'grid' : 'grid-outline'}
+  //       size={30}
+  //       color={focused ? palette.whiteColor : palette.footerTextColor}
+  //     />
+  //   ),
+  // },
 ];
 
-const DrawerMenu: React.FC<DrawerContentComponentProps> = ({ state }) => {
-  const navigation =
-    useNavigation<HomeDrawerScreenProps<'Home'>['navigation']>();
+const DrawerMenu: React.FC<DrawerContentComponentProps> = ({
+  state,
+  navigation,
+}) => {
+  // const navigation =
+  //   useNavigation<HomeDrawerScreenProps<'Home'>['navigation']>();
 
   const dispatch = useAppDispatch();
   const logoutUser = () => {
     dispatch(logOut());
   };
   const isDrawerOpen = useDrawerStatus() === 'open';
+  const closeDrawerMenu = () => {
+    navigation.dispatch(DrawerActions.closeDrawer());
+  };
 
   return (
-    <ScrollView style={{ flexDirection: 'column' }}>
+    <View
+      style={{
+        flexDirection: 'column',
+        flex: 1,
+        backgroundColor: palette.mainBgColor,
+      }}
+    >
       <LogoutBtn handlePress={logoutUser} style={styles.logoutBtn} />
       {drawerRoutes.map((route, index) => {
         const currentRoute = index === state.index;
@@ -97,7 +121,9 @@ const DrawerMenu: React.FC<DrawerContentComponentProps> = ({ state }) => {
           </Focused>
         );
       })}
-    </ScrollView>
+
+      <ActionSection closeDrawerMenu={closeDrawerMenu} />
+    </View>
   );
 };
 
@@ -105,12 +131,11 @@ export default DrawerMenu;
 
 const styles = StyleSheet.create({
   drawerLabel: {
-    fontSize: 16,
-    color: palette.footerTextColor,
+    fontSize: 18,
+    color: palette.whiteColor,
     marginLeft: 12,
   },
   drawerLabelFocused: {
-    color: palette.whiteColor,
     fontWeight: '600',
   },
   drawerItem: {
