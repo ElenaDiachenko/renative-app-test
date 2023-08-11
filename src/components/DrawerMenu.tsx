@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Text,
   StyleSheet,
@@ -18,13 +18,14 @@ import {
   DrawerContentComponentProps,
   useDrawerStatus,
 } from '@react-navigation/drawer';
-import { useNavigation } from '@react-navigation/native';
+
 import { genreList, headerHeight } from '../utils/constants';
 import { Focused, LogoutBtn } from './ui';
-import { Picker } from '@react-native-picker/picker';
-import { MemoizedGenreItem } from './GenreItem';
+
 import Search from './Search';
 import ActionSection from './ActionSection';
+import { useFocusState } from '../hooks';
+import FilterBtn from './FilterBtn';
 
 export const screens = {
   Home: 'Home' as keyof DrawerParamList,
@@ -37,48 +38,22 @@ const drawerRoutes = [
     name: screens.Home,
     focusedRoute: screens.Home,
     title: 'Home',
-    icon: (focused: boolean) => (
-      <Icon
-        name={focused ? 'home' : 'home-outline'}
-        size={30}
-        color={palette.whiteColor}
-      />
-    ),
+    icon: (focused: boolean) => (focused ? 'home' : 'home-outline'),
   },
   {
     name: screens.Library,
     focusedRoute: 'Library',
     title: 'Library',
-    icon: (focused: boolean) => (
-      <Icon
-        name={focused ? 'heart' : 'heart-outline'}
-        size={30}
-        color={palette.whiteColor}
-      />
-    ),
+    icon: (focused: boolean) => (focused ? 'heart' : 'heart-outline'),
   },
-  // {
-  //   name: screens.Filters,
-  //   focusedRoute: screens.Filters,
-  //   title: 'Filters',
-  //   icon: (focused: boolean) => (
-  //     <Icon
-  //       name={focused ? 'grid' : 'grid-outline'}
-  //       size={30}
-  //       color={focused ? palette.whiteColor : palette.footerTextColor}
-  //     />
-  //   ),
-  // },
 ];
 
 const DrawerMenu: React.FC<DrawerContentComponentProps> = ({
   state,
   navigation,
 }) => {
-  // const navigation =
-  //   useNavigation<HomeDrawerScreenProps<'Home'>['navigation']>();
-
   const dispatch = useAppDispatch();
+
   const logoutUser = () => {
     dispatch(logOut());
   };
@@ -86,7 +61,11 @@ const DrawerMenu: React.FC<DrawerContentComponentProps> = ({
   const closeDrawerMenu = () => {
     navigation.dispatch(DrawerActions.closeDrawer());
   };
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
+  const handleFilters = () => {
+    setIsFilterOpen((prev) => !prev);
+  };
   return (
     <View
       style={{
@@ -103,13 +82,16 @@ const DrawerMenu: React.FC<DrawerContentComponentProps> = ({
             key={route.name}
             hasTVPreferredFocus={currentRoute}
             handlePress={() => navigation.navigate(route.name)}
-            style={[
-              styles.drawerItem,
-              currentRoute ? styles.drawerItemFocused : null,
-            ]}
+            style={[styles.drawerItem]}
             focusable
+            focusedStyle={styles.drawerItemFocused}
           >
-            {route.icon(currentRoute)}
+            <Icon
+              name={route.icon(currentRoute)}
+              size={30}
+              color={palette.whiteColor}
+            />
+
             <Text
               style={[
                 styles.drawerLabel,
@@ -121,8 +103,18 @@ const DrawerMenu: React.FC<DrawerContentComponentProps> = ({
           </Focused>
         );
       })}
-
-      <ActionSection closeDrawerMenu={closeDrawerMenu} />
+      <FilterBtn
+        isFilterOpen={isFilterOpen}
+        setIsFilterOpen={setIsFilterOpen}
+        style={styles.filterBtn}
+        focusedStyle={styles.filterBtnFocused}
+      >
+        <Text style={[styles.filterLabel, styles.filterTitle]}>Filters</Text>
+      </FilterBtn>
+      <ActionSection
+        closeDrawerMenu={closeDrawerMenu}
+        setIsFilterOpen={setIsFilterOpen}
+      />
     </View>
   );
 };
@@ -150,8 +142,31 @@ const styles = StyleSheet.create({
   logoutBtn: {
     height: headerHeight,
     justifyContent: 'center',
-    paddingLeft: 12,
+    paddingLeft: 16,
     borderBottomWidth: 1,
     borderBottomColor: palette.footerTextColor,
+  },
+  filterLabel: {
+    color: palette.whiteColor,
+    fontSize: 16,
+  },
+  filterLabelFocused: {
+    color: palette.accentColor,
+    fontSize: 16,
+  },
+  filterTitle: {
+    marginLeft: 16,
+    fontSize: 18,
+  },
+  filterBtn: {
+    height: 50,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 16,
+    paddingHorizontal: 16,
+    backgroundColor: 'blue',
+  },
+  filterBtnFocused: {
+    backgroundColor: palette.accentColor,
   },
 });

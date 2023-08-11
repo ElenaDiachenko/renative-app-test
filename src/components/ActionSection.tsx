@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import { Text, StyleSheet, View } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import { isPlatformAndroidtv } from '@rnv/renative';
 import { useFocusState, useOrientation } from '../hooks';
 import GenreList from './GenreList';
 import { palette } from '../styles';
@@ -17,8 +17,11 @@ import {
   setLibrarySearchParameters,
 } from '../redux/filter/slice';
 import { constants, isGenre } from '../utils';
+import GenreListHorizontal from './GenreListHorizontal';
+
 type ActionSectionProps = {
   closeDrawerMenu: () => void;
+  setIsFilterOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const initialQuery = {
@@ -26,17 +29,19 @@ const initialQuery = {
   genre: '',
 };
 
-const ActionSection: FC<ActionSectionProps> = ({ closeDrawerMenu }) => {
-  const [isFocusedMenu, handleFocusChangeMenu] = useFocusState();
+const ActionSection: FC<ActionSectionProps> = ({
+  closeDrawerMenu,
+  setIsFilterOpen,
+}) => {
+  const [isFocusedGenre, handleFocusChangeGenre] = useFocusState();
   const [query, setQuery] = useState(initialQuery);
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const route = 'Home';
   const [openGenres, setOpenGenres] = useState(false);
+
   const searchParameters = useAppSelector(selectFilterMovie);
   const librarySearchParameters = useAppSelector(selectFilterlibrary);
   const dispatch = useAppDispatch();
-  const { isPortrait } = useOrientation();
 
   const sortState = {
     sort: searchParameters.sort,
@@ -100,58 +105,74 @@ const ActionSection: FC<ActionSectionProps> = ({ closeDrawerMenu }) => {
     closeDrawerMenu();
     handleFilters();
   };
-  const labelStyle = {
-    fontSize: isPortrait ? 16 : 24,
-  };
+
   return (
-    <View style={{ paddingHorizontal: 16 }}>
-      <Focused
-        handlePress={handleFilters}
-        style={[styles.filterBtn]}
-        onFocus={() => handleFocusChangeMenu(true)}
-        onBlur={() => handleFocusChangeMenu(false)}
+    <View style={{}}>
+      <View
+        style={[
+          { width: '100%', backgroundColor: 'red' },
+          isPlatformAndroidtv && styles.innerContainer,
+        ]}
       >
-        <Icon
-          name={isFocusedMenu ? 'grid' : 'grid-outline'}
-          size={30}
-          color={isFocusedMenu ? palette.accentColor : palette.whiteColor}
-        />
-        <Text style={[styles.filterLabel, styles.filterTitle]}>Filters</Text>
-      </Focused>
-      {isFilterOpen ? (
-        <>
-          <View>
-            <Text
-              style={[styles.filterLabel, labelStyle, { paddingBottom: 16 }]}
-            >
+        <View
+          style={[
+            {
+              width: isPlatformAndroidtv ? '40%' : '100%',
+              flexDirection: isPlatformAndroidtv ? 'row' : 'column',
+            },
+          ]}
+        >
+          {!isPlatformAndroidtv && (
+            <Text style={[styles.filterLabel]}>Sort By:</Text>
+          )}
+          <Sort
+            data={constants.sortList}
+            handleChange={handleSort}
+            sortState={sortState}
+          />
+        </View>
+        <View
+          style={{
+            width: isPlatformAndroidtv ? '60%' : '100%',
+            backgroundColor: 'green',
+          }}
+        >
+          {!isPlatformAndroidtv && (
+            <Text style={[styles.filterLabel, { paddingBottom: 16 }]}>
               Search By Title:
             </Text>
-            <Search
-              handleChange={handleSearch}
-              setMessage={setErrorMessage}
-              query={query.keyword}
-            />
-            {errorMessage ? (
-              <Text style={{ color: palette.warningText }}>{errorMessage}</Text>
-            ) : null}
-          </View>
-          <View>
-            <Text style={[styles.filterLabel, labelStyle]}>Sort By:</Text>
-            <Sort
-              data={constants.sortList}
-              handleChange={handleSort}
-              sortState={sortState}
-            />
-          </View>
+          )}
+          <Search
+            handleChange={handleSearch}
+            setMessage={setErrorMessage}
+            query={query.keyword}
+          />
+          {errorMessage ? (
+            <Text style={{ color: palette.warningText }}>{errorMessage}</Text>
+          ) : null}
+        </View>
+      </View>
+
+      {!isPlatformAndroidtv ? (
+        <>
           <Focused
             handlePress={() => setOpenGenres((openGenres) => !openGenres)}
             style={{
               flexDirection: 'row',
               alignItems: 'center',
               paddingBottom: 16,
+              backgroundColor: 'orange',
             }}
+            onFocus={() => handleFocusChangeGenre(true)}
+            onBlur={() => handleFocusChangeGenre(false)}
           >
-            <Text style={[styles.filterLabel, labelStyle]}>Sort By Genre:</Text>
+            <Text
+              style={
+                !isFocusedGenre ? styles.filterLabel : styles.filterLabelFocused
+              }
+            >
+              Sort By Genre:
+            </Text>
             {!openGenres ? (
               <Text
                 style={{ ...styles.filterTitle, color: palette.accentColor }}
@@ -166,7 +187,9 @@ const ActionSection: FC<ActionSectionProps> = ({ closeDrawerMenu }) => {
             </View>
           )}
         </>
-      ) : null}
+      ) : (
+        <GenreListHorizontal query={query.genre} handleChange={handleSearch} />
+      )}
     </View>
   );
 };
@@ -176,10 +199,11 @@ export default ActionSection;
 const styles = StyleSheet.create({
   filterLabel: {
     color: palette.whiteColor,
+    fontSize: 16,
   },
   filterLabelFocused: {
-    color: palette.whiteColor,
-    fontWeight: '600',
+    color: palette.accentColor,
+    fontSize: 16,
   },
   filterTitle: {
     marginLeft: 16,
@@ -190,8 +214,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 16,
+    paddingHorizontal: 16,
   },
   filterBtnFocused: {
     backgroundColor: palette.accentColor,
+  },
+  innerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
 });

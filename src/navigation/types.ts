@@ -32,7 +32,6 @@ export type HomeStackScreenProps<T extends keyof HomeStackNavigatorParamList> =
 export type DrawerParamList = {
   Home: undefined;
   Library: undefined;
-  Filters: undefined;
 };
 
 export type HomeDrawerScreenProps<T extends keyof DrawerParamList> =

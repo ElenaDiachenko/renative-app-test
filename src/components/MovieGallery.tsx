@@ -3,7 +3,7 @@ import { FlatList, StyleSheet, Text, View } from 'react-native';
 
 import MovieCard from './MovieCard';
 import { Movie } from '../types';
-// import ActionSection from './ActionSection';
+import ScreenWrapper from '../components/ScreenWrapper';
 import { commonStyles } from '../styles';
 import { useOrientation } from '../hooks';
 import { Loader, Pagination } from './ui';
@@ -48,7 +48,7 @@ const MovieGallery: FC<GalleryPropType> = ({ prevRoute }) => {
   };
 
   return (
-    <View style={[commonStyles.container, { paddingTop: 10 }]}>
+    <ScreenWrapper style={{ ...commonStyles.container, paddingTop: 10 }}>
       {isLoading && <Loader size={isPortrait ? width / 6 : height / 6} full />}
       {isError && (
         <View style={styles.innerContainer}>
@@ -86,7 +86,7 @@ const MovieGallery: FC<GalleryPropType> = ({ prevRoute }) => {
           }
         />
       )}
-    </View>
+    </ScreenWrapper>
   );
 };
 

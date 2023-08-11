@@ -1,22 +1,35 @@
 import React, { useEffect, useState } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer, RouteProp } from '@react-navigation/native';
+import {
+  StackNavigationProp,
+  createStackNavigator,
+} from '@react-navigation/stack';
 
 import * as Screens from '../screens';
-import {
-  AuthStackParamList,
-  DrawerParamList,
-  HomeStackNavigatorParamList,
-} from './types';
+import { AuthStackParamList } from './types';
 import { useAuth } from '../hooks';
-import { DrawerMenu } from '../components';
+
 import { useAppDispatch } from '../redux/hooks';
 import { checkStatus } from '../redux/auth/operations';
 
-import { headerHeight } from '../utils/constants';
+export type HomeStackNavigatorParamList = {
+  Home: undefined;
+  Library: undefined;
+  Details: {
+    movieId: string;
+    prevRoute: string;
+  };
+  Video: {
+    uri: string;
+  };
+};
 
-const Drawer = createDrawerNavigator<DrawerParamList>();
+export type HomeStackScreenProps<T extends keyof HomeStackNavigatorParamList> =
+  {
+    navigation: StackNavigationProp<HomeStackNavigatorParamList, T>;
+    route: RouteProp<HomeStackNavigatorParamList, T>;
+  };
+
 const MainStack = createStackNavigator<HomeStackNavigatorParamList>();
 const AuthStack = createStackNavigator<AuthStackParamList>();
 
@@ -33,32 +46,14 @@ const AuthNav = () => {
   );
 };
 
-const DrawerNav = () => {
-  return (
-    <Drawer.Navigator
-      initialRouteName="Home"
-      drawerContent={(props) => <DrawerMenu {...props} />}
-      screenOptions={{
-        overlayColor: 'transparent',
-        drawerType: 'front',
-        headerStyle: {
-          height: headerHeight,
-        },
-      }}
-    >
-      <Drawer.Screen name="Home" component={Screens.HomeScreen} />
-      <Drawer.Screen name="Library" component={Screens.LibraryScreen} />
-    </Drawer.Navigator>
-  );
-};
-
 const MainNav = () => (
   <MainStack.Navigator
     screenOptions={{
       headerShown: false,
     }}
   >
-    <MainStack.Screen name="Main" component={DrawerNav} />
+    <MainStack.Screen name="Home" component={Screens.HomeScreen} />
+    <MainStack.Screen name="Library" component={Screens.LibraryScreen} />
     <MainStack.Screen name="Details" component={Screens.DetailsScreen} />
     <MainStack.Screen name="Video" component={Screens.VideoScreen} />
   </MainStack.Navigator>

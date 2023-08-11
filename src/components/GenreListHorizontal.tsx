@@ -1,5 +1,5 @@
-import React, { useRef, useEffect, memo, FC } from 'react';
 import { StyleSheet, View, FlatList, ListRenderItem } from 'react-native';
+import React, { useRef, useEffect, memo, FC } from 'react';
 
 import { constants } from '../utils';
 import { palette } from '../styles';
@@ -9,7 +9,6 @@ type GenreListProps = {
   handleChange: ChangeHandler;
   query: string;
 };
-
 type ChangeHandler = (newQuery: string) => void;
 type GenreType = (typeof constants.genreList)[number];
 
@@ -42,8 +41,8 @@ const GenreList: FC<GenreListProps> = ({ handleChange, query }) => {
   }, [query]);
 
   const getItemLayout = (_: any, index: number) => ({
-    length: styles.item.height,
-    offset: styles.item.height * index,
+    length: styles.item.width,
+    offset: styles.item.width * index,
     index,
   });
 
@@ -63,12 +62,13 @@ const GenreList: FC<GenreListProps> = ({ handleChange, query }) => {
     <FlatList
       ref={flatListRef}
       data={constants.genreList}
-      showsVerticalScrollIndicator={false}
+      horizontal={true}
+      showsHorizontalScrollIndicator={false}
       renderItem={renderItem}
       keyExtractor={(item) => item.id}
       ItemSeparatorComponent={renderSeparator}
       initialNumToRender={constants.genreList.length}
-      contentContainerStyle={{ paddingBottom: 950 }}
+      contentContainerStyle={{ marginVertical: 10 }}
       getItemLayout={getItemLayout}
       onScrollToIndexFailed={onScrollToIndexFailed}
     />
@@ -79,14 +79,13 @@ export default memo(GenreList);
 
 const styles = StyleSheet.create({
   separator: {
-    width: '100%',
-    height: 1,
+    width: 1,
+    height: '60%',
+    alignSelf: 'center',
     backgroundColor: palette.footerTextColor,
-    marginVertical: 10,
+    marginHorizontal: 10,
   },
   item: {
-    width: '100%',
-    height: 50,
-    paddingHorizontal: 20,
+    width: 90,
   },
 });

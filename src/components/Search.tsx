@@ -5,6 +5,7 @@ import React, {
   useState,
   useEffect,
 } from 'react';
+import { isPlatformAndroidtv } from '@rnv/renative';
 import { StyleSheet, Keyboard, View } from 'react-native';
 import { CustomInput, SearchButton } from './ui';
 

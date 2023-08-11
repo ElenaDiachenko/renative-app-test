@@ -46,7 +46,7 @@ const MovieCard: FC<MovieCardProps> = ({ movie, index, prevRoute }) => {
         </Text>
         <View style={styles.ratingYearContainer}>
           <View style={{ flexDirection: 'row', marginBottom: 3 }}>
-            <Text style={styles.cardDescription}>Rating t:</Text>
+            <Text style={styles.cardDescription}>Rating:</Text>
             <View style={styles.rating}>
               <Text style={styles.ratingText}>
                 {convertRating(movie.rating || 0)}

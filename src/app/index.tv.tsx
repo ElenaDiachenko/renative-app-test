@@ -8,6 +8,7 @@ import { Provider } from 'react-redux';
 import { store, persistor } from '../redux/store';
 
 import Navigation from '../navigation';
+import { View, Text } from 'react-native';
 
 enableScreens(true);
 
