@@ -1,5 +1,5 @@
 import React, { FC, ReactNode } from 'react';
-import { Text, StyleSheet, ViewStyle } from 'react-native';
+import { ViewStyle } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import { palette } from '../styles';

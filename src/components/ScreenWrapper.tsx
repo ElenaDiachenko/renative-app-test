@@ -7,13 +7,13 @@ import { isPlatformAndroidtv } from '@rnv/renative';
 import React, { memo, ReactNode, useEffect, useState } from 'react';
 import { View, ViewStyle } from 'react-native';
 
-import { HomeStackNavigatorParamList } from '../navigation/index.tv';
 import { HomeStackScreenProps } from '../navigation/index.tv';
 import CustomHeader from './CustomHeader.tv';
 import ActionSection from './ActionSection';
 import { palette } from '../styles';
 import FilterBtn from './FilterBtn';
 type ValidNavigateRoute = 'Home' | 'Library';
+
 type ScreenProps = {
   children: ReactNode;
   style?: ViewStyle;
@@ -39,28 +39,7 @@ const ScreenWrapper = ({ children, style, contentStyle }: ScreenProps) => {
   }, [route]);
 
   return (
-    <View style={{ flex: 1, backgroundColor: palette.mainBgColor }}>
-      {isPlatformAndroidtv && (
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}
-        >
-          <FilterBtn
-            isFilterOpen={isFilterOpen}
-            setIsFilterOpen={setIsFilterOpen}
-          />
-          <CustomHeader />
-        </View>
-      )}
-      {isFilterOpen && (
-        <ActionSection
-          closeDrawerMenu={() => {}}
-          setIsFilterOpen={setIsFilterOpen}
-        />
-      )}
+    <View style={style}>
       <View style={[contentStyle]}>{children}</View>
     </View>
   );

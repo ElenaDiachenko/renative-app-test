@@ -63,9 +63,6 @@ const DrawerMenu: React.FC<DrawerContentComponentProps> = ({
   };
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
-  const handleFilters = () => {
-    setIsFilterOpen((prev) => !prev);
-  };
   return (
     <View
       style={{
@@ -111,10 +108,12 @@ const DrawerMenu: React.FC<DrawerContentComponentProps> = ({
       >
         <Text style={[styles.filterLabel, styles.filterTitle]}>Filters</Text>
       </FilterBtn>
-      <ActionSection
-        closeDrawerMenu={closeDrawerMenu}
-        setIsFilterOpen={setIsFilterOpen}
-      />
+      {isFilterOpen ? (
+        <ActionSection
+          closeDrawerMenu={closeDrawerMenu}
+          setIsFilterOpen={setIsFilterOpen}
+        />
+      ) : null}
     </View>
   );
 };
@@ -164,7 +163,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 16,
     paddingHorizontal: 16,
-    backgroundColor: 'blue',
   },
   filterBtnFocused: {
     backgroundColor: palette.accentColor,

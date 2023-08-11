@@ -107,17 +107,17 @@ const ActionSection: FC<ActionSectionProps> = ({
   };
 
   return (
-    <View style={{}}>
+    <View style={{ paddingHorizontal: !isPlatformAndroidtv ? 16 : 0 }}>
       <View
         style={[
-          { width: '100%', backgroundColor: 'red' },
+          { width: '100%' },
           isPlatformAndroidtv && styles.innerContainer,
         ]}
       >
         <View
           style={[
             {
-              width: isPlatformAndroidtv ? '40%' : '100%',
+              width: isPlatformAndroidtv ? '25%' : '100%',
               flexDirection: isPlatformAndroidtv ? 'row' : 'column',
             },
           ]}
@@ -133,8 +133,8 @@ const ActionSection: FC<ActionSectionProps> = ({
         </View>
         <View
           style={{
-            width: isPlatformAndroidtv ? '60%' : '100%',
-            backgroundColor: 'green',
+            flexDirection: isPlatformAndroidtv ? 'row' : 'column',
+            paddingLeft: isPlatformAndroidtv ? '10%' : 0,
           }}
         >
           {!isPlatformAndroidtv && (
@@ -160,8 +160,7 @@ const ActionSection: FC<ActionSectionProps> = ({
             style={{
               flexDirection: 'row',
               alignItems: 'center',
-              paddingBottom: 16,
-              backgroundColor: 'orange',
+              paddingVertical: 16,
             }}
             onFocus={() => handleFocusChangeGenre(true)}
             onBlur={() => handleFocusChangeGenre(false)}
@@ -222,6 +221,5 @@ const styles = StyleSheet.create({
   innerContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
   },
 });

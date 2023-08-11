@@ -26,7 +26,7 @@ const CustomHeader = () => {
         handlePress={() =>
           navigation.navigate(route === 'Home' ? 'Library' : 'Home')
         }
-        style={{ ...styles.logoutBtn }}
+        style={{ marginRight: 30 }}
       >
         <Text
           style={{
@@ -58,9 +58,7 @@ export default CustomHeader;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'yellow',
     flexDirection: 'row',
-    gap: 20,
     alignItems: 'center',
   },
   logoutBtn: {

@@ -4,11 +4,14 @@ import { FlatList, StyleSheet, Text, View } from 'react-native';
 import MovieCard from './MovieCard';
 import { Movie } from '../types';
 import ScreenWrapper from '../components/ScreenWrapper';
-import { commonStyles } from '../styles';
+import { commonStyles, palette } from '../styles';
 import { useOrientation } from '../hooks';
 import { Loader, Pagination } from './ui';
 import { isPlatformAndroidtv } from '@rnv/renative';
 import { useLibraryState } from '../hooks';
+import FilterBtn from './FilterBtn';
+import CustomHeader from './CustomHeader.tv';
+import ActionSection from './ActionSection';
 type GalleryPropType = {
   prevRoute: string;
 };
@@ -26,6 +29,7 @@ const renderMovieCard = ({
 const MovieGallery: FC<GalleryPropType> = ({ prevRoute }) => {
   const { isPortrait, width, height } = useOrientation();
   const [numCols, setCols] = useState(0);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
   const { data, isLoading, isError, changeSearchParams } =
     useLibraryState(prevRoute);
 
@@ -48,7 +52,14 @@ const MovieGallery: FC<GalleryPropType> = ({ prevRoute }) => {
   };
 
   return (
-    <ScreenWrapper style={{ ...commonStyles.container, paddingTop: 10 }}>
+    <View
+      style={{
+        paddingTop: 10,
+        width: '100%',
+        height: '100%',
+        backgroundColor: palette.mainBgColor,
+      }}
+    >
       {isLoading && <Loader size={isPortrait ? width / 6 : height / 6} full />}
       {isError && (
         <View style={styles.innerContainer}>
@@ -57,6 +68,34 @@ const MovieGallery: FC<GalleryPropType> = ({ prevRoute }) => {
       )}
       {!isLoading && movieData && (
         <FlatList
+          ListHeaderComponent={
+            <>
+              {isPlatformAndroidtv && (
+                <>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                    }}
+                  >
+                    <FilterBtn
+                      isFilterOpen={isFilterOpen}
+                      setIsFilterOpen={setIsFilterOpen}
+                    />
+                    <CustomHeader />
+                  </View>
+                  {isFilterOpen && (
+                    <ActionSection
+                      closeDrawerMenu={() => {}}
+                      setIsFilterOpen={setIsFilterOpen}
+                    />
+                  )}
+                </>
+              )}
+            </>
+          }
+          ListHeaderComponentStyle={{ paddingHorizontal: 10, marginBottom: 16 }}
           ListFooterComponent={
             currentPage && totalPages && totalPages > 1 ? (
               <Pagination
@@ -86,7 +125,7 @@ const MovieGallery: FC<GalleryPropType> = ({ prevRoute }) => {
           }
         />
       )}
-    </ScreenWrapper>
+    </View>
   );
 };
 
