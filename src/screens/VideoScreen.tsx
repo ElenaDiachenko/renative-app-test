@@ -1,20 +1,19 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-// import VideoPlayer from 'react-native-video-player';
+import { StyleSheet, View } from 'react-native';
+import VideoPlayer from 'react-native-video-player';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { palette } from '../styles';
-// import { AppStackScreenProps } from '../navigation/types';
+import { HomeStackScreenProps } from '../navigation/types';
 
 const VideoScreen = () => {
-  // const route = useRoute<AppStackScreenProps<'Video'>['route']>();
-  // const { goBack } =
-  //   useNavigation<AppStackScreenProps<'Video'>['navigation']>();
-  // const { uri } = route.params;
+  const route = useRoute<HomeStackScreenProps<'Video'>['route']>();
+  const { goBack } =
+    useNavigation<HomeStackScreenProps<'Video'>['navigation']>();
+  const { uri } = route.params;
 
   return (
     <View style={styles.container}>
-      <Text style={{ color: palette.whiteColor }}>Video screen</Text>
-      {/* <VideoPlayer
+      <VideoPlayer
         video={{
           uri,
         }}
@@ -25,7 +24,7 @@ const VideoScreen = () => {
         loop={false}
         style={styles.video}
         onEnd={goBack}
-      /> */}
+      />
     </View>
   );
 };

@@ -25,6 +25,7 @@ export const fetchAll = createAsyncThunk<
       return result;
     } catch (error: any) {
       Alert.alert('Something went wrong. Try again later');
+      console.log(error, 'library/getLibrary');
       return rejectWithValue(error?.response?.data);
     }
   },
