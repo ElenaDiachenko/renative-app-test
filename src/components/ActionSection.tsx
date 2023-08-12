@@ -18,6 +18,7 @@ import {
 } from '../redux/filter/slice';
 import { constants, isGenre } from '../utils';
 import GenreListHorizontal from './GenreListHorizontal';
+import { useRoute } from '@react-navigation/native';
 
 type ActionSectionProps = {
   closeDrawerMenu: () => void;
@@ -33,16 +34,18 @@ const ActionSection: FC<ActionSectionProps> = ({
   closeDrawerMenu,
   setIsFilterOpen,
 }) => {
+  const { name: route } = useRoute();
+
   const [isFocusedGenre, handleFocusChangeGenre] = useFocusState();
   const [query, setQuery] = useState(initialQuery);
   const [errorMessage, setErrorMessage] = useState('');
-  const route = 'Home';
+
   const [openGenres, setOpenGenres] = useState(false);
 
   const searchParameters = useAppSelector(selectFilterMovie);
   const librarySearchParameters = useAppSelector(selectFilterlibrary);
   const dispatch = useAppDispatch();
-
+  const isHomeScreen = route === 'Home';
   const sortState = {
     sort: searchParameters.sort,
     order: searchParameters.order,
@@ -50,7 +53,7 @@ const ActionSection: FC<ActionSectionProps> = ({
 
   useEffect(() => {
     if (!searchParameters || !librarySearchParameters) return;
-    const isHomeScreen = route === 'Home';
+
     if (isHomeScreen) {
       isGenre(searchParameters.query)
         ? setQuery({
@@ -83,7 +86,7 @@ const ActionSection: FC<ActionSectionProps> = ({
       query: evalGenre,
       page: 1,
     };
-    if (route === 'Home') {
+    if (isHomeScreen) {
       dispatch(setSearchParameters(updatedSearchParams));
     } else {
       dispatch(setLibrarySearchParameters(updatedSearchParams));
@@ -97,7 +100,7 @@ const ActionSection: FC<ActionSectionProps> = ({
       ...newSortState,
       page: 1,
     };
-    if (route === 'Home') {
+    if (isHomeScreen) {
       dispatch(setSearchParameters(updatedSearchParams));
     } else {
       dispatch(setLibrarySearchParameters(updatedSearchParams));

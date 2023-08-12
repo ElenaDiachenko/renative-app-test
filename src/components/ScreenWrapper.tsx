@@ -3,15 +3,12 @@ import {
   useNavigation,
   useRoute,
 } from '@react-navigation/native';
-import { isPlatformAndroidtv } from '@rnv/renative';
+
 import React, { memo, ReactNode, useEffect, useState } from 'react';
 import { View, ViewStyle } from 'react-native';
 
 import { HomeStackScreenProps } from '../navigation/index.tv';
-import CustomHeader from './CustomHeader.tv';
-import ActionSection from './ActionSection';
-import { palette } from '../styles';
-import FilterBtn from './FilterBtn';
+
 type ValidNavigateRoute = 'Home' | 'Library';
 
 type ScreenProps = {
@@ -21,22 +18,22 @@ type ScreenProps = {
 };
 
 const ScreenWrapper = ({ children, style, contentStyle }: ScreenProps) => {
-  const isFocused = useIsFocused();
-  const navigation =
-    useNavigation<HomeStackScreenProps<'Home'>['navigation']>();
-  const { name: route } = useRoute<HomeStackScreenProps<'Home'>['route']>();
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  // const isFocused = useIsFocused();
+  // const navigation =
+  //   useNavigation<HomeStackScreenProps<'Home'>['navigation']>();
+  // const { name: route } = useRoute<HomeStackScreenProps<'Home'>['route']>();
+  // const [isFilterOpen, setIsFilterOpen] = useState(false);
 
-  const [targetNavigate, setTargetNavigate] =
-    useState<ValidNavigateRoute>('Library');
+  // const [targetNavigate, setTargetNavigate] =
+  //   useState<ValidNavigateRoute>('Library');
 
-  useEffect(() => {
-    if (route === 'Home') {
-      setTargetNavigate('Library');
-    } else if (route === 'Library') {
-      setTargetNavigate('Home');
-    }
-  }, [route]);
+  // useEffect(() => {
+  //   if (route === 'Home') {
+  //     setTargetNavigate('Library');
+  //   } else if (route === 'Library') {
+  //     setTargetNavigate('Home');
+  //   }
+  // }, [route]);
 
   return (
     <View style={style}>
