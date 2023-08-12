@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 import { Text, StyleSheet, View } from 'react-native';
 import { isPlatformAndroidtv } from '@rnv/renative';
-import { useFocusState, useOrientation } from '../hooks';
+import { useFocusState } from '../hooks';
 import GenreList from './GenreList';
 import { palette } from '../styles';
 import { Focused } from './ui';
@@ -23,6 +23,7 @@ import { useRoute } from '@react-navigation/native';
 type ActionSectionProps = {
   closeDrawerMenu: () => void;
   setIsFilterOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  currentRoute?: string;
 };
 
 const initialQuery = {
@@ -33,9 +34,9 @@ const initialQuery = {
 const ActionSection: FC<ActionSectionProps> = ({
   closeDrawerMenu,
   setIsFilterOpen,
+  currentRoute,
 }) => {
-  const { name: route } = useRoute();
-
+  const { name: routeTv } = useRoute();
   const [isFocusedGenre, handleFocusChangeGenre] = useFocusState();
   const [query, setQuery] = useState(initialQuery);
   const [errorMessage, setErrorMessage] = useState('');
@@ -45,7 +46,9 @@ const ActionSection: FC<ActionSectionProps> = ({
   const searchParameters = useAppSelector(selectFilterMovie);
   const librarySearchParameters = useAppSelector(selectFilterlibrary);
   const dispatch = useAppDispatch();
+  const route = isPlatformAndroidtv ? routeTv : currentRoute;
   const isHomeScreen = route === 'Home';
+
   const sortState = {
     sort: searchParameters.sort,
     order: searchParameters.order,

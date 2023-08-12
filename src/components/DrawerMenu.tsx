@@ -62,6 +62,7 @@ const DrawerMenu: React.FC<DrawerContentComponentProps> = ({
     navigation.dispatch(DrawerActions.closeDrawer());
   };
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const currentRoute = drawerRoutes[state.index].name;
 
   return (
     <View
@@ -112,6 +113,7 @@ const DrawerMenu: React.FC<DrawerContentComponentProps> = ({
         <ActionSection
           closeDrawerMenu={closeDrawerMenu}
           setIsFilterOpen={setIsFilterOpen}
+          currentRoute={currentRoute}
         />
       ) : null}
     </View>
