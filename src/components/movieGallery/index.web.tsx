@@ -13,7 +13,7 @@ import FilterBtn from '../FilterBtn';
 import CustomHeader from '../CustomHeader.tv';
 import ActionSection from '../ActionSection';
 import { useAppDispatch } from '../../redux/hooks';
-import { logIn } from '../../redux/auth/operations';
+import { logIn, logOut } from '../../redux/auth/operations';
 
 type GalleryPropType = {
   prevRoute: string;
@@ -73,6 +73,7 @@ const MovieGallery: FC<GalleryPropType> = ({ prevRoute, data }) => {
                     )
                   }
                 />
+                <Button title="Logout" onPress={() => dispatch(logOut())} />
               </View>
               {/* {isFilterOpen && (
                 <ActionSection

@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import { isWebBased } from '@rnv/renative';
-import { getTokenFromAsyncStorage } from '../utils';
+// import { getTokenFromAsyncStorage } from '../utils';
 
 const API_URL = 'http://10.0.2.2:4200/api';
 const API_URL_WEB = 'http://localhost:4200/api';
