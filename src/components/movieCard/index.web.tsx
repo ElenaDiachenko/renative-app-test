@@ -1,36 +1,32 @@
 import React, { FC } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import FastImage from 'react-native-fast-image';
+import { View, Text, StyleSheet, Image } from 'react-native';
 
-import { constants, convertRating, calculateCardWidth } from '../utils';
-import { Movie } from '../types';
-import { palette } from '../styles';
-import { useOrientation } from '../hooks';
-import { Focused } from './ui';
+import { constants, convertRating, calculateCardWidth } from '../../utils';
+import { Movie } from '../../types';
+import { palette } from '../../styles';
+import { useOrientation } from '../../hooks';
+import { Focused } from '../ui';
 
 type MovieCardProps = {
   movie: Movie;
-  index: number;
+
   prevRoute: string;
 };
 
-const MovieCard: FC<MovieCardProps> = ({ movie, index, prevRoute }) => {
-  const navigation = useNavigation();
+const MovieCard: FC<MovieCardProps> = ({ movie, prevRoute }) => {
   const { width, isPortrait } = useOrientation();
 
   const cardWidth = calculateCardWidth(isPortrait, width);
 
   return (
     <Focused
-      hasTVPreferredFocus={index === 0}
       style={{ ...styles.card, width: cardWidth }}
       focusedStyle={styles.cardFocused}
-      handlePress={() =>
-        navigation.navigate('Details', { movieId: movie._id, prevRoute })
-      }
+      // handlePress={() =>
+      //   navigation.navigate('Details', { movieId: movie._id, prevRoute })
+      // }
     >
-      <FastImage
+      <Image
         style={styles.cardImage}
         resizeMode="cover"
         source={{ uri: movie.poster[2] }}

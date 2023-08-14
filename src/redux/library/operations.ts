@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Alert } from 'react-native';
 
-import { RootState } from '../store';
+import { RootState } from '..';
 import {
   LibrarySearchParamsType,
   fetchMovies,

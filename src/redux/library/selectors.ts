@@ -1,3 +1,3 @@
-import { RootState } from '../store';
+import { RootState } from '..';
 
 export const selectLibrary = (state: RootState) => state?.library;

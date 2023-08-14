@@ -1,17 +1,17 @@
 import React, { FC, useState, useEffect } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 
-import MovieCard from './MovieCard';
-import { Movie } from '../types';
-import ScreenWrapper from '../components/ScreenWrapper';
-import { commonStyles, palette } from '../styles';
-import { useOrientation } from '../hooks';
-import { Loader, Pagination } from './ui';
+import MovieCard from '../movieCard';
+import { Movie } from '../../types';
+
+import { commonStyles, palette } from '../../styles';
+import { useOrientation } from '../../hooks';
+import { Loader, Pagination } from '../ui';
 import { isPlatformAndroidtv } from '@rnv/renative';
-import { useLibraryState } from '../hooks';
-import FilterBtn from './FilterBtn';
-import CustomHeader from './CustomHeader.tv';
-import ActionSection from './ActionSection';
+import { useLibraryState } from '../../hooks';
+import FilterBtn from '../FilterBtn';
+import CustomHeader from '../CustomHeader.tv';
+import ActionSection from '../ActionSection';
 type GalleryPropType = {
   prevRoute: string;
 };

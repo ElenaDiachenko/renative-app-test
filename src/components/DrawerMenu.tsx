@@ -8,23 +8,19 @@ import {
   Button,
 } from 'react-native';
 import { DrawerActions } from '@react-navigation/native';
-import { DrawerParamList, HomeDrawerScreenProps } from '../navigation/types';
+import { DrawerParamList } from '../navigation/types';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useAppDispatch } from '../redux/hooks';
 import { logOut } from '../redux/auth/operations';
-import GenreList from './GenreList';
 import { palette } from '../styles';
 import {
   DrawerContentComponentProps,
   useDrawerStatus,
 } from '@react-navigation/drawer';
 
-import { genreList, headerHeight } from '../utils/constants';
+import { headerHeight } from '../utils/constants';
 import { Focused, LogoutBtn } from './ui';
-
-import Search from './Search';
 import ActionSection from './ActionSection';
-import { useFocusState } from '../hooks';
 import FilterBtn from './FilterBtn';
 
 export const screens = {
