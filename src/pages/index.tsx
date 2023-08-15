@@ -5,6 +5,7 @@ import type {
   GetServerSidePropsContext,
   InferGetServerSidePropsType,
 } from 'next';
+
 import { useRouter } from 'next/router';
 import { fetchMovies } from '../API/movieRequests';
 import { useAuth } from '../hooks';
@@ -46,7 +47,11 @@ const Home: NextPage<
     }
   }, [router.isReady, searchParameters]);
 
-  return <MovieGallery prevRoute={'Home'} data={data} />;
+  return (
+    <>
+      <MovieGallery prevRoute={'Home'} data={data} />
+    </>
+  );
 };
 
 export default Home;

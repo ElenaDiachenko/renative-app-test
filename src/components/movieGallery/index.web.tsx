@@ -1,6 +1,6 @@
 import React, { FC, useState, useEffect } from 'react';
 import { Button, FlatList, StyleSheet, Text, View } from 'react-native';
-
+import Link from 'next/link';
 import MovieCard from '../movieCard/index.web';
 import { Movie, MovieDataType } from '../../types';
 
@@ -74,6 +74,9 @@ const MovieGallery: FC<GalleryPropType> = ({ prevRoute, data }) => {
                   }
                 />
                 <Button title="Logout" onPress={() => dispatch(logOut())} />
+                <Link href="/library">
+                  <Text style={{ color: 'white' }}>My library</Text>
+                </Link>
               </View>
               {/* {isFilterOpen && (
                 <ActionSection

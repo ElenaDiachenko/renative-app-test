@@ -7,7 +7,7 @@ import {
   updateProfile,
 } from 'firebase/auth';
 import { auth } from '../../../../firebase.config';
-
+import { libraryToken } from '../../../API/instance';
 import { UserType, SignupData, LoginData } from '../../../types';
 import { resetLibraryState } from '../../library/slice';
 import { resetMoviesState } from '../../movies/slice';
@@ -27,6 +27,7 @@ export const checkStatus = createAsyncThunk<UserType | null>(
             };
             unsubscribe();
             console.log(currentUser, 'check');
+            libraryToken.set(token);
             resolve(currentUser);
           } else {
             resolve(null);
@@ -62,7 +63,7 @@ export const register = createAsyncThunk(
         username: createdUser?.displayName || '',
         token: token || '',
       };
-
+      libraryToken.set(token || '');
       return user;
     } catch (err: any) {
       if (err instanceof Error) {
@@ -86,7 +87,7 @@ export const logIn = createAsyncThunk(
         username: currentUser?.displayName || '',
         token: token || '',
       };
-
+      libraryToken.set(token || '');
       return user;
     } catch (err: any) {
       if (err instanceof Error) {
@@ -108,7 +109,7 @@ export const logOut = createAsyncThunk(
       dispatch(resetLibraryState());
       dispatch(resetMoviesState());
       dispatch(resetFilterState());
-
+      libraryToken.unset();
       return null;
     } catch (err: any) {
       if (err instanceof Error) {
