@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from 'react';
+import React, { useReducer } from 'react';
 
 import {
   View,
@@ -13,12 +13,18 @@ import { CustomInput } from './ui';
 import { reducer, validateInputField } from '../utils';
 import { palette } from '../styles';
 import { useNavigation } from '@react-navigation/native';
-import { AuthStackScreenProps } from '../navigation/types';
+import { AuthStackParamList, AuthStackScreenProps } from '../navigation/types';
 import { useAuth } from '../hooks';
 import { useAppDispatch } from '../redux/hooks';
 
 import { register } from '../redux/auth/operations';
+import { NextRouter } from 'next/router';
+import { isWebBased } from '@rnv/renative';
+import { StackNavigationProp } from '@react-navigation/stack';
 
+type RegisterFormProps = {
+  router?: NextRouter;
+};
 const initialState: reducer.State = {
   username: '',
   email: '',
@@ -26,9 +32,16 @@ const initialState: reducer.State = {
   errors: {},
 };
 
-const RegisterForm = () => {
-  const navigation =
-    useNavigation<AuthStackScreenProps<'Register'>['navigation']>();
+const RegisterForm = ({ router }) => {
+  let navigation: any;
+  if (!isWebBased) {
+    navigation =
+      useNavigation<AuthStackScreenProps<'Register'>['navigation']>();
+  } else {
+    navigation = router;
+  }
+  // const navigation =
+  //   useNavigation<AuthStackScreenProps<'Register'>['navigation']>();
   const [state, dispatch] = useReducer(reducer.reducer, initialState);
 
   const reduxDispatch = useAppDispatch();
@@ -68,6 +81,9 @@ const RegisterForm = () => {
 
   const { username = '', email, password, errors } = state;
 
+  const navigateToLogin = () => {
+    isWebBased ? navigation.push('/login') : navigation.navigate('Login');
+  };
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Sign Up</Text>
@@ -105,10 +121,7 @@ const RegisterForm = () => {
       </TouchableOpacity>
       <View style={styles.containerLink}>
         <Text style={styles.text}>Already have an account?</Text>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('Login')}
-          activeOpacity={0.7}
-        >
+        <TouchableOpacity onPress={navigateToLogin} activeOpacity={0.7}>
           <Text style={styles.linkText}>Log In</Text>
         </TouchableOpacity>
       </View>

@@ -14,6 +14,11 @@ import CustomHeader from '../CustomHeader.tv';
 import ActionSection from '../ActionSection';
 import { useAppDispatch } from '../../redux/hooks';
 import { logIn, logOut } from '../../redux/auth/operations';
+import {
+  setLibrarySearchParameters,
+  setSearchParameters,
+} from '../../redux/filter/slice';
+import { useRouter } from 'next/router';
 
 type GalleryPropType = {
   prevRoute: string;
@@ -33,11 +38,14 @@ const renderMovieCard = ({
 const MovieGallery: FC<GalleryPropType> = ({ prevRoute, data }) => {
   const [numCols, setCols] = useState(5);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const router = useRouter();
   const dispatch = useAppDispatch();
-
+  const isHomeScreen = prevRoute === 'Home';
   const { data: movieData, currentPage, totalPages } = data;
   const paginate = (page: number) => {
-    // changeSearchParams({ page });
+    isHomeScreen
+      ? dispatch(setSearchParameters({ page }))
+      : dispatch(setLibrarySearchParameters({ page }));
   };
 
   return (
@@ -74,9 +82,18 @@ const MovieGallery: FC<GalleryPropType> = ({ prevRoute, data }) => {
                   }
                 />
                 <Button title="Logout" onPress={() => dispatch(logOut())} />
-                <Link href="/library">
-                  <Text style={{ color: 'white' }}>My library</Text>
-                </Link>
+                <Button
+                  title="Library"
+                  onPress={() => {
+                    router.push('/library');
+                  }}
+                />
+                <Button
+                  title="Login Page"
+                  onPress={() => {
+                    router.push('/login');
+                  }}
+                />
               </View>
               {/* {isFilterOpen && (
                 <ActionSection

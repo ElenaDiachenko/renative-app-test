@@ -1,26 +1,22 @@
 import React, { FC } from 'react';
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
-import {
-  isFactorMobile,
-  isPlatformAndroidtv,
-  isPlatformAndroid,
-} from '@rnv/renative';
+import { StyleSheet, Text, View, ScrollView, Image } from 'react-native';
+import { isPlatformAndroidtv, isPlatformAndroid } from '@rnv/renative';
 
 import Octicons from 'react-native-vector-icons/Octicons';
 import LinearGradient from 'react-native-linear-gradient';
 
 import { StackNavigationProp } from '@react-navigation/stack';
-import FastImage from 'react-native-fast-image';
+// import FastImage from 'react-native-fast-image';
 
-import { convertRating, convertTime, constants } from '../utils';
-import { commonStyles, palette } from '../styles';
-import { useToggleMovie, useOrientation } from '../hooks';
+import { convertRating, convertTime, constants } from '../../utils';
+import { commonStyles, palette } from '../../styles';
+import { useToggleMovie, useOrientation } from '../../hooks';
 
-import { Focused } from './ui';
-import { HomeStackNavigatorParamList } from '../navigation/types';
+import { Focused } from '../ui';
+import { HomeStackNavigatorParamList } from '../../navigation/types';
 
-import { useAppSelector } from '../redux/hooks';
-import { selectMovieById } from '../redux/movies/selectors';
+import { useAppSelector } from '../../redux/hooks';
+import { selectMovieById } from '../../redux/movies/selectors';
 
 type MoviePropsType = {
   movieId: string;
@@ -64,7 +60,7 @@ const MovieDetailsContent: FC<MoviePropsType> = ({
             }
           >
             <View style={[styles.posterBox, posterBoxStyle]}>
-              <FastImage
+              <Image
                 style={[
                   styles.infoImage,
                   { aspectRatio: constants.ASPECT_RATIO },

@@ -1,6 +1,7 @@
 import React, { useState, FC, useRef } from 'react';
 import { TextInput, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { palette } from '../../styles';
+import { isWebBased } from '@rnv/renative';
 
 type InputProps = {
   placeholder: string;
@@ -64,7 +65,7 @@ export default CustomInput;
 const styles = StyleSheet.create({
   inputBox: {
     width: '100%',
-    maxWidth: 450,
+    maxWidth: !isWebBased ? 450 : 600,
     marginBottom: 16,
   },
   input: {

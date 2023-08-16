@@ -11,7 +11,7 @@ import { useMovies } from '../hooks/useMovies.web';
 const Library: NextPage = () => {
   const router = useRouter();
   const searchParameters = useAppSelector(selectFilterlibrary);
-  const { data, isLoading, isError, changeSearchParams } = useMovies();
+  const { data, isLoading, isError } = useMovies();
 
   useEffect(() => {
     if (router.isReady) {
@@ -28,9 +28,9 @@ const Library: NextPage = () => {
         query: newQuery,
       });
     }
-  }, [router.isReady]);
+  }, [router.isReady, searchParameters]);
 
-  return data && <MovieGallery prevRoute={'Library'} data={data} />;
+  return <>{data && <MovieGallery prevRoute={'Library'} data={data} />}</>;
 };
 
 export default Library;

@@ -23,7 +23,7 @@ const Home: NextPage<
   const searchParameters = useAppSelector(selectFilterMovie);
   const dispatch = useAppDispatch();
   const { isLoggedIn } = useAuth();
-  console.log(isLoggedIn, 'isLoggedIn');
+
   useEffect(() => {
     (async () => {
       await dispatch(checkStatus());

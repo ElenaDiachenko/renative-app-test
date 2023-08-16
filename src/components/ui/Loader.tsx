@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { palette } from '../../styles';
+import { isWebBased } from '@rnv/renative';
 
 type LoaderProps = {
   size?: 'small' | 'large' | number;
@@ -24,6 +25,7 @@ export default Loader;
 const styles = StyleSheet.create({
   indicatorWrapperFull: {
     flex: 1,
+    height: isWebBased ? '100vh' : '100%',
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: palette.mainBgColor,

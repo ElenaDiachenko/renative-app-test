@@ -1,5 +1,5 @@
 import React, { useReducer, useEffect } from 'react';
-// import { shallow } from 'zustand/shallow';
+
 import {
   View,
   Text,
@@ -17,6 +17,8 @@ import { useAuth } from '../hooks';
 import { useAppDispatch } from '../redux/hooks';
 
 import { logIn } from '../redux/auth/operations';
+import { isWebBased } from '@rnv/renative';
+import { useRouter } from 'next/router';
 
 const initialState: reducer.State = {
   email: '',
@@ -25,8 +27,14 @@ const initialState: reducer.State = {
 };
 
 const LoginForm = () => {
-  const navigation =
-    useNavigation<AuthStackScreenProps<'Login'>['navigation']>();
+  let navigation;
+  if (!isWebBased) {
+    navigation = useNavigation<AuthStackScreenProps<'Login'>['navigation']>();
+  } else {
+    navigation = useRouter();
+  }
+  // const navigation =
+  //   useNavigation<AuthStackScreenProps<'Login'>['navigation']>();
   const [state, dispatch] = useReducer(reducer.reducer, initialState);
   const reduxDispatch = useAppDispatch();
   const { isLoading } = useAuth();
@@ -59,6 +67,9 @@ const LoginForm = () => {
 
   const { email, password, errors } = state;
 
+  const navigateToRegister = () => {
+    isWebBased ? navigation.push('/register') : navigation.navigate('Register');
+  };
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Log In</Text>
@@ -90,10 +101,7 @@ const LoginForm = () => {
       </TouchableOpacity>
       <View style={styles.containerLink}>
         <Text style={styles.text}>Want to create a new account?</Text>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('Register')}
-          activeOpacity={0.7}
-        >
+        <TouchableOpacity onPress={navigateToRegister} activeOpacity={0.7}>
           <Text style={styles.linkText}>Sign Up</Text>
         </TouchableOpacity>
       </View>
@@ -106,6 +114,7 @@ export default LoginForm;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    height: isWebBased ? '100vh' : '100%',
     justifyContent: 'center',
     flexDirection: 'column',
     alignItems: 'center',
