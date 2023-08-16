@@ -22,7 +22,6 @@ const Home: NextPage<
   const router = useRouter();
   const searchParameters = useAppSelector(selectFilterMovie);
   const dispatch = useAppDispatch();
-  const { isLoggedIn } = useAuth();
 
   useEffect(() => {
     (async () => {

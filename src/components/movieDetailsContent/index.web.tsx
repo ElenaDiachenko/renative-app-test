@@ -1,38 +1,30 @@
 import React, { FC } from 'react';
 import { StyleSheet, Text, View, ScrollView, Image } from 'react-native';
-import { isPlatformAndroidtv, isPlatformAndroid } from '@rnv/renative';
 
 import Octicons from 'react-native-vector-icons/Octicons';
 import LinearGradient from 'react-native-linear-gradient';
-
-import { StackNavigationProp } from '@react-navigation/stack';
-// import FastImage from 'react-native-fast-image';
 
 import { convertRating, convertTime, constants } from '../../utils';
 import { commonStyles, palette } from '../../styles';
 import { useToggleMovie, useOrientation } from '../../hooks';
 
 import { Focused } from '../ui';
-import { HomeStackNavigatorParamList } from '../../navigation/types';
-
-import { useAppSelector } from '../../redux/hooks';
-import { selectMovieById } from '../../redux/movies/selectors';
+import { Movie } from '../../types';
 
 type MoviePropsType = {
-  movieId: string;
-  prevRoute: string;
-  navigation: StackNavigationProp<HomeStackNavigatorParamList, 'Details'>;
+  movie: Movie;
+  backLink: string;
+  goBack: () => void;
 };
 
 const MovieDetailsContent: FC<MoviePropsType> = ({
-  movieId,
-  navigation,
-  prevRoute,
+  movie,
+  backLink,
+  goBack,
 }) => {
   const { isPortrait, height } = useOrientation();
-  const { navigate, goBack } = navigation;
-  const isHomeScreen = prevRoute === 'Home';
-  const movie = useAppSelector(selectMovieById(movieId, isHomeScreen));
+
+  const isHomeScreen = backLink === '/';
 
   const { toggleMovie } = useToggleMovie({ isHomeScreen, goBack });
 
@@ -52,13 +44,7 @@ const MovieDetailsContent: FC<MoviePropsType> = ({
     <>
       {movie && (
         <ScrollView>
-          <View
-            style={
-              isPortrait || !isPlatformAndroidtv
-                ? styles.container
-                : styles.containerRow
-            }
-          >
+          <View style={isPortrait ? styles.container : styles.containerRow}>
             <View style={[styles.posterBox, posterBoxStyle]}>
               <Image
                 style={[
@@ -121,21 +107,21 @@ const MovieDetailsContent: FC<MoviePropsType> = ({
               </View>
               <View style={styles.buttonBox}>
                 <Focused
-                  hasTVPreferredFocus
                   style={styles.button}
                   focusedStyle={styles.buttonFocused}
-                  handlePress={() =>
-                    navigate('Video', {
-                      uri: movie.videos[0],
-                    })
-                  }
+                  // handlePress={() =>
+                  //   navigate('Video', {
+                  //     uri: movie.videos[0],
+                  //   })
+                  // }
                 >
-                  <Octicons
-                    name="play"
-                    size={isPortrait ? 60 : 40}
-                    color={palette.whiteColor}
-                  />
-                  <Text style={[commonStyles.text, { marginLeft: 4 }]}>
+                  <Octicons name="play" size={40} color={palette.whiteColor} />
+                  <Text
+                    style={[
+                      commonStyles.text,
+                      { marginLeft: 4, fontWeight: 'bold' },
+                    ]}
+                  >
                     WATCH
                   </Text>
                 </Focused>
@@ -144,13 +130,7 @@ const MovieDetailsContent: FC<MoviePropsType> = ({
                   focusedStyle={styles.buttonFocused}
                   handlePress={() => toggleMovie(movie)}
                 >
-                  <View
-                    style={{
-                      ...(isPortrait || isPlatformAndroid
-                        ? styles.iconBoxCentered
-                        : styles.iconBoxCenteredLand),
-                    }}
-                  >
+                  <View style={styles.iconBoxCenteredLand}>
                     {isHomeScreen ? (
                       <Octicons
                         name="heart"
@@ -165,7 +145,12 @@ const MovieDetailsContent: FC<MoviePropsType> = ({
                       />
                     )}
                   </View>
-                  <Text style={[commonStyles.text, { marginLeft: 4 }]}>
+                  <Text
+                    style={[
+                      commonStyles.text,
+                      { marginLeft: 4, fontWeight: 'bold' },
+                    ]}
+                  >
                     {isHomeScreen ? 'SAVE' : 'REMOVE'}
                   </Text>
                 </Focused>
@@ -188,7 +173,8 @@ const styles = StyleSheet.create({
   containerRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    // paddingLeft: 16,
+    backgroundColor: palette.mainBgColor,
+
     paddingVertical: 16,
   },
   posterBox: {
@@ -214,12 +200,12 @@ const styles = StyleSheet.create({
   title: {
     width: 100,
     fontWeight: 'bold',
-    fontSize: 14,
+    fontSize: 16,
     color: palette.whiteColor,
   },
   content: {
     fontWeight: '500',
-    fontSize: 14,
+    fontSize: 16,
     lineHeight: 16,
     color: palette.modalGreyText,
   },
@@ -237,8 +223,8 @@ const styles = StyleSheet.create({
   button: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 24,
-    paddingVertical: 4,
+    paddingHorizontal: 34,
+    paddingVertical: 6,
     borderWidth: 2,
     borderRadius: 5,
     borderColor: palette.whiteColor,
@@ -247,15 +233,7 @@ const styles = StyleSheet.create({
     backgroundColor: palette.accentColor,
     borderColor: palette.accentColor,
   },
-  iconBoxCentered: {
-    borderWidth: 5.5,
-    borderColor: palette.whiteColor,
-    borderRadius: 30,
-    width: 60,
-    height: 60,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+
   iconBoxCenteredLand: {
     borderWidth: 3.5,
     borderColor: palette.whiteColor,

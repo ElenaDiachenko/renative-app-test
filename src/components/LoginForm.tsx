@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from 'react';
+import React, { useReducer, useEffect, FC } from 'react';
 
 import {
   View,
@@ -12,13 +12,14 @@ import { useNavigation } from '@react-navigation/native';
 import { reducer, validateInputField } from '../utils';
 import { palette } from '../styles';
 import { CustomInput } from './ui';
-import { AuthStackScreenProps } from '../navigation/types';
+import { AuthStackScreenProps, AuthStackParamList } from '../navigation/types';
 import { useAuth } from '../hooks';
 import { useAppDispatch } from '../redux/hooks';
 
 import { logIn } from '../redux/auth/operations';
 import { isWebBased } from '@rnv/renative';
-import { useRouter } from 'next/router';
+import { NextRouter, useRouter } from 'next/router';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 const initialState: reducer.State = {
   email: '',
@@ -26,15 +27,16 @@ const initialState: reducer.State = {
   errors: {},
 };
 
-const LoginForm = () => {
-  let navigation;
+type LoginFormProps = {
+  router?: NextRouter;
+};
+const LoginForm: FC<LoginFormProps> = ({ router }) => {
+  let navigation: StackNavigationProp<AuthStackParamList, 'Login'>;
+
   if (!isWebBased) {
     navigation = useNavigation<AuthStackScreenProps<'Login'>['navigation']>();
-  } else {
-    navigation = useRouter();
   }
-  // const navigation =
-  //   useNavigation<AuthStackScreenProps<'Login'>['navigation']>();
+
   const [state, dispatch] = useReducer(reducer.reducer, initialState);
   const reduxDispatch = useAppDispatch();
   const { isLoading } = useAuth();
@@ -68,7 +70,7 @@ const LoginForm = () => {
   const { email, password, errors } = state;
 
   const navigateToRegister = () => {
-    isWebBased ? navigation.push('/register') : navigation.navigate('Register');
+    isWebBased ? router?.push('/register') : navigation.navigate('Register');
   };
   return (
     <View style={styles.container}>
@@ -134,7 +136,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   button: {
-    width: '40%',
+    width: '35%',
     height: 50,
     alignItems: 'center',
     justifyContent: 'center',

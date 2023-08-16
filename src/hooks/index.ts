@@ -5,6 +5,7 @@ import { usePagination, DOTS } from './usePagination';
 import { useToggleMovie } from './useToggleMovie';
 import { useLibraryState } from './useLibraryState';
 import { useFocusState } from './useFocusState';
+import { useRouting } from './useRouting';
 
 export {
   useAuth,
@@ -15,4 +16,5 @@ export {
   useToggleMovie,
   useLibraryState,
   useFocusState,
+  useRouting,
 };

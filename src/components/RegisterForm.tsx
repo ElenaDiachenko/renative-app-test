@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { FC, useReducer } from 'react';
 
 import {
   View,
@@ -32,16 +32,14 @@ const initialState: reducer.State = {
   errors: {},
 };
 
-const RegisterForm = ({ router }) => {
-  let navigation: any;
+const RegisterForm: FC<RegisterFormProps> = ({ router }) => {
+  let navigation: StackNavigationProp<AuthStackParamList, 'Register'>;
+
   if (!isWebBased) {
     navigation =
       useNavigation<AuthStackScreenProps<'Register'>['navigation']>();
-  } else {
-    navigation = router;
   }
-  // const navigation =
-  //   useNavigation<AuthStackScreenProps<'Register'>['navigation']>();
+
   const [state, dispatch] = useReducer(reducer.reducer, initialState);
 
   const reduxDispatch = useAppDispatch();
@@ -82,7 +80,7 @@ const RegisterForm = ({ router }) => {
   const { username = '', email, password, errors } = state;
 
   const navigateToLogin = () => {
-    isWebBased ? navigation.push('/login') : navigation.navigate('Login');
+    isWebBased ? router?.push('/login') : navigation?.navigate('Login');
   };
   return (
     <View style={styles.container}>
@@ -134,6 +132,7 @@ export default RegisterForm;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    height: isWebBased ? '100vh' : '100%',
     justifyContent: 'center',
     flexDirection: 'column',
     alignItems: 'center',
@@ -153,7 +152,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   button: {
-    width: '40%',
+    width: '35%',
     height: 50,
     alignItems: 'center',
     justifyContent: 'center',

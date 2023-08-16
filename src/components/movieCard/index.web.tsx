@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
-
+import { useRouter } from 'next/router';
 import { constants, convertRating, calculateCardWidth } from '../../utils';
 import { Movie } from '../../types';
 import { palette } from '../../styles';
@@ -9,22 +9,21 @@ import { Focused } from '../ui';
 
 type MovieCardProps = {
   movie: Movie;
-
   prevRoute: string;
 };
 
 const MovieCard: FC<MovieCardProps> = ({ movie, prevRoute }) => {
   const { width, isPortrait } = useOrientation();
-
+  const router = useRouter();
   const cardWidth = calculateCardWidth(isPortrait, width);
 
   return (
     <Focused
       style={{ ...styles.card, width: cardWidth }}
       focusedStyle={styles.cardFocused}
-      // handlePress={() =>
-      //   navigation.navigate('Details', { movieId: movie._id, prevRoute })
-      // }
+      handlePress={() =>
+        router.push(`/movie/${movie._id}?backLink=${router.pathname}`)
+      }
     >
       <Image
         style={styles.cardImage}

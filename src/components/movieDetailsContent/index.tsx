@@ -6,7 +6,7 @@ import Octicons from 'react-native-vector-icons/Octicons';
 import LinearGradient from 'react-native-linear-gradient';
 
 import { StackNavigationProp } from '@react-navigation/stack';
-// import FastImage from 'react-native-fast-image';
+import FastImage from 'react-native-fast-image';
 
 import { convertRating, convertTime, constants } from '../../utils';
 import { commonStyles, palette } from '../../styles';
@@ -60,7 +60,7 @@ const MovieDetailsContent: FC<MoviePropsType> = ({
             }
           >
             <View style={[styles.posterBox, posterBoxStyle]}>
-              <Image
+              <FastImage
                 style={[
                   styles.infoImage,
                   { aspectRatio: constants.ASPECT_RATIO },
