@@ -7,7 +7,7 @@ import {
   ViewProps,
   ViewStyle,
 } from 'react-native';
-import { isPlatformAndroidtv } from '@rnv/renative';
+import { isPlatformAndroid, isPlatformAndroidtv } from '@rnv/renative';
 import React, { FC, ReactNode, useState, useCallback } from 'react';
 
 import { palette } from '../../styles';
@@ -50,7 +50,7 @@ const Focused: FC<FocusedType & ViewProps & TouchableOpacityProps> = ({
       {...props}
       style={[style, focus ? focusedStyle || styles.focused : null]}
       onPress={handlePress}
-      activeOpacity={isPlatformAndroidtv ? 1 : 0.6}
+      activeOpacity={isPlatformAndroid ? 0.6 : 1}
       onFocus={handleFocus}
       onBlur={handleBlur}
     >

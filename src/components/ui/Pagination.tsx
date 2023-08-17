@@ -1,9 +1,11 @@
 import React, { FC } from 'react';
 import { Text, StyleSheet, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Octicons';
+import { BsArrowRight, BsArrowLeft } from 'react-icons/bs';
 import { usePagination, DOTS, useOrientation } from '../../hooks';
 import { palette } from '../../styles';
 import Focused from '../ui/Focused';
+import { isWebBased } from '@rnv/renative';
 
 type PaginationProps = {
   total: number;
@@ -51,7 +53,11 @@ const Pagination: FC<PaginationProps> = ({
           accessibilityLabel="previous"
           handlePress={() => paginate(currentPage - 1)}
         >
-          <Icon name="arrow-left" size={20} color={palette.whiteColor} />
+          {isWebBased ? (
+            <BsArrowLeft size={20} color={palette.whiteColor} />
+          ) : (
+            <Icon name="arrow-left" size={20} color={palette.whiteColor} />
+          )}
         </Focused>
       )}
 
@@ -88,7 +94,11 @@ const Pagination: FC<PaginationProps> = ({
           handlePress={() => paginate(currentPage + 1)}
           style={styles.paginationButton}
         >
-          <Icon name="arrow-right" size={20} color={palette.whiteColor} />
+          {isWebBased ? (
+            <BsArrowRight size={20} color={palette.whiteColor} />
+          ) : (
+            <Icon name="arrow-right" size={20} color={palette.whiteColor} />
+          )}
         </Focused>
       )}
     </View>

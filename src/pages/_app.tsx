@@ -4,6 +4,8 @@ import 'raf/polyfill';
 import type { AppProps } from 'next/app';
 import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { store, persistor } from '../redux';
 import { Loader } from '../components/ui';
 
@@ -29,10 +31,13 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <>
-          {isLoading ? <Loader size={'large'} full /> : null}
-          <Component {...pageProps} />
-        </>
+        {isLoading ? <Loader size={'large'} full /> : null}
+        <Component {...pageProps} />
+        <ToastContainer
+          autoClose={2000}
+          theme={'colored'}
+          hideProgressBar={false}
+        />
       </PersistGate>
     </Provider>
   );

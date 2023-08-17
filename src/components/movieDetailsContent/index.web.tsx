@@ -1,7 +1,8 @@
 import React, { FC } from 'react';
 import { StyleSheet, Text, View, ScrollView, Image } from 'react-native';
 
-import Octicons from 'react-native-vector-icons/Octicons';
+import { BsHeartFill, BsHeart } from 'react-icons/bs';
+import { FaPlay } from 'react-icons/fa';
 import LinearGradient from 'react-native-linear-gradient';
 
 import { convertRating, convertTime, constants } from '../../utils';
@@ -122,11 +123,11 @@ const MovieDetailsContent: FC<MoviePropsType> = ({
                     );
                   }}
                 >
-                  <Octicons name="play" size={40} color={palette.whiteColor} />
+                  <FaPlay size={25} color={palette.whiteColor} />
                   <Text
                     style={[
                       commonStyles.text,
-                      { marginLeft: 4, fontWeight: 'bold' },
+                      { marginLeft: 10, fontWeight: '600' },
                     ]}
                   >
                     WATCH
@@ -137,25 +138,16 @@ const MovieDetailsContent: FC<MoviePropsType> = ({
                   focusedStyle={styles.buttonFocused}
                   handlePress={() => toggleMovie(movie)}
                 >
-                  <View style={styles.iconBoxCenteredLand}>
-                    {isHomeScreen ? (
-                      <Octicons
-                        name="heart"
-                        size={isPortrait ? 26 : 20}
-                        color={palette.whiteColor}
-                      />
-                    ) : (
-                      <Octicons
-                        name="heart-fill"
-                        size={isPortrait ? 26 : 20}
-                        color={palette.whiteColor}
-                      />
-                    )}
-                  </View>
+                  {isHomeScreen ? (
+                    <BsHeart size={25} color={palette.whiteColor} />
+                  ) : (
+                    <BsHeartFill size={25} color={palette.whiteColor} />
+                  )}
+
                   <Text
                     style={[
                       commonStyles.text,
-                      { marginLeft: 4, fontWeight: 'bold' },
+                      { marginLeft: 10, fontWeight: '600' },
                     ]}
                   >
                     {isHomeScreen ? 'SAVE' : 'REMOVE'}
@@ -230,6 +222,7 @@ const styles = StyleSheet.create({
   button: {
     flexDirection: 'row',
     alignItems: 'center',
+    height: 60,
     paddingHorizontal: 34,
     paddingVertical: 6,
     borderWidth: 2,
