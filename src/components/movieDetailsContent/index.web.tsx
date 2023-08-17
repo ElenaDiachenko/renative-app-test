@@ -10,6 +10,7 @@ import { useToggleMovie, useOrientation } from '../../hooks';
 
 import { Focused } from '../ui';
 import { Movie } from '../../types';
+import { useRouter } from 'next/router';
 
 type MoviePropsType = {
   movie: Movie;
@@ -23,7 +24,7 @@ const MovieDetailsContent: FC<MoviePropsType> = ({
   goBack,
 }) => {
   const { isPortrait, height } = useOrientation();
-
+  const router = useRouter();
   const isHomeScreen = backLink === '/';
 
   const { toggleMovie } = useToggleMovie({ isHomeScreen, goBack });
@@ -109,11 +110,17 @@ const MovieDetailsContent: FC<MoviePropsType> = ({
                 <Focused
                   style={styles.button}
                   focusedStyle={styles.buttonFocused}
-                  // handlePress={() =>
-                  //   navigate('Video', {
-                  //     uri: movie.videos[0],
-                  //   })
-                  // }
+                  handlePress={() => {
+                    router.push(
+                      {
+                        pathname: '/video/[uri]',
+                        query: {
+                          uri: movie.videos[0],
+                        },
+                      },
+                      '/video',
+                    );
+                  }}
                 >
                   <Octicons name="play" size={40} color={palette.whiteColor} />
                   <Text
