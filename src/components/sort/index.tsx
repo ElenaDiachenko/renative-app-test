@@ -1,10 +1,10 @@
 import React, { FC } from 'react';
 import { View, StyleSheet } from 'react-native';
 import Octicons from 'react-native-vector-icons/Octicons';
-import { palette } from '../styles';
-import Picker from './Picker';
-import { Focused } from './ui';
-import { useFocusState } from '../hooks';
+import { palette } from '../../styles';
+import Picker from '../Picker';
+import { Focused } from '../ui';
+import { useFocusState } from '../../hooks';
 
 type SortPropsType = {
   data: DataType[];
@@ -43,7 +43,6 @@ const Sort: FC<SortPropsType> = ({ data, handleChange, sortState }) => {
         data={data}
         dropdownIconColor={palette.whiteColor}
       />
-
       <Focused
         handlePress={handleOrderChange}
         onFocus={() => handleFocusChangeOrder(true)}

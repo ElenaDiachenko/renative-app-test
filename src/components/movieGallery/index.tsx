@@ -10,8 +10,8 @@ import { Loader, Pagination } from '../ui';
 import { isPlatformAndroidtv } from '@rnv/renative';
 import { useLibraryState } from '../../hooks';
 import FilterBtn from '../FilterBtn';
-import CustomHeader from '../CustomHeader.tv';
-import ActionSection from '../ActionSection';
+import CustomHeader from '../CustomHeader';
+import ActionSection from '../actionSection';
 type GalleryPropType = {
   prevRoute: string;
 };
@@ -86,10 +86,7 @@ const MovieGallery: FC<GalleryPropType> = ({ prevRoute }) => {
                     <CustomHeader />
                   </View>
                   {isFilterOpen && (
-                    <ActionSection
-                      closeDrawerMenu={() => {}}
-                      setIsFilterOpen={setIsFilterOpen}
-                    />
+                    <ActionSection setIsFilterOpen={setIsFilterOpen} />
                   )}
                 </>
               )}

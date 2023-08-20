@@ -1,19 +1,19 @@
 import React, { FC, useState, useEffect } from 'react';
 import { Button, FlatList, StyleSheet, Text, View } from 'react-native';
-import Link from 'next/link';
+import { isPlatformAndroidtv } from '@rnv/renative';
 import MovieCard from '../movieCard/index.web';
 import { Movie, MovieDataType } from '../../types';
 
 import { commonStyles, palette } from '../../styles';
 import { useOrientation } from '../../hooks';
 import { Loader, Pagination } from '../ui';
-import { isPlatformAndroidtv } from '@rnv/renative';
+
 import { useLibraryState } from '../../hooks';
 import FilterBtn from '../FilterBtn';
-import CustomHeader from '../CustomHeader.tv';
-import ActionSection from '../ActionSection';
+import CustomHeader from '../CustomHeader';
+import ActionSection from '../actionSection/index.web';
 import { useAppDispatch } from '../../redux/hooks';
-import { logIn, logOut } from '../../redux/auth/operations';
+
 import {
   setLibrarySearchParameters,
   setSearchParameters,
@@ -37,7 +37,7 @@ const renderMovieCard = ({
 
 const MovieGallery: FC<GalleryPropType> = ({ prevRoute, data }) => {
   const [numCols, setCols] = useState(5);
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
+
   const router = useRouter();
   const dispatch = useAppDispatch();
   const isHomeScreen = prevRoute === 'Home';
@@ -68,39 +68,9 @@ const MovieGallery: FC<GalleryPropType> = ({ prevRoute, data }) => {
                   justifyContent: 'space-between',
                 }}
               >
-                <FilterBtn
-                  isFilterOpen={isFilterOpen}
-                  setIsFilterOpen={setIsFilterOpen}
-                />
-                {/* <CustomHeader /> */}
-                <Button
-                  title="Login"
-                  onPress={() =>
-                    dispatch(
-                      logIn({ email: 'mary@gmail.com', password: 'mary1234' }),
-                    )
-                  }
-                />
-                <Button title="Logout" onPress={() => dispatch(logOut())} />
-                <Button
-                  title="Library"
-                  onPress={() => {
-                    router.push('/library');
-                  }}
-                />
-                <Button
-                  title="Login Page"
-                  onPress={() => {
-                    router.push('/login');
-                  }}
-                />
+                <ActionSection router={router} />
+                <CustomHeader router={router} />
               </View>
-              {/* {isFilterOpen && (
-                <ActionSection
-                  closeDrawerMenu={() => {}}
-                  setIsFilterOpen={setIsFilterOpen}
-                />
-              )} */}
             </>
           }
           ListHeaderComponentStyle={{ paddingHorizontal: 10, marginBottom: 16 }}

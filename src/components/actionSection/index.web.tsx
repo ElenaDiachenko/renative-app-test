@@ -1,29 +1,36 @@
 import React, { FC, useEffect, useState } from 'react';
 import { Text, StyleSheet, View } from 'react-native';
-import { isPlatformAndroidtv } from '@rnv/renative';
-import { useFocusState } from '../hooks';
-import GenreList from './GenreList';
-import { palette } from '../styles';
-import { Focused } from './ui';
-import Search from './Search';
-import Sort from './Sort';
-import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import {
+  isPlatformAndroid,
+  isPlatformAndroidtv,
+  isWebBased,
+} from '@rnv/renative';
+import { useFocusState } from '../../hooks';
+
+import { palette } from '../../styles';
+import { Focused } from '../ui';
+import Search from '../Search';
+import Sort from '../sort/index.web';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import {
   selectFilterMovie,
   selectFilterlibrary,
-} from '../redux/filter/selectors';
+} from '../../redux/filter/selectors';
 import {
   setSearchParameters,
   setLibrarySearchParameters,
-} from '../redux/filter/slice';
-import { constants, isGenre } from '../utils';
-import GenreListHorizontal from './GenreListHorizontal';
+} from '../../redux/filter/slice';
+import { constants, isGenre } from '../../utils';
+
 import { useRoute } from '@react-navigation/native';
+import { NextRouter } from 'next/router';
+import { Select } from '../select/index.web';
 
 type ActionSectionProps = {
-  closeDrawerMenu: () => void;
-  setIsFilterOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  closeDrawerMenu?: () => void;
+
   currentRoute?: string;
+  router?: NextRouter;
 };
 
 const initialQuery = {
@@ -31,22 +38,18 @@ const initialQuery = {
   genre: '',
 };
 
-const ActionSection: FC<ActionSectionProps> = ({
-  closeDrawerMenu,
-  setIsFilterOpen,
-  currentRoute,
-}) => {
-  const { name: routeTv } = useRoute();
-  const [isFocusedGenre, handleFocusChangeGenre] = useFocusState();
+const ActionSection: FC<ActionSectionProps> = ({ currentRoute, router }) => {
+  const { name: routeName } = isWebBased
+    ? { name: router?.pathname === '/' ? 'Home' : 'Library' }
+    : useRoute();
+
   const [query, setQuery] = useState(initialQuery);
   const [errorMessage, setErrorMessage] = useState('');
-
-  const [openGenres, setOpenGenres] = useState(false);
 
   const searchParameters = useAppSelector(selectFilterMovie);
   const librarySearchParameters = useAppSelector(selectFilterlibrary);
   const dispatch = useAppDispatch();
-  const route = isPlatformAndroidtv ? routeTv : currentRoute;
+  const route = isPlatformAndroid ? currentRoute : routeName;
   const isHomeScreen = route === 'Home';
 
   const sortState = {
@@ -79,10 +82,6 @@ const ActionSection: FC<ActionSectionProps> = ({
           });
   }, [librarySearchParameters.query, searchParameters.query]);
 
-  const handleFilters = () => {
-    setIsFilterOpen((prev) => !prev);
-  };
-
   const handleSearch = (searchQuery: string) => {
     const evalGenre = searchQuery === 'all genres' ? '' : searchQuery;
     const updatedSearchParams = {
@@ -94,9 +93,6 @@ const ActionSection: FC<ActionSectionProps> = ({
     } else {
       dispatch(setLibrarySearchParameters(updatedSearchParams));
     }
-    closeDrawerMenu();
-    handleFilters();
-    setOpenGenres(false);
   };
   const handleSort = (newSortState: typeof sortState) => {
     const updatedSearchParams = {
@@ -108,27 +104,20 @@ const ActionSection: FC<ActionSectionProps> = ({
     } else {
       dispatch(setLibrarySearchParameters(updatedSearchParams));
     }
-    closeDrawerMenu();
-    handleFilters();
   };
 
   return (
     <View style={{ paddingHorizontal: !isPlatformAndroidtv ? 16 : 0 }}>
-      <View
-        style={[
-          { width: '100%' },
-          isPlatformAndroidtv && styles.innerContainer,
-        ]}
-      >
+      <View style={styles.innerContainer}>
         <View
           style={[
             {
-              width: isPlatformAndroidtv ? '25%' : '100%',
-              flexDirection: isPlatformAndroidtv ? 'row' : 'column',
+              width: !isPlatformAndroid ? '25%' : '100%',
+              flexDirection: !isPlatformAndroid ? 'row' : 'column',
             },
           ]}
         >
-          {!isPlatformAndroidtv && (
+          {isPlatformAndroid && (
             <Text style={[styles.filterLabel]}>Sort By:</Text>
           )}
           <Sort
@@ -137,13 +126,23 @@ const ActionSection: FC<ActionSectionProps> = ({
             sortState={sortState}
           />
         </View>
+
+        <Select
+          data={constants.genreList}
+          handleChange={handleSearch}
+          value={
+            isHomeScreen
+              ? searchParameters.query
+              : librarySearchParameters.query
+          }
+        />
         <View
           style={{
-            flexDirection: isPlatformAndroidtv ? 'row' : 'column',
-            paddingLeft: isPlatformAndroidtv ? '10%' : 0,
+            flexDirection: !isPlatformAndroid ? 'row' : 'column',
+            paddingLeft: !isPlatformAndroid ? '10%' : 0,
           }}
         >
-          {!isPlatformAndroidtv && (
+          {isPlatformAndroid && (
             <Text style={[styles.filterLabel, { paddingBottom: 16 }]}>
               Search By Title:
             </Text>
@@ -158,43 +157,6 @@ const ActionSection: FC<ActionSectionProps> = ({
           ) : null}
         </View>
       </View>
-
-      {!isPlatformAndroidtv ? (
-        <>
-          <Focused
-            handlePress={() => setOpenGenres((openGenres) => !openGenres)}
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              paddingVertical: 16,
-            }}
-            onFocus={() => handleFocusChangeGenre(true)}
-            onBlur={() => handleFocusChangeGenre(false)}
-          >
-            <Text
-              style={
-                !isFocusedGenre ? styles.filterLabel : styles.filterLabelFocused
-              }
-            >
-              Sort By Genre:
-            </Text>
-            {!openGenres ? (
-              <Text
-                style={{ ...styles.filterTitle, color: palette.accentColor }}
-              >
-                {query.genre || 'all genres'}
-              </Text>
-            ) : null}
-          </Focused>
-          {openGenres && (
-            <View style={{ paddingHorizontal: 16 }}>
-              <GenreList query={query.genre} handleChange={handleSearch} />
-            </View>
-          )}
-        </>
-      ) : (
-        <GenreListHorizontal query={query.genre} handleChange={handleSearch} />
-      )}
     </View>
   );
 };
@@ -227,5 +189,6 @@ const styles = StyleSheet.create({
   innerContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
   },
 });

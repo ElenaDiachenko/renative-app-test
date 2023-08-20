@@ -8,7 +8,7 @@ import type {
   DrawerNavigationProp,
   DrawerScreenProps,
 } from '@react-navigation/drawer';
-import { StackNavigationProp } from '@react-navigation/stack';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 export type HomeStackNavigatorParamList = {
   Main: NavigatorScreenParams<DrawerParamList>;
@@ -23,7 +23,7 @@ export type HomeStackNavigatorParamList = {
 
 export type HomeStackScreenProps<T extends keyof HomeStackNavigatorParamList> =
   {
-    navigation: StackNavigationProp<HomeStackNavigatorParamList, T>;
+    navigation: NativeStackNavigationProp<HomeStackNavigatorParamList, T>;
     route: RouteProp<HomeStackNavigatorParamList, T>;
   };
 
@@ -48,7 +48,7 @@ export type AuthStackParamList = {
 };
 
 export type AuthStackScreenProps<T extends keyof AuthStackParamList> = {
-  navigation: StackNavigationProp<AuthStackParamList, T>;
+  navigation: NativeStackNavigationProp<AuthStackParamList, T>;
   route: RouteProp<AuthStackParamList, T>;
 };
 

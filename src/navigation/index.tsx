@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import * as Screens from '../screens';
 import {
@@ -15,10 +15,11 @@ import { useAppDispatch } from '../redux/hooks';
 import { checkStatus } from '../redux/auth/operations';
 
 import { headerHeight } from '../utils/constants';
+import { palette } from '../styles';
 
 const Drawer = createDrawerNavigator<DrawerParamList>();
-const MainStack = createStackNavigator<HomeStackNavigatorParamList>();
-const AuthStack = createStackNavigator<AuthStackParamList>();
+const MainStack = createNativeStackNavigator<HomeStackNavigatorParamList>();
+const AuthStack = createNativeStackNavigator<AuthStackParamList>();
 
 const AuthNav = () => {
   return (
@@ -43,7 +44,14 @@ const DrawerNav = () => {
         drawerType: 'front',
         headerStyle: {
           height: headerHeight,
+          backgroundColor: palette.mainBgColor,
+          shadowColor: palette.footerBgColor,
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: 0.2,
+          shadowRadius: 4,
+          elevation: 5,
         },
+        headerTintColor: palette.whiteColor,
       }}
     >
       <Drawer.Screen name="Home" component={Screens.HomeScreen} />
@@ -60,7 +68,15 @@ const MainNav = () => (
   >
     <MainStack.Screen name="Main" component={DrawerNav} />
     <MainStack.Screen name="Details" component={Screens.DetailsScreen} />
-    <MainStack.Screen name="Video" component={Screens.VideoScreen} />
+    <MainStack.Screen
+      name="Video"
+      component={Screens.VideoScreen}
+      options={{
+        orientation: 'landscape',
+        presentation: 'fullScreenModal',
+        animation: 'fade',
+      }}
+    />
   </MainStack.Navigator>
 );
 

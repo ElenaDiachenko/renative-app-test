@@ -8,7 +8,9 @@ import {
   StyleSheet,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-// import { useStore } from '../stores/store';
+import { isWebBased } from '@rnv/renative';
+import { NextRouter } from 'next/router';
+
 import { reducer, validateInputField } from '../utils';
 import { palette } from '../styles';
 import { CustomInput } from './ui';
@@ -17,8 +19,7 @@ import { useAuth } from '../hooks';
 import { useAppDispatch } from '../redux/hooks';
 
 import { logIn } from '../redux/auth/operations';
-import { isWebBased } from '@rnv/renative';
-import { NextRouter, useRouter } from 'next/router';
+
 import { StackNavigationProp } from '@react-navigation/stack';
 
 const initialState: reducer.State = {

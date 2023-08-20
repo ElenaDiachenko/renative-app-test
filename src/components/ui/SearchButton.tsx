@@ -1,5 +1,7 @@
 import React, { FC } from 'react';
 import { StyleSheet, ViewProps } from 'react-native';
+import { isWebBased } from '@rnv/renative';
+import { BiSearch } from 'react-icons/bi';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { palette } from '../../styles';
 import Focused from './Focused';
@@ -15,12 +17,16 @@ const SearchButton: FC<ButtonProps> = ({ isFocused, ...props }) => {
 
   return (
     <Focused style={styles.button} {...props}>
-      <Ionicons
-        name="search"
-        size={24}
-        color={palette.blackColor}
-        style={buttonStyle}
-      />
+      {isWebBased ? (
+        <BiSearch size={24} color={palette.blackColor} />
+      ) : (
+        <Ionicons
+          name="search"
+          size={24}
+          color={palette.blackColor}
+          style={buttonStyle}
+        />
+      )}
     </Focused>
   );
 };

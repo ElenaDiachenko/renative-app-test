@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { StyleSheet, Text, View, ScrollView, Image } from 'react-native';
 import { isPlatformAndroidtv, isPlatformAndroid } from '@rnv/renative';
 
-import Octicons from 'react-native-vector-icons/Octicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
 
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -51,7 +51,7 @@ const MovieDetailsContent: FC<MoviePropsType> = ({
   return (
     <>
       {movie && (
-        <ScrollView>
+        <ScrollView style={{ paddingHorizontal: 16 }}>
           <View
             style={
               isPortrait || !isPlatformAndroidtv
@@ -130,9 +130,9 @@ const MovieDetailsContent: FC<MoviePropsType> = ({
                     })
                   }
                 >
-                  <Octicons
+                  <Ionicons
                     name="play"
-                    size={isPortrait ? 60 : 40}
+                    size={isPortrait ? 26 : 30}
                     color={palette.whiteColor}
                   />
                   <Text style={[commonStyles.text, { marginLeft: 4 }]}>
@@ -144,27 +144,20 @@ const MovieDetailsContent: FC<MoviePropsType> = ({
                   focusedStyle={styles.buttonFocused}
                   handlePress={() => toggleMovie(movie)}
                 >
-                  <View
-                    style={{
-                      ...(isPortrait || isPlatformAndroid
-                        ? styles.iconBoxCentered
-                        : styles.iconBoxCenteredLand),
-                    }}
-                  >
-                    {isHomeScreen ? (
-                      <Octicons
-                        name="heart"
-                        size={isPortrait ? 26 : 20}
-                        color={palette.whiteColor}
-                      />
-                    ) : (
-                      <Octicons
-                        name="heart-fill"
-                        size={isPortrait ? 26 : 20}
-                        color={palette.whiteColor}
-                      />
-                    )}
-                  </View>
+                  {isHomeScreen ? (
+                    <Ionicons
+                      name="heart-outline"
+                      size={isPortrait ? 26 : 30}
+                      color={palette.whiteColor}
+                    />
+                  ) : (
+                    <Ionicons
+                      name="heart"
+                      size={isPortrait ? 26 : 30}
+                      color={palette.whiteColor}
+                    />
+                  )}
+
                   <Text style={[commonStyles.text, { marginLeft: 4 }]}>
                     {isHomeScreen ? 'SAVE' : 'REMOVE'}
                   </Text>
@@ -188,7 +181,7 @@ const styles = StyleSheet.create({
   containerRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    // paddingLeft: 16,
+
     paddingVertical: 16,
   },
   posterBox: {
@@ -204,7 +197,7 @@ const styles = StyleSheet.create({
 
   infoImage: {
     width: '100%',
-    backgroundColor: 'red',
+    backgroundColor: palette.modalGreyText,
   },
   item: {
     flexDirection: 'row',
@@ -237,8 +230,10 @@ const styles = StyleSheet.create({
   button: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 24,
-    paddingVertical: 4,
+    justifyContent: 'center',
+    width: isPlatformAndroidtv ? '30%' : '35%',
+    height: 50,
+
     borderWidth: 2,
     borderRadius: 5,
     borderColor: palette.whiteColor,
@@ -246,23 +241,5 @@ const styles = StyleSheet.create({
   buttonFocused: {
     backgroundColor: palette.accentColor,
     borderColor: palette.accentColor,
-  },
-  iconBoxCentered: {
-    borderWidth: 5.5,
-    borderColor: palette.whiteColor,
-    borderRadius: 30,
-    width: 60,
-    height: 60,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  iconBoxCenteredLand: {
-    borderWidth: 3.5,
-    borderColor: palette.whiteColor,
-    borderRadius: 20,
-    width: 40,
-    height: 40,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 });

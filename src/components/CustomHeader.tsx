@@ -1,7 +1,13 @@
 import { StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import React, { FC } from 'react';
+import { NextRouter } from 'next/router';
 import Feather from 'react-native-vector-icons/Feather';
-import { HomeStackScreenProps } from '../navigation/index.tv';
+import { isWebBased } from '@rnv/renative';
+import { FiLogOut } from 'react-icons/fi';
+import {
+  HomeStackNavigatorParamList,
+  HomeStackScreenProps,
+} from '../navigation/index.tv';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { palette } from '../styles';
 import { Focused } from './ui';
@@ -9,11 +15,21 @@ import { Focused } from './ui';
 import { useFocusState } from '../hooks';
 import { useAppDispatch } from '../redux/hooks';
 import { logOut } from '../redux/auth/operations';
+import { StackNavigationProp } from '@react-navigation/stack';
 
-const CustomHeader = () => {
-  const navigation =
-    useNavigation<HomeStackScreenProps<'Home'>['navigation']>();
-  const { name: route } = useRoute<HomeStackScreenProps<'Home'>['route']>();
+type HeaderProps = {
+  router?: NextRouter;
+};
+const CustomHeader: FC<HeaderProps> = ({ router }) => {
+  let navigation: StackNavigationProp<HomeStackNavigatorParamList, 'Home'>;
+
+  if (!isWebBased) {
+    navigation = useNavigation<HomeStackScreenProps<'Home'>['navigation']>();
+  }
+
+  const { name: route } = isWebBased
+    ? { name: router?.pathname === '/' ? 'Home' : 'Library' }
+    : useRoute<HomeStackScreenProps<'Home'>['route']>();
   const [isFocusedLibrary, handleFocusChangeLibrary] = useFocusState();
   const [isFocusedLogout, handleFocusChangeLogout] = useFocusState();
   const dispatch = useAppDispatch();
@@ -23,9 +39,11 @@ const CustomHeader = () => {
       <Focused
         onFocus={() => handleFocusChangeLibrary(true)}
         onBlur={() => handleFocusChangeLibrary(false)}
-        handlePress={() =>
-          navigation.navigate(route === 'Home' ? 'Library' : 'Home')
-        }
+        handlePress={() => {
+          isWebBased
+            ? router?.push(route === 'Home' ? '/library' : '/')
+            : navigation.navigate(route === 'Home' ? 'Library' : 'Home');
+        }}
         style={{ marginRight: 30 }}
       >
         <Text
@@ -44,11 +62,18 @@ const CustomHeader = () => {
         onFocus={() => handleFocusChangeLogout(true)}
         onBlur={() => handleFocusChangeLogout(false)}
       >
-        <Feather
-          name="log-out"
-          size={26}
-          color={isFocusedLogout ? palette.accentColor : palette.whiteColor}
-        />
+        {isWebBased ? (
+          <FiLogOut
+            size={26}
+            color={isFocusedLogout ? palette.accentColor : palette.whiteColor}
+          />
+        ) : (
+          <Feather
+            name="log-out"
+            size={26}
+            color={isFocusedLogout ? palette.accentColor : palette.whiteColor}
+          />
+        )}
       </Focused>
     </View>
   );

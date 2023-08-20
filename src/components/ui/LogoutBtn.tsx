@@ -1,4 +1,6 @@
 import { ViewStyle } from 'react-native';
+import { isWebBased } from '@rnv/renative';
+import { FiLogOut } from 'react-icons/fi';
 import Feather from 'react-native-vector-icons/Feather';
 import React from 'react';
 import { palette } from '../../styles';
@@ -19,11 +21,18 @@ const LogoutBtn = ({ handlePress, style }: Props) => {
       onFocus={() => handleFocusChange(true)}
       onBlur={() => handleFocusChange(false)}
     >
-      <Feather
-        name="log-out"
-        size={30}
-        color={isFocusedBtn ? palette.accentColor : palette.whiteColor}
-      />
+      {isWebBased ? (
+        <FiLogOut
+          size={30}
+          color={isFocusedBtn ? palette.accentColor : palette.whiteColor}
+        />
+      ) : (
+        <Feather
+          name="log-out"
+          size={30}
+          color={isFocusedBtn ? palette.accentColor : palette.whiteColor}
+        />
+      )}
     </Focused>
   );
 };

@@ -20,7 +20,7 @@ import {
 
 import { headerHeight } from '../utils/constants';
 import { Focused, LogoutBtn } from './ui';
-import ActionSection from './ActionSection';
+import ActionSection from './actionSection/index';
 import FilterBtn from './FilterBtn';
 
 export const screens = {

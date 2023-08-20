@@ -1,5 +1,5 @@
 export const genreList = [
-  { id: 'all', value: 'all genres' },
+  { id: 'all genres', value: 'all genres' },
   { id: 'adventure', value: 'adventure' },
   { id: 'action', value: 'action' },
   { id: 'animation', value: 'animation' },
