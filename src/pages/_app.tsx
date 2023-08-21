@@ -8,6 +8,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { store, persistor } from '../redux';
 import { Loader } from '../components/ui';
+import { Container } from '../components/ui';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const [isLoading, setIsLoading] = useState(false);
@@ -32,7 +33,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         {isLoading ? <Loader size={'large'} full /> : null}
-        <Component {...pageProps} />
+        <Container>{<Component {...pageProps} />}</Container>
         <ToastContainer
           autoClose={2000}
           theme={'colored'}

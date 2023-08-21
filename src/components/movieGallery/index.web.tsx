@@ -1,15 +1,9 @@
-import React, { FC, useState, useEffect } from 'react';
-import { Button, FlatList, StyleSheet, Text, View } from 'react-native';
-import { isPlatformAndroidtv } from '@rnv/renative';
+import React, { FC, useState } from 'react';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
 import MovieCard from '../movieCard/index.web';
 import { Movie, MovieDataType } from '../../types';
-
 import { commonStyles, palette } from '../../styles';
-import { useOrientation } from '../../hooks';
-import { Loader, Pagination } from '../ui';
-
-import { useLibraryState } from '../../hooks';
-import FilterBtn from '../FilterBtn';
+import { Pagination } from '../ui';
 import CustomHeader from '../CustomHeader';
 import ActionSection from '../actionSection/index.web';
 import { useAppDispatch } from '../../redux/hooks';

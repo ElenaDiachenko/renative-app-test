@@ -1,4 +1,6 @@
+import { isPlatformWeb } from '@rnv/renative';
 import { Dimensions, StyleSheet } from 'react-native';
+import { MAX_WIDTH_WEB } from '../utils/constants';
 
 export const palette = {
   accentColor: '#5dadef',
@@ -19,10 +21,16 @@ export const commonStyles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    maxWidth: isPlatformWeb ? MAX_WIDTH_WEB : '100%',
+    marginHorizontal: isPlatformWeb ? 'auto' : 0,
   },
 
   text: {
     color: palette.whiteColor,
+  },
+  title: {
+    color: palette.whiteColor,
+    fontSize: 35,
   },
   borderInit: { borderColor: 'transparent', borderWidth: 1, borderRadius: 5 },
 });

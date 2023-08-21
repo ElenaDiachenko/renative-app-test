@@ -5,12 +5,10 @@ import type {
   GetServerSidePropsContext,
   InferGetServerSidePropsType,
 } from 'next';
-
 import { useRouter } from 'next/router';
-import { fetchMovies } from '../API/movieRequests';
-import { useAuth } from '../hooks';
-import MovieGallery from '../components/movieGallery/index.web';
 
+import { fetchMovies } from '../API/movieRequests';
+import MovieGallery from '../components/movieGallery/index.web';
 import { MovieDataType } from '../types';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { selectFilterMovie } from '../redux/filter/selectors';

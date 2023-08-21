@@ -6,15 +6,20 @@ import 'video.js/dist/video-js.css';
 
 import React from 'react';
 import VideoJS from '../../components/VideoJS';
+import { useOrientation } from '../../hooks';
 
 const VideoPlayer: NextPage = () => {
   const { query } = useRouter();
   const playerRef = React.useRef(null);
-
+  const { height, width } = useOrientation();
+  console.log(width, height);
   const videoJsOptions = {
     autoplay: true,
     controls: true,
     fluid: true,
+    width,
+    height: height - 300,
+    poster: '',
     sources: [
       {
         src: query.uri,

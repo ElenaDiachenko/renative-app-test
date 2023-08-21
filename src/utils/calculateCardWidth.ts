@@ -1,8 +1,4 @@
-import {
-  isFactorMobile,
-  isPlatformAndroidtv,
-  isPlatformAndroid,
-} from '@rnv/renative';
+import { isFactorMobile, isPlatformAndroid } from '@rnv/renative';
 
 export const calculateCardWidth = (isPortrait: boolean, width: number) => {
   let columnCount: number = 0;

@@ -13,9 +13,9 @@ type MovieCardProps = {
 };
 
 const MovieCard: FC<MovieCardProps> = ({ movie, prevRoute }) => {
-  const { width, isPortrait } = useOrientation();
+  const { isPortrait } = useOrientation();
   const router = useRouter();
-  const cardWidth = calculateCardWidth(isPortrait, width);
+  const cardWidth = calculateCardWidth(isPortrait, constants.MAX_WIDTH_WEB);
 
   return (
     <Focused
