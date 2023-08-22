@@ -24,14 +24,11 @@ const Container: React.FC<ContainerProps> = ({ children }) => {
   if (!user && !isAuthPage) {
     router.replace('/login');
   }
-
-  return (
-    <View
-      style={{ ...commonStyles.container, height: isAuthPage ? '100vh' : '' }}
-    >
-      {children}
-    </View>
-  );
+  const appliedStyle =
+    router.asPath === '/video'
+      ? {}
+      : { ...commonStyles.container, height: isAuthPage ? '100vh' : '' };
+  return <View style={appliedStyle}>{children}</View>;
 };
 
 export default Container;
