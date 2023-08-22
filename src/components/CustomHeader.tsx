@@ -24,7 +24,7 @@ const CustomHeader: FC<HeaderProps> = ({ router }) => {
   let navigation: StackNavigationProp<HomeStackNavigatorParamList, 'Home'>;
 
   if (!isWebBased) {
-    navigation = useNavigation<HomeStackScreenProps<'Home'>['navigation']>();
+    navigation = useNavigation();
   }
 
   const { name: route } = isWebBased
@@ -34,6 +34,10 @@ const CustomHeader: FC<HeaderProps> = ({ router }) => {
   const [isFocusedLogout, handleFocusChangeLogout] = useFocusState();
   const dispatch = useAppDispatch();
 
+  const handleLogOut = async () => {
+    await dispatch(logOut());
+    router?.replace('/login');
+  };
   return (
     <View style={styles.container}>
       <Focused
@@ -56,9 +60,7 @@ const CustomHeader: FC<HeaderProps> = ({ router }) => {
         </Text>
       </Focused>
       <Focused
-        handlePress={() => {
-          dispatch(logOut());
-        }}
+        handlePress={handleLogOut}
         onFocus={() => handleFocusChangeLogout(true)}
         onBlur={() => handleFocusChangeLogout(false)}
       >

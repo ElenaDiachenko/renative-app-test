@@ -34,7 +34,7 @@ const CustomInput: FC<InputProps> = ({
     setIsFocused(false);
     setInputFocused?.(false);
   };
-  console.log(isFocused, '  => isFocused, input');
+
   return (
     <TouchableOpacity
       style={styles.inputBox}

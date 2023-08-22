@@ -1,4 +1,4 @@
-import { isPlatformWeb } from '@rnv/renative';
+import { isPlatformWeb, isWebBased } from '@rnv/renative';
 import { Dimensions, StyleSheet } from 'react-native';
 import { MAX_WIDTH_WEB } from '../utils/constants';
 
@@ -14,13 +14,13 @@ export const palette = {
   footerBgColor: '#f7f7f7',
   paginationArrowBg: '#f7f7f7',
 };
-
 export const commonStyles = StyleSheet.create({
   container: {
     backgroundColor: palette.mainBgColor,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    width: '100%',
     maxWidth: isPlatformWeb ? MAX_WIDTH_WEB : '100%',
     marginHorizontal: isPlatformWeb ? 'auto' : 0,
   },

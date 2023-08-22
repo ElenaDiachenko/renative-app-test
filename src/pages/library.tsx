@@ -7,9 +7,11 @@ import MovieGallery from '../components/movieGallery/index.web';
 import { useAppSelector } from '../redux/hooks';
 import { selectFilterlibrary } from '../redux/filter/selectors';
 import { useMovies } from '../hooks/useMovies.web';
+import { useRouting } from '../hooks';
 
 const Library: NextPage = () => {
   const router = useRouter();
+  // useRouting();
   const searchParameters = useAppSelector(selectFilterlibrary);
   const { data, isLoading, isError } = useMovies();
 

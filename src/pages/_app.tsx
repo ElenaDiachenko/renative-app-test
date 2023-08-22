@@ -1,4 +1,4 @@
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import 'raf/polyfill';
 import type { AppProps } from 'next/app';
@@ -12,13 +12,18 @@ import { Container } from '../components/ui';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const start = () => {
-      setIsLoading(true);
+      setTimeout(() => {
+        setIsLoading(true);
+      });
     };
     const end = () => {
-      setIsLoading(false);
+      setTimeout(() => {
+        setIsLoading(false);
+      });
     };
     Router.events.on('routeChangeStart', start);
     Router.events.on('routeChangeComplete', end);
@@ -33,7 +38,11 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         {isLoading ? <Loader size={'large'} full /> : null}
-        <Container>{<Component {...pageProps} />}</Container>
+
+        <Container>
+          <Component {...pageProps} />
+        </Container>
+
         <ToastContainer
           autoClose={2000}
           theme={'colored'}

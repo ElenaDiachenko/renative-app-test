@@ -10,22 +10,14 @@ import { useRouter } from 'next/router';
 import { fetchMovies } from '../API/movieRequests';
 import MovieGallery from '../components/movieGallery/index.web';
 import { MovieDataType } from '../types';
-import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import { useAppSelector } from '../redux/hooks';
 import { selectFilterMovie } from '../redux/filter/selectors';
-import { checkStatus } from '../redux/auth/operations';
 
 const Home: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({ data }) => {
   const router = useRouter();
   const searchParameters = useAppSelector(selectFilterMovie);
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    (async () => {
-      await dispatch(checkStatus());
-    })();
-  }, []);
 
   useEffect(() => {
     if (router.isReady) {

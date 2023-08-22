@@ -8,7 +8,7 @@ export const useRouting = () => {
 
   useEffect(() => {
     const asPath = router.asPath;
-    const shouldRedirect = user && !isError;
+    const shouldRedirect = user;
     console.log(asPath, 'asPath, useRouting');
     if (shouldRedirect && (asPath === '/login' || asPath === '/register')) {
       router.replace('/');

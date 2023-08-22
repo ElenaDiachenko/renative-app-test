@@ -47,7 +47,7 @@ const MovieGallery: FC<GalleryPropType> = ({ prevRoute, data }) => {
       style={{
         paddingTop: 10,
         width: '100%',
-        height: '100%',
+        // height: '100vh',
         backgroundColor: palette.mainBgColor,
       }}
     >
@@ -79,7 +79,9 @@ const MovieGallery: FC<GalleryPropType> = ({ prevRoute, data }) => {
                 contentPerPage={5}
                 siblingCount={1}
               />
-            ) : null
+            ) : (
+              <View style={{ height: 50 }}></View>
+            )
           }
           key={numCols}
           data={movieData}

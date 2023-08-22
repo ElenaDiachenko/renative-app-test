@@ -19,7 +19,7 @@ import { useAppDispatch } from '../redux/hooks';
 
 import { register } from '../redux/auth/operations';
 import { NextRouter } from 'next/router';
-import { isWebBased } from '@rnv/renative';
+import { isPlatformWeb, isWebBased } from '@rnv/renative';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 type RegisterFormProps = {
@@ -36,8 +36,7 @@ const RegisterForm: FC<RegisterFormProps> = ({ router }) => {
   let navigation: StackNavigationProp<AuthStackParamList, 'Register'>;
 
   if (!isWebBased) {
-    navigation =
-      useNavigation<AuthStackScreenProps<'Register'>['navigation']>();
+    navigation = useNavigation();
   }
 
   const [state, dispatch] = useReducer(reducer.reducer, initialState);
@@ -132,7 +131,8 @@ export default RegisterForm;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    height: isWebBased ? '100vh' : '100%',
+    width: '100%',
+    height: isPlatformWeb ? '100vh' : '100%',
     justifyContent: 'center',
     flexDirection: 'column',
     alignItems: 'center',

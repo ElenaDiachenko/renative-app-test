@@ -14,7 +14,7 @@ import { NextRouter } from 'next/router';
 import { reducer, validateInputField } from '../utils';
 import { palette } from '../styles';
 import { CustomInput } from './ui';
-import { AuthStackScreenProps, AuthStackParamList } from '../navigation/types';
+import { AuthStackParamList } from '../navigation/types';
 import { useAuth } from '../hooks';
 import { useAppDispatch } from '../redux/hooks';
 
@@ -35,7 +35,7 @@ const LoginForm: FC<LoginFormProps> = ({ router }) => {
   let navigation: StackNavigationProp<AuthStackParamList, 'Login'>;
 
   if (!isWebBased) {
-    navigation = useNavigation<AuthStackScreenProps<'Login'>['navigation']>();
+    navigation = useNavigation();
   }
 
   const [state, dispatch] = useReducer(reducer.reducer, initialState);
@@ -117,6 +117,7 @@ export default LoginForm;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    width: '100%',
     height: isWebBased ? '100vh' : '100%',
     justifyContent: 'center',
     flexDirection: 'column',
