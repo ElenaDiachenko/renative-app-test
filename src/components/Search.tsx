@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { CustomInput, SearchButton } from './ui';
-import { isWebBased } from '@rnv/renative';
+import { isPlatformWeb } from '@rnv/renative';
 
 type SearchPropsType = {
   handleChange: (newQuery: string) => void;
@@ -72,6 +72,6 @@ const styles = StyleSheet.create({
   innerContainer: {
     position: 'relative',
     maxWidth: 450,
-    width: isWebBased ? 600 : 'auto',
+    width: isPlatformWeb ? 600 : 'auto',
   },
 });

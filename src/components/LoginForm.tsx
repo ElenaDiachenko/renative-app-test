@@ -8,7 +8,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { isWebBased } from '@rnv/renative';
+import { isPlatformWeb } from '@rnv/renative';
 import { NextRouter } from 'next/router';
 
 import { reducer, validateInputField } from '../utils';
@@ -34,7 +34,7 @@ type LoginFormProps = {
 const LoginForm: FC<LoginFormProps> = ({ router }) => {
   let navigation: StackNavigationProp<AuthStackParamList, 'Login'>;
 
-  if (!isWebBased) {
+  if (!isPlatformWeb) {
     navigation = useNavigation();
   }
 
@@ -71,7 +71,7 @@ const LoginForm: FC<LoginFormProps> = ({ router }) => {
   const { email, password, errors } = state;
 
   const navigateToRegister = () => {
-    isWebBased ? router?.push('/register') : navigation.navigate('Register');
+    isPlatformWeb ? router?.push('/register') : navigation.navigate('Register');
   };
   return (
     <View style={styles.container}>
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: '100%',
-    height: isWebBased ? '100vh' : '100%',
+    height: isPlatformWeb ? '100vh' : '100%',
     justifyContent: 'center',
     flexDirection: 'column',
     alignItems: 'center',

@@ -5,7 +5,7 @@ import { BsArrowRight, BsArrowLeft } from 'react-icons/bs';
 import { usePagination, DOTS, useOrientation } from '../../hooks';
 import { palette } from '../../styles';
 import Focused from '../ui/Focused';
-import { isWebBased } from '@rnv/renative';
+import { isPlatformWeb } from '@rnv/renative';
 
 type PaginationProps = {
   total: number;
@@ -53,7 +53,7 @@ const Pagination: FC<PaginationProps> = ({
           accessibilityLabel="previous"
           handlePress={() => paginate(currentPage - 1)}
         >
-          {isWebBased ? (
+          {isPlatformWeb ? (
             <BsArrowLeft size={20} color={palette.whiteColor} />
           ) : (
             <Icon name="arrow-left" size={20} color={palette.whiteColor} />
@@ -94,7 +94,7 @@ const Pagination: FC<PaginationProps> = ({
           handlePress={() => paginate(currentPage + 1)}
           style={styles.paginationButton}
         >
-          {isWebBased ? (
+          {isPlatformWeb ? (
             <BsArrowRight size={20} color={palette.whiteColor} />
           ) : (
             <Icon name="arrow-right" size={20} color={palette.whiteColor} />

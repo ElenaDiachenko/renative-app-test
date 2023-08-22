@@ -3,7 +3,7 @@ import { Text, StyleSheet, View } from 'react-native';
 import {
   isPlatformAndroid,
   isPlatformAndroidtv,
-  isWebBased,
+  isPlatformWeb,
 } from '@rnv/renative';
 import { useFocusState } from '../../hooks';
 
@@ -39,7 +39,7 @@ const initialQuery = {
 };
 
 const ActionSection: FC<ActionSectionProps> = ({ currentRoute, router }) => {
-  const { name: routeName } = isWebBased
+  const { name: routeName } = isPlatformWeb
     ? { name: router?.pathname === '/' ? 'Home' : 'Library' }
     : useRoute();
 

@@ -6,6 +6,7 @@ import { useToggleMovie } from './useToggleMovie';
 import { useLibraryState } from './useLibraryState';
 import { useFocusState } from './useFocusState';
 import { useRouting } from './useRouting';
+import { useLoaderSize } from './useLoaderSize';
 
 export {
   useAuth,
@@ -17,4 +18,5 @@ export {
   useLibraryState,
   useFocusState,
   useRouting,
+  useLoaderSize,
 };

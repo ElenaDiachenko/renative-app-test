@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import React, { FC } from 'react';
 import { NextRouter } from 'next/router';
 import Feather from 'react-native-vector-icons/Feather';
-import { isWebBased } from '@rnv/renative';
+import { isPlatformWeb } from '@rnv/renative';
 import { FiLogOut } from 'react-icons/fi';
 import {
   HomeStackNavigatorParamList,
@@ -23,11 +23,11 @@ type HeaderProps = {
 const CustomHeader: FC<HeaderProps> = ({ router }) => {
   let navigation: StackNavigationProp<HomeStackNavigatorParamList, 'Home'>;
 
-  if (!isWebBased) {
+  if (!isPlatformWeb) {
     navigation = useNavigation();
   }
 
-  const { name: route } = isWebBased
+  const { name: route } = isPlatformWeb
     ? { name: router?.pathname === '/' ? 'Home' : 'Library' }
     : useRoute<HomeStackScreenProps<'Home'>['route']>();
   const [isFocusedLibrary, handleFocusChangeLibrary] = useFocusState();
@@ -44,7 +44,7 @@ const CustomHeader: FC<HeaderProps> = ({ router }) => {
         onFocus={() => handleFocusChangeLibrary(true)}
         onBlur={() => handleFocusChangeLibrary(false)}
         handlePress={() => {
-          isWebBased
+          isPlatformWeb
             ? router?.push(route === 'Home' ? '/library' : '/')
             : navigation.navigate(route === 'Home' ? 'Library' : 'Home');
         }}
@@ -64,7 +64,7 @@ const CustomHeader: FC<HeaderProps> = ({ router }) => {
         onFocus={() => handleFocusChangeLogout(true)}
         onBlur={() => handleFocusChangeLogout(false)}
       >
-        {isWebBased ? (
+        {isPlatformWeb ? (
           <FiLogOut
             size={26}
             color={isFocusedLogout ? palette.accentColor : palette.whiteColor}

@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     height: 60,
-    minWidth: '18%',
+    minWidth: '25%',
     borderWidth: 2,
     borderRadius: 5,
     borderColor: palette.whiteColor,

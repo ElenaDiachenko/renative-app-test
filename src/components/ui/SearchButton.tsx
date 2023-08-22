@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { StyleSheet, ViewProps } from 'react-native';
-import { isWebBased } from '@rnv/renative';
+import { isPlatformWeb } from '@rnv/renative';
 import { BiSearch } from 'react-icons/bi';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { palette } from '../../styles';
@@ -17,7 +17,7 @@ const SearchButton: FC<ButtonProps> = ({ isFocused, ...props }) => {
 
   return (
     <Focused style={styles.button} {...props}>
-      {isWebBased ? (
+      {isPlatformWeb ? (
         <BiSearch size={24} color={palette.blackColor} />
       ) : (
         <Ionicons

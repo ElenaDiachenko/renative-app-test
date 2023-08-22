@@ -1,7 +1,7 @@
 import React, { useState, FC, useRef } from 'react';
 import { TextInput, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { palette } from '../../styles';
-import { isWebBased } from '@rnv/renative';
+import { isPlatformWeb } from '@rnv/renative';
 
 type InputProps = {
   placeholder: string;
@@ -70,7 +70,7 @@ export default CustomInput;
 const styles = StyleSheet.create({
   inputBox: {
     width: '100%',
-    maxWidth: !isWebBased ? 450 : 600,
+    maxWidth: !isPlatformWeb ? 450 : 600,
     marginBottom: 16,
   },
   input: {
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
 // import React, { useState, FC, useRef } from 'react';
 // import { TextInput, Text, StyleSheet, TouchableOpacity } from 'react-native';
 // import { palette } from '../../styles';
-// import { isWebBased, isPlatformWeb } from '@rnv/renative';
+// import { isPlatformWeb, isPlatformWeb } from '@rnv/renative';
 
 // type InputProps = {
 //   placeholder: string;

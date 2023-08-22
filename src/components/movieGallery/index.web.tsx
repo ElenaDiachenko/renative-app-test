@@ -30,7 +30,7 @@ const renderMovieCard = ({
 }) => <MovieCard movie={item} prevRoute={prevRoute} />;
 
 const MovieGallery: FC<GalleryPropType> = ({ prevRoute, data }) => {
-  const [numCols, setCols] = useState(5);
+  const [numCols] = useState(5);
 
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -47,7 +47,6 @@ const MovieGallery: FC<GalleryPropType> = ({ prevRoute, data }) => {
       style={{
         paddingTop: 10,
         width: '100%',
-        // height: '100vh',
         backgroundColor: palette.mainBgColor,
       }}
     >

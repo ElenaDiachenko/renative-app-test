@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice, isAnyOf } from '@reduxjs/toolkit';
-import { isWebBased } from '@rnv/renative';
+
 import { UserType } from '../../types';
 import { checkStatus, logIn, logOut, register } from './operations/index';
 import {

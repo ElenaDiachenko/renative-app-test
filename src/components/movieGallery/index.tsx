@@ -5,7 +5,7 @@ import MovieCard from '../movieCard';
 import { Movie } from '../../types';
 
 import { commonStyles, palette } from '../../styles';
-import { useOrientation } from '../../hooks';
+import { useLoaderSize, useOrientation } from '../../hooks';
 import { Loader, Pagination } from '../ui';
 import { isPlatformAndroidtv } from '@rnv/renative';
 import { useLibraryState } from '../../hooks';
@@ -27,9 +27,10 @@ const renderMovieCard = ({
 }) => <MovieCard movie={item} index={index} prevRoute={prevRoute} />;
 
 const MovieGallery: FC<GalleryPropType> = ({ prevRoute }) => {
-  const { isPortrait, width, height } = useOrientation();
+  const { isPortrait, width } = useOrientation();
   const [numCols, setCols] = useState(0);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const loaderSize = useLoaderSize();
   const { data, isLoading, isError, changeSearchParams } =
     useLibraryState(prevRoute);
 
@@ -60,7 +61,7 @@ const MovieGallery: FC<GalleryPropType> = ({ prevRoute }) => {
         backgroundColor: palette.mainBgColor,
       }}
     >
-      {isLoading && <Loader size={isPortrait ? width / 6 : height / 6} full />}
+      {isLoading && <Loader size={loaderSize} full />}
       {isError && (
         <View style={styles.innerContainer}>
           <Text>An error has occurred. Try again later.</Text>

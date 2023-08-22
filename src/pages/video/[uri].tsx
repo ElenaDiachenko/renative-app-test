@@ -15,7 +15,6 @@ const VideoPlayer: NextPage = () => {
     autoplay: true,
     controls: true,
     fluid: true,
-
     poster: '',
     sources: [
       {

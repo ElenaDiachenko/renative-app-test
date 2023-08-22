@@ -1,4 +1,4 @@
-import Router, { useRouter } from 'next/router';
+import Router from 'next/router';
 import { useState, useEffect } from 'react';
 import 'raf/polyfill';
 import type { AppProps } from 'next/app';
@@ -9,10 +9,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import { store, persistor } from '../redux';
 import { Loader } from '../components/ui';
 import { Container } from '../components/ui';
+import { useLoaderSize } from '../hooks';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
+  const loaderSize = useLoaderSize();
 
   useEffect(() => {
     const start = () => {
@@ -37,7 +38,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        {isLoading ? <Loader size={'large'} full /> : null}
+        {isLoading ? <Loader size={loaderSize} full /> : null}
 
         <Container>
           <Component {...pageProps} />

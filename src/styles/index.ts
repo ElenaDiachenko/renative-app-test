@@ -1,4 +1,4 @@
-import { isPlatformWeb, isWebBased } from '@rnv/renative';
+import { isPlatformWeb } from '@rnv/renative';
 import { Dimensions, StyleSheet } from 'react-native';
 import { MAX_WIDTH_WEB } from '../utils/constants';
 

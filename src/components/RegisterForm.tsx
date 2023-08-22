@@ -13,13 +13,13 @@ import { CustomInput } from './ui';
 import { reducer, validateInputField } from '../utils';
 import { palette } from '../styles';
 import { useNavigation } from '@react-navigation/native';
-import { AuthStackParamList, AuthStackScreenProps } from '../navigation/types';
+import { AuthStackParamList } from '../navigation/types';
 import { useAuth } from '../hooks';
 import { useAppDispatch } from '../redux/hooks';
 
 import { register } from '../redux/auth/operations';
 import { NextRouter } from 'next/router';
-import { isPlatformWeb, isWebBased } from '@rnv/renative';
+import { isPlatformWeb } from '@rnv/renative';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 type RegisterFormProps = {
@@ -35,7 +35,7 @@ const initialState: reducer.State = {
 const RegisterForm: FC<RegisterFormProps> = ({ router }) => {
   let navigation: StackNavigationProp<AuthStackParamList, 'Register'>;
 
-  if (!isWebBased) {
+  if (!isPlatformWeb) {
     navigation = useNavigation();
   }
 
@@ -79,7 +79,7 @@ const RegisterForm: FC<RegisterFormProps> = ({ router }) => {
   const { username = '', email, password, errors } = state;
 
   const navigateToLogin = () => {
-    isWebBased ? router?.push('/login') : navigation?.navigate('Login');
+    isPlatformWeb ? router?.push('/login') : navigation?.navigate('Login');
   };
   return (
     <View style={styles.container}>

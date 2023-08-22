@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Alert } from 'react-native';
 import { toast } from 'react-toastify';
-import { isWebBased } from '@rnv/renative';
+import { isPlatformWeb } from '@rnv/renative';
 import { RootState } from '..';
 import {
   LibrarySearchParamsType,
@@ -25,7 +25,7 @@ export const fetchAll = createAsyncThunk<
 
       return result;
     } catch (error: any) {
-      isWebBased
+      isPlatformWeb
         ? toast.error('Something went wrong. Try again later')
         : Alert.alert('Something went wrong. Try again later');
       console.log(error, 'library/getLibrary');
@@ -45,18 +45,18 @@ export const addMovie = createAsyncThunk<
 
     const librarySearchParameters = filter.librarySearchParameters;
     await dispatch(fetchAll(librarySearchParameters));
-    isWebBased
-      ? toast.success('The movie has been saved successfully')
+    isPlatformWeb
+      ? toast.info('The movie has been saved successfully')
       : Alert.alert('The movie has been saved successfully');
     return movie;
   } catch (error: any) {
     if (error?.response?.status === 403) {
-      isWebBased
+      isPlatformWeb
         ? toast.error(error?.response?.data?.message)
         : Alert.alert(error?.response?.data?.message);
       return rejectWithValue(error?.response?.data.message);
     }
-    isWebBased
+    isPlatformWeb
       ? toast.info('Something went wrong. Try again later')
       : Alert.alert('Something went wrong.Try again later');
     return rejectWithValue('Something went wrong.Try again later');
@@ -77,12 +77,12 @@ export const removeMovie = createAsyncThunk<
       const librarySearchParameters = filter.librarySearchParameters;
       await dispatch(fetchAll(librarySearchParameters));
 
-      isWebBased
+      isPlatformWeb
         ? toast.info('The movie has been deleted successfully')
         : Alert.alert('The movie has been deleted successfully');
       return movie;
     } catch (error: any) {
-      isWebBased
+      isPlatformWeb
         ? toast.error('Something went wrong. Try again later')
         : Alert.alert('Something went wrong.Try again later');
       return rejectWithValue(error?.response?.data);
