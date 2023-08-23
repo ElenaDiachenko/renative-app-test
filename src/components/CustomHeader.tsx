@@ -3,19 +3,19 @@ import React, { FC } from 'react';
 import { NextRouter } from 'next/router';
 import Feather from 'react-native-vector-icons/Feather';
 import { isPlatformWeb } from '@rnv/renative';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { FiLogOut } from 'react-icons/fi';
 import {
   HomeStackNavigatorParamList,
   HomeStackScreenProps,
 } from '../navigation/index.tv';
-import { useNavigation, useRoute } from '@react-navigation/native';
 import { palette } from '../styles';
 import { Focused } from './ui';
 
 import { useFocusState } from '../hooks';
 import { useAppDispatch } from '../redux/hooks';
 import { logOut } from '../redux/auth/operations';
-import { StackNavigationProp } from '@react-navigation/stack';
 
 type HeaderProps = {
   router?: NextRouter;

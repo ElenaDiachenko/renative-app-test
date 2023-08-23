@@ -1,5 +1,4 @@
-import React, { useReducer, useEffect, FC } from 'react';
-
+import React, { useReducer, FC } from 'react';
 import {
   View,
   Text,
@@ -10,6 +9,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { isPlatformWeb } from '@rnv/renative';
 import { NextRouter } from 'next/router';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 import { reducer, validateInputField } from '../utils';
 import { palette } from '../styles';
@@ -17,10 +17,7 @@ import { CustomInput } from './ui';
 import { AuthStackParamList } from '../navigation/types';
 import { useAuth } from '../hooks';
 import { useAppDispatch } from '../redux/hooks';
-
 import { logIn } from '../redux/auth/operations';
-
-import { StackNavigationProp } from '@react-navigation/stack';
 
 const initialState: reducer.State = {
   email: '',

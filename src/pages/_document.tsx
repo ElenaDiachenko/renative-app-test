@@ -15,7 +15,9 @@ class MyDocument extends Document {
                 height: 100vh;
                 background-color: ${palette.mainBgColor};
               }
-             
+             input {
+              outline:none
+             }
             `}
           </style>
         </Head>

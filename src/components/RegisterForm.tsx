@@ -7,20 +7,18 @@ import {
   ActivityIndicator,
   StyleSheet,
 } from 'react-native';
-
-import { CustomInput } from './ui';
-
-import { reducer, validateInputField } from '../utils';
-import { palette } from '../styles';
-import { useNavigation } from '@react-navigation/native';
-import { AuthStackParamList } from '../navigation/types';
-import { useAuth } from '../hooks';
-import { useAppDispatch } from '../redux/hooks';
-
-import { register } from '../redux/auth/operations';
 import { NextRouter } from 'next/router';
 import { isPlatformWeb } from '@rnv/renative';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { useNavigation } from '@react-navigation/native';
+
+import { CustomInput } from './ui';
+import { reducer, validateInputField } from '../utils';
+import { palette } from '../styles';
+import { AuthStackParamList } from '../navigation/types';
+import { useAuth } from '../hooks';
+import { useAppDispatch } from '../redux/hooks';
+import { register } from '../redux/auth/operations';
 
 type RegisterFormProps = {
   router?: NextRouter;

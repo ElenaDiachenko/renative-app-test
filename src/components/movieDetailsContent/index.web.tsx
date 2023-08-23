@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { StyleSheet, Text, View, ScrollView, Image } from 'react-native';
-
+import { useRouter } from 'next/router';
 import { BsHeartFill, BsHeart } from 'react-icons/bs';
 import { FaPlay } from 'react-icons/fa';
 import LinearGradient from 'react-native-linear-gradient';
@@ -8,10 +8,8 @@ import LinearGradient from 'react-native-linear-gradient';
 import { convertRating, convertTime, constants } from '../../utils';
 import { commonStyles, palette } from '../../styles';
 import { useToggleMovie, useOrientation } from '../../hooks';
-
 import { Focused } from '../ui';
 import { Movie } from '../../types';
-import { useRouter } from 'next/router';
 
 type MoviePropsType = {
   movie: Movie;

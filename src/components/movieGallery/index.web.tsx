@@ -7,11 +7,7 @@ import { Pagination } from '../ui';
 import CustomHeader from '../CustomHeader';
 import ActionSection from '../actionSection/index.web';
 import { useAppDispatch } from '../../redux/hooks';
-
-import {
-  setLibrarySearchParameters,
-  setSearchParameters,
-} from '../../redux/filter/slice';
+import { filterActions } from '../../redux/filter';
 import { useRouter } from 'next/router';
 
 type GalleryPropType = {
@@ -38,8 +34,8 @@ const MovieGallery: FC<GalleryPropType> = ({ prevRoute, data }) => {
   const { data: movieData, currentPage, totalPages } = data;
   const paginate = (page: number) => {
     isHomeScreen
-      ? dispatch(setSearchParameters({ page }))
-      : dispatch(setLibrarySearchParameters({ page }));
+      ? dispatch(filterActions.setSearchParameters({ page }))
+      : dispatch(filterActions.setLibrarySearchParameters({ page }));
   };
 
   return (

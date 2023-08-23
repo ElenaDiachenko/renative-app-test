@@ -1,23 +1,15 @@
-import React, { useEffect, useRef, useState } from 'react';
-import {
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  ScrollView,
-  View,
-  Button,
-} from 'react-native';
+import React, { useState } from 'react';
+import { Text, StyleSheet, View } from 'react-native';
 import { DrawerActions } from '@react-navigation/native';
 import { DrawerParamList } from '../navigation/types';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { useAppDispatch } from '../redux/hooks';
-import { logOut } from '../redux/auth/operations';
-import { palette } from '../styles';
 import {
   DrawerContentComponentProps,
   useDrawerStatus,
 } from '@react-navigation/drawer';
-
+import { useAppDispatch } from '../redux/hooks';
+import { logOut } from '../redux/auth/operations';
+import { palette } from '../styles';
 import { headerHeight } from '../utils/constants';
 import { Focused, LogoutBtn } from './ui';
 import ActionSection from './actionSection/index';

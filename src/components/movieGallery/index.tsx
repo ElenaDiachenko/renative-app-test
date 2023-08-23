@@ -1,13 +1,12 @@
 import React, { FC, useState, useEffect } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { isPlatformAndroidtv } from '@rnv/renative';
 
 import MovieCard from '../movieCard';
 import { Movie } from '../../types';
-
 import { commonStyles, palette } from '../../styles';
 import { useLoaderSize, useOrientation } from '../../hooks';
 import { Loader, Pagination } from '../ui';
-import { isPlatformAndroidtv } from '@rnv/renative';
 import { useLibraryState } from '../../hooks';
 import FilterBtn from '../FilterBtn';
 import CustomHeader from '../CustomHeader';
