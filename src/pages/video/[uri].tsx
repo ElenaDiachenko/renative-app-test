@@ -6,7 +6,7 @@ import 'video.js/dist/video-js.css';
 
 import React from 'react';
 import VideoJS from '../../components/VideoJS';
-
+import { GoBackButton } from '../../components/ui';
 const VideoPlayer: NextPage = () => {
   const { query } = useRouter();
   const playerRef = React.useRef(null);
@@ -39,6 +39,7 @@ const VideoPlayer: NextPage = () => {
 
   return (
     <Meta title={`Player page`} description={`Player page`}>
+      <GoBackButton />
       <VideoJS options={videoJsOptions} onReady={handlePlayerReady} />
     </Meta>
   );

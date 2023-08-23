@@ -8,7 +8,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { convertRating, convertTime, constants } from '../../utils';
 import { commonStyles, palette } from '../../styles';
 import { useToggleMovie, useOrientation } from '../../hooks';
-import { Focused } from '../ui';
+import { Focused, GoBackButton } from '../ui';
 import { Movie } from '../../types';
 
 type MoviePropsType = {
@@ -44,6 +44,7 @@ const MovieDetailsContent: FC<MoviePropsType> = ({
     <>
       {movie && (
         <ScrollView>
+          <GoBackButton />
           <View style={isPortrait ? styles.container : styles.containerRow}>
             <View style={[styles.posterBox, posterBoxStyle]}>
               <Image
@@ -171,8 +172,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: palette.mainBgColor,
-
-    paddingVertical: 16,
+    paddingBottom: 16,
+    paddingTop: 10,
   },
   posterBox: {
     position: 'relative',

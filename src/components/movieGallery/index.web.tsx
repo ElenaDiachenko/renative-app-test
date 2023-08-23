@@ -1,5 +1,6 @@
 import React, { FC, useState } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { useRouter } from 'next/router';
 import MovieCard from '../movieCard/index.web';
 import { Movie, MovieDataType } from '../../types';
 import { commonStyles, palette } from '../../styles';
@@ -8,7 +9,6 @@ import CustomHeader from '../CustomHeader';
 import ActionSection from '../actionSection/index.web';
 import { useAppDispatch } from '../../redux/hooks';
 import { filterActions } from '../../redux/filter';
-import { useRouter } from 'next/router';
 
 type GalleryPropType = {
   prevRoute: string;

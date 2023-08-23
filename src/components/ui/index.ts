@@ -7,3 +7,4 @@ export { default as LogoutBtn } from './LogoutBtn';
 export { default as CustomInput } from './CustomInput';
 export { default as Meta } from './Meta';
 export { default as Container } from './Container';
+export { default as GoBackButton } from './GoBackButton';
