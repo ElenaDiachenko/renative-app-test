@@ -35,41 +35,6 @@ export const VideoJS: FC<VideoJSProps> = (props) => {
     }
   }, [options, videoRef]);
 
-  // useEffect(() => {
-  //   if (!playerRef.current) {
-  //     const videoElement = document.createElement('video-js');
-  //     const handleGoBack = () => {
-  //       router.back();
-  //     };
-  //     videoElement.classList.add('vjs-big-play-centered');
-  //     if (videoRef?.current) {
-  //       videoRef.current.appendChild(videoElement);
-  //     }
-
-  //     const player = (playerRef.current = videojs(videoElement, options, () => {
-  //       videojs.log('player is ready');
-  //       onReady && onReady(player);
-  //     }));
-
-  //     const goBackButton = document.createElement('button');
-  //     goBackButton.innerText = 'Go Back';
-  //     goBackButton.style.position = 'absolute';
-  //     goBackButton.style.top = '10px';
-  //     goBackButton.style.left = '10px';
-  //     goBackButton.addEventListener('click', handleGoBack);
-  //     videoRef?.current?.appendChild(goBackButton);
-
-  //     return () => {
-  //       goBackButton.removeEventListener('click', handleGoBack);
-  //     };
-  //   } else {
-  //     const player = playerRef.current;
-
-  //     player.autoplay(options.autoplay);
-  //     player.src(options.sources);
-  //   }
-  // }, [options, videoRef, history, onReady]);
-
   useEffect(() => {
     const player = playerRef.current;
 

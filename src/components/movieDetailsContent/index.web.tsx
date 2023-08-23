@@ -44,7 +44,7 @@ const MovieDetailsContent: FC<MoviePropsType> = ({
     <>
       {movie && (
         <ScrollView>
-          <GoBackButton />
+          <GoBackButton handlePress={() => router.back()} />
           <View style={isPortrait ? styles.container : styles.containerRow}>
             <View style={[styles.posterBox, posterBoxStyle]}>
               <Image

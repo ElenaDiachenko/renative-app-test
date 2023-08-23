@@ -12,7 +12,7 @@ import { convertRating, convertTime, constants } from '../../utils';
 import { commonStyles, palette } from '../../styles';
 import { useToggleMovie, useOrientation } from '../../hooks';
 
-import { Focused } from '../ui';
+import { Focused, GoBackButton } from '../ui';
 import { HomeStackNavigatorParamList } from '../../navigation/types';
 
 import { useAppSelector } from '../../redux/hooks';
@@ -52,6 +52,7 @@ const MovieDetailsContent: FC<MoviePropsType> = ({
     <>
       {movie && (
         <ScrollView style={{ paddingHorizontal: 16 }}>
+          <GoBackButton handlePress={() => goBack()} />
           <View
             style={
               isPortrait || !isPlatformAndroidtv

@@ -1,19 +1,40 @@
-import { StyleSheet, TouchableOpacity } from 'react-native';
-import React from 'react';
-import { useRouter } from 'next/router';
-import { BsArrowLeft } from 'react-icons/bs';
-import { palette } from '../../styles';
+import { StyleSheet } from 'react-native';
+import React, { FC } from 'react';
+import { isPlatformWeb } from '@rnv/renative';
 
-const GoBackButton = () => {
-  const router = useRouter();
+import { BsArrowLeft } from 'react-icons/bs';
+import Icon from 'react-native-vector-icons/Octicons';
+import { palette } from '../../styles';
+import Focused from './Focused';
+import { useFocusState } from '../../hooks';
+
+type GoBackButtonProps = {
+  handlePress: () => void;
+};
+const GoBackButton: FC<GoBackButtonProps> = ({ handlePress }) => {
+  const [isFocusedBtn, handleFocusChange] = useFocusState();
+
   return (
-    <TouchableOpacity
+    <Focused
       style={styles.container}
-      onPress={() => router.back()}
+      handlePress={handlePress}
       activeOpacity={0.7}
+      onFocus={() => handleFocusChange(true)}
+      onBlur={() => handleFocusChange(false)}
     >
-      <BsArrowLeft size={25} color={palette.whiteColor} />
-    </TouchableOpacity>
+      {isPlatformWeb ? (
+        <BsArrowLeft
+          size={25}
+          color={isFocusedBtn ? palette.accentColor : palette.whiteColor}
+        />
+      ) : (
+        <Icon
+          name="arrow-left"
+          size={25}
+          color={isFocusedBtn ? palette.accentColor : palette.whiteColor}
+        />
+      )}
+    </Focused>
   );
 };
 
@@ -27,7 +48,7 @@ const styles = StyleSheet.create({
     width: 45,
     height: 45,
     borderRadius: 20,
-    backgroundColor: palette.mainBgColor,
+    backgroundColor: `${palette.mainBgColor}20%`,
     zIndex: 1,
     alignItems: 'center',
     justifyContent: 'center',
