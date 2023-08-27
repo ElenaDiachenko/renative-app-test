@@ -12,6 +12,7 @@ import MovieGallery from '../components/movieGallery/index.web';
 import { MovieDataType } from '../types';
 import { useAppSelector } from '../redux/hooks';
 import { selectFilterMovie } from '../redux/filter/selectors';
+import { Meta } from '../components/ui';
 
 const Home: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>
@@ -37,9 +38,9 @@ const Home: NextPage<
   }, [router.isReady, searchParameters]);
 
   return (
-    <>
+    <Meta title="Main page" description="Home page">
       <MovieGallery prevRoute={'Home'} data={data} />
-    </>
+    </Meta>
   );
 };
 

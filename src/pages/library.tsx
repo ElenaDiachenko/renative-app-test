@@ -7,11 +7,11 @@ import MovieGallery from '../components/movieGallery/index.web';
 import { useAppSelector } from '../redux/hooks';
 import { selectFilterlibrary } from '../redux/filter/selectors';
 import { useMovies } from '../hooks/useMovies.web';
-import { useRouting } from '../hooks';
+import { Meta } from '../components/ui';
 
 const Library: NextPage = () => {
   const router = useRouter();
-  // useRouting();
+
   const searchParameters = useAppSelector(selectFilterlibrary);
   const { data, isLoading, isError } = useMovies();
 
@@ -32,7 +32,11 @@ const Library: NextPage = () => {
     }
   }, [router.isReady, searchParameters]);
 
-  return <>{data && <MovieGallery prevRoute={'Library'} data={data} />}</>;
+  return (
+    <Meta title="Library page" description="Library page">
+      {data && <MovieGallery prevRoute={'Library'} data={data} />}
+    </Meta>
+  );
 };
 
 export default Library;
