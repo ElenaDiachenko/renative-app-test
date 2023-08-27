@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { NavigationContainer, RouteProp } from '@react-navigation/native';
 import {
-  StackNavigationProp,
-  createStackNavigator,
-} from '@react-navigation/stack';
+  NativeStackNavigationProp,
+  createNativeStackNavigator,
+} from '@react-navigation/native-stack';
 
 import * as Screens from '../screens';
 import { AuthStackParamList } from './types';
@@ -26,12 +26,12 @@ export type HomeStackNavigatorParamList = {
 
 export type HomeStackScreenProps<T extends keyof HomeStackNavigatorParamList> =
   {
-    navigation: StackNavigationProp<HomeStackNavigatorParamList, T>;
+    navigation: NativeStackNavigationProp<HomeStackNavigatorParamList, T>;
     route: RouteProp<HomeStackNavigatorParamList, T>;
   };
 
-const MainStack = createStackNavigator<HomeStackNavigatorParamList>();
-const AuthStack = createStackNavigator<AuthStackParamList>();
+const MainStack = createNativeStackNavigator<HomeStackNavigatorParamList>();
+const AuthStack = createNativeStackNavigator<AuthStackParamList>();
 
 const AuthNav = () => {
   return (

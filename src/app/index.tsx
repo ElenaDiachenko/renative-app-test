@@ -5,7 +5,7 @@ import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';
-import { store, persistor } from '../redux/store';
+import { store, persistor } from '../redux';
 
 import Navigation from '../navigation';
 

@@ -1,100 +1,99 @@
 {
-    "platforms": {},
-    "plugins": {
-        "@react-native-community/cli-platform-ios": "source:rnv",
-        "@react-native-community/cli": "source:rnv",
-        "react-native-tvos": "source:rnv",
-        "react-native-web": "source:rnv",
-        "next": "source:rnv",
-        "@react-navigation": "source:rnv",
-        "react-native-safe-area-context": "source:rnv",
-        "react-native-screens": "source:rnv",
-        "@react-native-picker/picker": "source:rnv",
-        "@react-navigation/drawer": "source:rnv",
-        "@react-navigation/native": "source:rnv",
-        "@react-navigation/stack": "source:rnv",
-        "axios": "source:rnv",
-        "react-native-fast-image": "source:rnv",
-        "react-native-linear-gradient": "source:rnv",
-        "react-native-vector-icons": "source:rnv",
-        "react-native-video": "source:rnv",
-        "@react-native-firebase/auth": {
-            "android": {
-                "package": "io.invertase.firebase.auth.ReactNativeFirebaseAuthPackage",
-                "projectName": "@react-native-firebase_auth"
-            },
-            "androidtv": {
-                "package": "io.invertase.firebase.auth.ReactNativeFirebaseAuthPackage",
-                "projectName": "@react-native-firebase_auth"
-            },
-            "ios": {
-                "appDelegateImports": [
-                    "Firebase"
-                ],
-                "appDelegateMethods": {
-                    "application": {
-                        "didFinishLaunchingWithOptions": [
-                            {
-                                "order": -1,
-                                "value": "FirebaseApp.configure()",
-                                "weight": 1
-                            }
-                        ]
-                    }
-                },
-                "isStatic": true,
-                "podName": "RNFBAuth",
-                "xcodeproj": {
-                    "resourceFiles": [
-                        "RNVApp/GoogleService-Info.plist"
-                    ]
-                }
-            },
-            "pluginDependencies": {
-                "@react-native-firebase/app": "source:rnv"
-            },
-            "version": "16.7.0"
+  "platforms": {},
+  "plugins": {
+    "@react-native-community/cli-platform-ios": "source:rnv",
+    "@react-native-community/cli": "source:rnv",
+    "react-native-tvos": "source:rnv",
+    "react-native-web": "source:rnv",
+    "next": "source:rnv",
+    "@react-navigation": "source:rnv",
+    "react-native-safe-area-context": "source:rnv",
+    "react-native-screens": "source:rnv",
+    "@react-native-picker/picker": "source:rnv",
+    "@react-navigation/drawer": "source:rnv",
+    "@react-navigation/native": "source:rnv",
+    "@react-navigation/stack": "source:rnv",
+    "axios": "source:rnv",
+    "react-native-fast-image": "source:rnv",
+    "react-native-linear-gradient": "source:rnv",
+    "react-native-vector-icons": "source:rnv",
+    "react-native-video": "source:rnv",
+    "react-native-video-player": {
+      "version": "0.14.0"
+    },
+    "@react-native-firebase/auth": {
+      "android": {
+        "package": "io.invertase.firebase.auth.ReactNativeFirebaseAuthPackage",
+        "projectName": "@react-native-firebase_auth"
+      },
+      "androidtv": {
+        "package": "io.invertase.firebase.auth.ReactNativeFirebaseAuthPackage",
+        "projectName": "@react-native-firebase_auth"
+      },
+      "ios": {
+        "appDelegateImports": ["Firebase"],
+        "appDelegateMethods": {
+          "application": {
+            "didFinishLaunchingWithOptions": [
+              {
+                "order": -1,
+                "value": "FirebaseApp.configure()",
+                "weight": 1
+              }
+            ]
+          }
         },
-        "@react-native-firebase/app": "source:rnv",
-        "@reduxjs/toolkit": "source:rnv",
-        "react-redux": "source:rnv",
-        "react-native-reanimated": "source:rnv",
-        "@react-native-async-storage/async-storage": "source:rnv",
-        "@rnv/renative": "source:rnv"
-    },
-    "extendsTemplate": "@rnv/template-starter/renative.json",
-    "projectName": "test",
-    "workspaceID": "rnv",
-    "defaults": {
-        "title": "Hello Renative",
-        "id": "com.mycompany.test",
-        "supportedPlatforms": [
-            "ios",
-            "android",
-            "androidtv",
-            "firetv",
-            "androidwear",
-            "web",
-            "webtv",
-            "tizen",
-            "tvos",
-            "webos",
-            "macos",
-            "windows",
-            "tizenwatch",
-            "tizenmobile",
-            "kaios",
-            "firefoxos",
-            "firefoxtv",
-            "chromecast"
-        ]
-    },
-    "engines": {},
-    "templates": {
-        "@rnv/template-starter": {
-            "version": "0.37.1"
+        "isStatic": true,
+        "podName": "RNFBAuth",
+        "xcodeproj": {
+          "resourceFiles": ["RNVApp/GoogleService-Info.plist"]
         }
+      },
+      "pluginDependencies": {
+        "@react-native-firebase/app": "source:rnv"
+      },
+      "version": "16.7.0"
     },
-    "currentTemplate": "@rnv/template-starter",
-    "isMonorepo": false
+    "@react-native-firebase/app": "source:rnv",
+    "@reduxjs/toolkit": "source:rnv",
+    "react-redux": "source:rnv",
+    "react-native-reanimated": "source:rnv",
+    "@react-native-async-storage/async-storage": "source:rnv",
+    "@rnv/renative": "source:rnv"
+  },
+  "extendsTemplate": "@rnv/template-starter/renative.json",
+  "projectName": "test",
+  "workspaceID": "rnv",
+  "defaults": {
+    "title": "Hello Renative",
+    "id": "com.mycompany.test",
+    "supportedPlatforms": [
+      "ios",
+      "android",
+      "androidtv",
+      "firetv",
+      "androidwear",
+      "web",
+      "webtv",
+      "tizen",
+      "tvos",
+      "webos",
+      "macos",
+      "windows",
+      "tizenwatch",
+      "tizenmobile",
+      "kaios",
+      "firefoxos",
+      "firefoxtv",
+      "chromecast"
+    ]
+  },
+  "engines": {},
+  "templates": {
+    "@rnv/template-starter": {
+      "version": "0.37.1"
+    }
+  },
+  "currentTemplate": "@rnv/template-starter",
+  "isMonorepo": false
 }

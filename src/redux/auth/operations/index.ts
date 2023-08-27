@@ -1,9 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import auth from '@react-native-firebase/auth';
-import { UserType, SignupData, LoginData } from '../../types';
-import { resetLibraryState } from '../library/slice';
-import { resetMoviesState } from '../movies/slice';
-import { resetFilterState } from '../filter/slice';
+import { UserType, SignupData, LoginData } from '../../../types';
+import { resetLibraryState } from '../../library/slice';
+import { resetMoviesState } from '../../movies/slice';
+import { resetFilterState } from '../../filter/slice';
 
 export const checkStatus = createAsyncThunk<UserType | null>(
   'auth/checkStatus',

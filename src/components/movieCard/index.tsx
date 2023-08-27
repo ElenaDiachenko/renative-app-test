@@ -3,11 +3,11 @@ import { View, Text, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import FastImage from 'react-native-fast-image';
 
-import { constants, convertRating, calculateCardWidth } from '../utils';
-import { Movie } from '../types';
-import { palette } from '../styles';
-import { useOrientation } from '../hooks';
-import { Focused } from './ui';
+import { constants, convertRating, calculateCardWidth } from '../../utils';
+import { Movie } from '../../types';
+import { palette } from '../../styles';
+import { useOrientation } from '../../hooks';
+import { Focused } from '../ui';
 
 type MovieCardProps = {
   movie: Movie;

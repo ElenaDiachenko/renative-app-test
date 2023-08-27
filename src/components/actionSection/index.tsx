@@ -1,27 +1,20 @@
 import React, { FC, useEffect, useState } from 'react';
 import { Text, StyleSheet, View } from 'react-native';
 import { isPlatformAndroidtv } from '@rnv/renative';
-import { useFocusState } from '../hooks';
-import GenreList from './GenreList';
-import { palette } from '../styles';
-import { Focused } from './ui';
-import Search from './Search';
-import Sort from './Sort';
-import { useAppDispatch, useAppSelector } from '../redux/hooks';
-import {
-  selectFilterMovie,
-  selectFilterlibrary,
-} from '../redux/filter/selectors';
-import {
-  setSearchParameters,
-  setLibrarySearchParameters,
-} from '../redux/filter/slice';
-import { constants, isGenre } from '../utils';
-import GenreListHorizontal from './GenreListHorizontal';
 import { useRoute } from '@react-navigation/native';
+import { useFocusState } from '../../hooks';
+import GenreList from '../GenreList';
+import { palette } from '../../styles';
+import { Focused } from '../ui';
+import Search from '../Search';
+import Sort from '../sort/index';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { selectors, filterActions } from '../../redux/filter';
+import { constants, isGenre } from '../../utils';
+import GenreListHorizontal from '../GenreListHorizontal';
 
 type ActionSectionProps = {
-  closeDrawerMenu: () => void;
+  closeDrawerMenu?: () => void;
   setIsFilterOpen: React.Dispatch<React.SetStateAction<boolean>>;
   currentRoute?: string;
 };
@@ -43,8 +36,8 @@ const ActionSection: FC<ActionSectionProps> = ({
 
   const [openGenres, setOpenGenres] = useState(false);
 
-  const searchParameters = useAppSelector(selectFilterMovie);
-  const librarySearchParameters = useAppSelector(selectFilterlibrary);
+  const searchParameters = useAppSelector(selectors.selectFilterMovie);
+  const librarySearchParameters = useAppSelector(selectors.selectFilterlibrary);
   const dispatch = useAppDispatch();
   const route = isPlatformAndroidtv ? routeTv : currentRoute;
   const isHomeScreen = route === 'Home';
@@ -90,11 +83,11 @@ const ActionSection: FC<ActionSectionProps> = ({
       page: 1,
     };
     if (isHomeScreen) {
-      dispatch(setSearchParameters(updatedSearchParams));
+      dispatch(filterActions.setSearchParameters(updatedSearchParams));
     } else {
-      dispatch(setLibrarySearchParameters(updatedSearchParams));
+      dispatch(filterActions.setLibrarySearchParameters(updatedSearchParams));
     }
-    closeDrawerMenu();
+    closeDrawerMenu && closeDrawerMenu();
     handleFilters();
     setOpenGenres(false);
   };
@@ -104,11 +97,11 @@ const ActionSection: FC<ActionSectionProps> = ({
       page: 1,
     };
     if (isHomeScreen) {
-      dispatch(setSearchParameters(updatedSearchParams));
+      dispatch(filterActions.setSearchParameters(updatedSearchParams));
     } else {
-      dispatch(setLibrarySearchParameters(updatedSearchParams));
+      dispatch(filterActions.setLibrarySearchParameters(updatedSearchParams));
     }
-    closeDrawerMenu();
+    closeDrawerMenu && closeDrawerMenu();
     handleFilters();
   };
 

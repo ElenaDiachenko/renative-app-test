@@ -1,5 +1,9 @@
+export const headerHeight = 50;
+export const ASPECT_RATIO = 500 / 750;
+export const MAX_WIDTH_WEB = 1400;
+
 export const genreList = [
-  { id: 'all', value: 'all genres' },
+  { id: 'all genres', value: 'all genres' },
   { id: 'adventure', value: 'adventure' },
   { id: 'action', value: 'action' },
   { id: 'animation', value: 'animation' },
@@ -29,8 +33,6 @@ export const sortList = [
   { label: 'Rating', value: 'rating' },
 ];
 
-export const ASPECT_RATIO = 500 / 750;
-
 export const fields = {
   RATING: 'Rating',
   DURATION: 'Duration',
@@ -40,5 +42,3 @@ export const fields = {
   ABOUT: 'About',
   CASTS: 'Casts',
 };
-
-export const headerHeight = 50;

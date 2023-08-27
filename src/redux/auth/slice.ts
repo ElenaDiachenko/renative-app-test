@@ -1,6 +1,13 @@
 import { PayloadAction, createSlice, isAnyOf } from '@reduxjs/toolkit';
+
 import { UserType } from '../../types';
-import { checkStatus, logIn, logOut, register } from './operations';
+import { checkStatus, logIn, logOut, register } from './operations/index';
+import {
+  checkStatus as checkStatusWeb,
+  logIn as logInWeb,
+  logOut as logOutWeb,
+  register as registerWeb,
+} from './operations/index.web';
 
 export interface IAuthState {
   user: UserType | null;
@@ -18,6 +25,10 @@ const fulfilledActionTypes = [
   checkStatus.fulfilled,
   register.fulfilled,
   logOut.fulfilled,
+  logInWeb.fulfilled,
+  checkStatusWeb.fulfilled,
+  registerWeb.fulfilled,
+  logOutWeb.fulfilled,
 ];
 
 const pendingActionTypes = [
@@ -25,6 +36,10 @@ const pendingActionTypes = [
   checkStatus.pending,
   register.pending,
   logOut.pending,
+  logInWeb.pending,
+  checkStatusWeb.pending,
+  registerWeb.pending,
+  logOutWeb.pending,
 ];
 
 const rejectedActionTypes = [
@@ -32,6 +47,10 @@ const rejectedActionTypes = [
   checkStatus.rejected,
   register.rejected,
   logOut.rejected,
+  logInWeb.rejected,
+  checkStatusWeb.rejected,
+  registerWeb.rejected,
+  logOutWeb.rejected,
 ];
 
 export const authSlice = createSlice({

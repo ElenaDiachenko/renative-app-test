@@ -1,4 +1,4 @@
-import { RootState } from '../store';
+import { RootState } from '..';
 
 export const selectFilterMovie = (state: RootState) =>
   state?.filter.searchParameters;

@@ -1,5 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { RootState } from '../store';
+import { RootState } from '..';
 import { selectLibrary } from '../library/selectors';
 
 export const selectMovies = (state: RootState) => state.movies;

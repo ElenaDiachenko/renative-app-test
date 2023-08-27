@@ -1,22 +1,33 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 import React from 'react';
-import { CONFIG } from '../config';
+
+import { palette } from '../styles';
 
 class MyDocument extends Document {
-    render() {
-        return (
-            <Html lang="en">
-                <Head>
-                    <meta name="description" content={CONFIG.welcomeMessage} />
-                    <link rel="shortcut icon" href="/favicon.ico" />
-                </Head>
-                <body>
-                    <Main />
-                    <NextScript />
-                </body>
-            </Html>
-        );
-    }
+  render() {
+    return (
+      <Html lang="en">
+        <Head>
+          <link rel="shortcut icon" href="/favicon.ico" />
+          <style>
+            {`
+              body {
+                height: 100vh;
+                background-color: ${palette.mainBgColor};
+              }
+             input {
+              outline:none
+             }
+            `}
+          </style>
+        </Head>
+        <body>
+          <Main />
+          <NextScript />
+        </body>
+      </Html>
+    );
+  }
 }
 
 export default MyDocument;

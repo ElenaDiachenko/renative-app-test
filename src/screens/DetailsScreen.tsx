@@ -12,14 +12,11 @@ const DetailsScreen = ({
 
   return (
     <View style={styles.container}>
-      {/* <ScreenWrapper style={styles.container}> */}
       <MovieDetailsContent
         navigation={navigation}
         prevRoute={prevRoute}
         movieId={movieId}
       />
-
-      {/* </ScreenWrapper> */}
     </View>
   );
 };

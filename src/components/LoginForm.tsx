@@ -1,5 +1,4 @@
-import React, { useReducer, useEffect } from 'react';
-// import { shallow } from 'zustand/shallow';
+import React, { useReducer, FC } from 'react';
 import {
   View,
   Text,
@@ -8,14 +7,16 @@ import {
   StyleSheet,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-// import { useStore } from '../stores/store';
+import { isPlatformWeb } from '@rnv/renative';
+import { NextRouter } from 'next/router';
+import { StackNavigationProp } from '@react-navigation/stack';
+
 import { reducer, validateInputField } from '../utils';
 import { palette } from '../styles';
 import { CustomInput } from './ui';
-import { AuthStackScreenProps } from '../navigation/types';
+import { AuthStackParamList } from '../navigation/types';
 import { useAuth } from '../hooks';
 import { useAppDispatch } from '../redux/hooks';
-
 import { logIn } from '../redux/auth/operations';
 
 const initialState: reducer.State = {
@@ -24,9 +25,16 @@ const initialState: reducer.State = {
   errors: {},
 };
 
-const LoginForm = () => {
-  const navigation =
-    useNavigation<AuthStackScreenProps<'Login'>['navigation']>();
+type LoginFormProps = {
+  router?: NextRouter;
+};
+const LoginForm: FC<LoginFormProps> = ({ router }) => {
+  let navigation: StackNavigationProp<AuthStackParamList, 'Login'>;
+
+  if (!isPlatformWeb) {
+    navigation = useNavigation();
+  }
+
   const [state, dispatch] = useReducer(reducer.reducer, initialState);
   const reduxDispatch = useAppDispatch();
   const { isLoading } = useAuth();
@@ -59,6 +67,9 @@ const LoginForm = () => {
 
   const { email, password, errors } = state;
 
+  const navigateToRegister = () => {
+    isPlatformWeb ? router?.push('/register') : navigation.navigate('Register');
+  };
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Log In</Text>
@@ -90,10 +101,7 @@ const LoginForm = () => {
       </TouchableOpacity>
       <View style={styles.containerLink}>
         <Text style={styles.text}>Want to create a new account?</Text>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('Register')}
-          activeOpacity={0.7}
-        >
+        <TouchableOpacity onPress={navigateToRegister} activeOpacity={0.7}>
           <Text style={styles.linkText}>Sign Up</Text>
         </TouchableOpacity>
       </View>
@@ -106,6 +114,8 @@ export default LoginForm;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    width: '100%',
+    height: isPlatformWeb ? '100vh' : '100%',
     justifyContent: 'center',
     flexDirection: 'column',
     alignItems: 'center',
@@ -125,7 +135,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   button: {
-    width: '40%',
+    width: '35%',
     height: 50,
     alignItems: 'center',
     justifyContent: 'center',

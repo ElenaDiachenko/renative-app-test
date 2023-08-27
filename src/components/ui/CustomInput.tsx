@@ -1,6 +1,7 @@
 import React, { useState, FC, useRef } from 'react';
 import { TextInput, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { palette } from '../../styles';
+import { isPlatformWeb } from '@rnv/renative';
 
 type InputProps = {
   placeholder: string;
@@ -9,6 +10,7 @@ type InputProps = {
   value: string;
   onChangeText: (text: string) => void;
   error?: string;
+  onEndEditing?: () => void;
 };
 
 const CustomInput: FC<InputProps> = ({
@@ -18,6 +20,7 @@ const CustomInput: FC<InputProps> = ({
   setInputFocused,
   secureTextEntry = false,
   error,
+  onEndEditing,
 }) => {
   const [isFocused, setIsFocused] = useState(false);
   const textInputRef = useRef<TextInput>(null);
@@ -47,12 +50,15 @@ const CustomInput: FC<InputProps> = ({
         onChangeText={onChangeText}
         placeholderTextColor={palette.footerTextColor}
         secureTextEntry={secureTextEntry}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
         style={[
           styles.input,
           {
             borderColor: !isFocused ? palette.whiteColor : palette.accentColor,
           },
         ]}
+        onEndEditing={onEndEditing}
       />
       {error && <Text style={styles.error}>{error}</Text>}
     </TouchableOpacity>
@@ -64,7 +70,7 @@ export default CustomInput;
 const styles = StyleSheet.create({
   inputBox: {
     width: '100%',
-    maxWidth: 450,
+    maxWidth: !isPlatformWeb ? 450 : 600,
     marginBottom: 16,
   },
   input: {

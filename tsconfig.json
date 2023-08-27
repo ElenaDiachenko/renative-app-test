@@ -11,6 +11,7 @@
     "**/*.ts",
     "**/*.tsx",
     "src/components/ActionSection.1tsx",
-    "src/navigation/index.tv.tsx"
+    "src/navigation/index.tv.tsx",
+    "src/components/VideoJS.tsx"
   ]
 }

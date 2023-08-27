@@ -1,6 +1,5 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import { isPlatformWeb } from '@rnv/renative';
+
 import {
   persistStore,
   persistReducer,
@@ -32,7 +31,7 @@ const rootReducer = combineReducers({
 
 const persistConfig = {
   key: 'state',
-  storage: AsyncStorage,
+  storage,
   blacklist: ['library', 'movies'],
 };
 
