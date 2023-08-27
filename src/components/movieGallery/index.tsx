@@ -104,7 +104,9 @@ const MovieGallery: FC<GalleryPropType> = ({ prevRoute }) => {
                 contentPerPage={5}
                 siblingCount={1}
               />
-            ) : null
+            ) : (
+              <View style={{ height: 50 }}></View>
+            )
           }
           key={numCols}
           data={movieData}
